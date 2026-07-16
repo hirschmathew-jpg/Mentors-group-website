@@ -399,7 +399,9 @@ const posts = (await getCollection('insights'))
     border-top: 1px solid var(--hairline-band);
     padding-top: 48px;
   }
-  .stat { display: flex; flex-direction: column-reverse; }
+  /* column-reverse puts the number above its label; flex-end packs the
+     stack to the cell's top so all numbers align regardless of label wrap */
+  .stat { display: flex; flex-direction: column-reverse; justify-content: flex-end; }
   .stat dd {
     font-family: var(--font-display);
     font-variant-numeric: tabular-nums;
