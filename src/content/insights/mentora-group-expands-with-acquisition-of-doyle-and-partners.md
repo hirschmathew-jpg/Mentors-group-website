@@ -23,9 +23,9 @@ Existing Doyle & Partners clients will gain access to the full breadth of Mentor
 
 The combined team will continue to operate from the Doyle & Partners office in Cork, giving the group an advisory base in Munster for the first time.
 
-## The eighth acquisition
+## A growing group
 
-This acquisition marks the eighth completed by HLB Ireland since beginning its acquisitions programme in 2017. Each acquisition has been selected on the basis of cultural alignment, complementary expertise, and shared commitment to the owner-managed business sector.
+The acquisition is the latest in a series of strategic transactions completed by HLB Ireland. Each has been selected on the basis of cultural alignment, complementary expertise, and shared commitment to the owner-managed business sector.
 
 > "We are not acquiring for scale alone. Every firm that has joined us has brought something that made us better. Doyle & Partners continues that pattern."
 >

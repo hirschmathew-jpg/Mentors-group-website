@@ -24,7 +24,7 @@ While adoption of AI tools is accelerating, there is a significant gap between t
 
 > "The speed of AI adoption has outpaced governance. That creates real risk, particularly around data handling and client confidentiality. Businesses need a policy framework before they add more tools."
 >
-> — Eoin Kiersey, Chief Technology Officer, Mentora Group
+> — Eoin Kiersey, Chief Technology Officer, FutureRange
 
 ## Cybersecurity: awareness vs action
 
