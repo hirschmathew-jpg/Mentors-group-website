@@ -41,8 +41,11 @@ const areas = [
         <div class="info-block">
           <h3 class="mini">Head office</h3>
           <address class="address">
-            The Courtyard, Carmanhall Road,<br />
-            Sandyford, Dublin 18, D18 NW62
+            The Courtyard<br />
+            Carmanhall Road<br />
+            Sandyford<br />
+            Dublin 18<br />
+            D18 NW62
           </address>
         </div>
 
@@ -148,18 +151,25 @@ const areas = [
   }
   .places {
     list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
+    display: grid;
+    gap: 6px;
     padding: 0;
   }
   .places li {
-    background: #fff;
-    border: 1px solid var(--line);
     color: var(--head);
     font-weight: 600;
-    font-size: 0.88rem;
-    padding: 0.35rem 0.85rem;
+    padding-left: 18px;
+    position: relative;
+  }
+  .places li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.62em;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--gold);
   }
   .direct {
     display: grid;
