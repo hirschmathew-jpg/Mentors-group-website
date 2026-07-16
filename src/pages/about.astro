@@ -13,12 +13,20 @@ const people = [
     role: 'Group Managing Partner',
     email: 'mbutler@hlb.ie',
     photo: markButler,
+    bio: [
+      'A member of the Institute of Chartered Certified Accountants and Institute of Certified Public Accountants in Ireland, Mark is a registered auditor in both Ireland and the UK. Mark is our Managing Partner focusing on the implementation of the firm’s growth objective and leads our consulting services.',
+      'Mark is an expert in strategic business planning with over twenty years’ experience advising domestic and international businesses. He focuses on a number of sectors including veterinary practice, food, hotel & leisure and property investment.',
+    ],
   },
   {
     name: 'Ciara McFadden',
     role: 'Chief Financial Officer',
     email: 'cmcfadden@hlb.ie',
     photo: ciaraMcFadden,
+    bio: [
+      'A Fellow of the Institute of Chartered Accountants, Ciara is an experienced finance leader with a background in scaling technology, fast-moving consumer goods and high-growth decarbonisation sectors.',
+      'Having trained with a Big 4 firm, Ciara has held leadership roles across the full finance function, building and leading high-performing teams, driving finance transformation initiatives and supporting organisations through significant growth and operational change.',
+    ],
   },
 ];
 
@@ -134,6 +142,11 @@ const timeline = [
             <h3>{p.name}</h3>
             <p class="role">{p.role}</p>
             <a class="email" href={`mailto:${p.email}`}>{p.email}</a>
+            <div class="bio" aria-hidden="false">
+              <h3>{p.name}</h3>
+              <p class="role">{p.role}</p>
+              {p.bio.map((para) => <p class="bio-text">{para}</p>)}
+            </div>
           </article>
         ))}
       </div>
@@ -216,7 +229,32 @@ const timeline = [
   .person {
     background: #fff;
     border: 1px solid var(--line);
+    position: relative;
+    overflow: hidden;
   }
+  /* bio slides up over the card on hover / keyboard focus */
+  .bio {
+    position: absolute;
+    inset: 0;
+    background: #fff;
+    padding: 20px 22px;
+    overflow-y: auto;
+    transform: translateY(100%);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .bio { transition: transform 0.45s ease; }
+  }
+  .person:hover .bio,
+  .person:focus-within .bio {
+    transform: translateY(0);
+  }
+  .bio h3 { margin: 0 0 2px; font-size: 1.2rem; font-weight: 560; }
+  .bio .role { margin: 0 0 14px; }
+  .bio-text {
+    font-size: 0.85rem;
+    line-height: 1.55;
+  }
+  .bio-text + .bio-text { margin-top: 10px; }
   .photo { aspect-ratio: 4 / 5; overflow: hidden; }
   .photo :global(img) {
     width: 100%;
