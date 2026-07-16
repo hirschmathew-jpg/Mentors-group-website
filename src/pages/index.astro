@@ -1,4 +1,5 @@
 ---
+import { href } from '../lib/paths';
 import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
@@ -32,8 +33,8 @@ const posts = (await getCollection('insights'))
           technology, working side by side for ambitious Irish businesses.
         </p>
         <div class="hero-actions">
-          <a class="btn btn-gold" href="/contact/">Talk to us <span aria-hidden="true">→</span></a>
-          <a class="btn btn-ghost" href="/about/">About the group</a>
+          <a class="btn btn-gold" href={href('/contact/')}>Talk to us <span aria-hidden="true">→</span></a>
+          <a class="btn btn-ghost" href={href('/about/')}>About the group</a>
         </div>
       </div>
       <div class="hero-media">
@@ -203,7 +204,7 @@ const posts = (await getCollection('insights'))
           <p class="eyebrow">Insights</p>
           <h2 class="section-title">Latest from the group</h2>
         </div>
-        <a class="all-link" href="/insights/">All insights</a>
+        <a class="all-link" href={href('/insights/')}>All insights</a>
       </div>
       <div class="posts">
         {posts.map((post) => <PostCard post={post} />)}

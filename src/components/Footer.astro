@@ -1,4 +1,5 @@
 ---
+import { href } from '../lib/paths';
 import logoOnDark from '../assets/logo-on-dark.svg?raw';
 const year = new Date().getFullYear();
 ---
@@ -7,7 +8,7 @@ const year = new Date().getFullYear();
   <div class="container">
     <div class="grid">
       <div>
-        <a class="logo" href="/" aria-label="Mentora Group — home" set:html={logoOnDark} />
+        <a class="logo" href={href('/')} aria-label="Mentora Group — home" set:html={logoOnDark} />
         <p class="blurb">
           The Mentora Group is the parent of HLB Ireland and FutureRange —
           advisory, accounting, tax, technology and cybersecurity for ambitious
@@ -16,9 +17,9 @@ const year = new Date().getFullYear();
       </div>
       <div class="col">
         <h4>Mentora Group</h4>
-        <a href="/about/">About</a>
-        <a href="/insights/">Insights</a>
-        <a href="/contact/">Contact</a>
+        <a href={href('/about/')}>About</a>
+        <a href={href('/insights/')}>Insights</a>
+        <a href={href('/contact/')}>Contact</a>
       </div>
       <div class="col">
         <h4>Our firms</h4>
@@ -29,9 +30,9 @@ const year = new Date().getFullYear();
     <div class="base">
       <span>© {year} Mentora Group. All rights reserved.</span>
       <span class="legal">
-        <a href="/privacy-policy/">Privacy</a>
+        <a href={href('/privacy-policy/')}>Privacy</a>
         <span aria-hidden="true">·</span>
-        <a href="/terms/">Terms</a>
+        <a href={href('/terms/')}>Terms</a>
       </span>
     </div>
   </div>

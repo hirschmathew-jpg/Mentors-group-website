@@ -1,16 +1,17 @@
 ---
+import { href } from '../lib/paths';
 import logoOnDark from '../assets/logo-on-dark.svg?raw';
 
 const links = [
-  { href: '/about/', label: 'About' },
-  { href: '/insights/', label: 'Insights' },
+  { href: href('/about/'), label: 'About' },
+  { href: href('/insights/'), label: 'Insights' },
 ];
 const current = Astro.url.pathname;
 ---
 
 <header class="site-header">
   <div class="container inner">
-    <a class="logo" href="/" aria-label="Mentora Group — home" set:html={logoOnDark} />
+    <a class="logo" href={href('/')} aria-label="Mentora Group — home" set:html={logoOnDark} />
     <nav aria-label="Main">
       <button id="menu-toggle" aria-expanded="false" aria-controls="site-nav">
         Menu
@@ -21,7 +22,7 @@ const current = Astro.url.pathname;
             <a href={l.href} aria-current={current.startsWith(l.href) ? 'page' : undefined}>{l.label}</a>
           </li>
         ))}
-        <li><a class="cta" href="/contact/">Contact</a></li>
+        <li><a class="cta" href={href('/contact/')}>Contact</a></li>
       </ul>
     </nav>
   </div>

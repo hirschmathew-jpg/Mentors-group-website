@@ -1,4 +1,5 @@
 ---
+import { href } from '../lib/paths';
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
@@ -15,8 +16,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         homepage, or get in touch and we'll point you the right way.
       </p>
       <div class="actions">
-        <a class="btn btn-gold" href="/">Back to home</a>
-        <a class="btn btn-ghost" href="/contact/">Contact us</a>
+        <a class="btn btn-gold" href={href('/')}>Back to home</a>
+        <a class="btn btn-ghost" href={href('/contact/')}>Contact us</a>
       </div>
     </div>
   </section>

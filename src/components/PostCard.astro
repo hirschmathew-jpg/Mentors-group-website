@@ -1,4 +1,5 @@
 ---
+import { href } from '../lib/paths';
 import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 
@@ -9,7 +10,7 @@ const { post } = Astro.props;
 const { title, description, category, image, imageAlt } = post.data;
 ---
 
-<a class="post" href={`/insights/${post.id}/`} data-reveal>
+<a class="post" href={href(`/insights/${post.id}/`)} data-reveal>
   <div class="thumb">
     <Image src={image} alt={imageAlt} widths={[480, 800]} sizes="(min-width: 800px) 33vw, 100vw" />
   </div>

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.mentoragroup.ie/sitemap-index.xml
+Sitemap: https://hirschmathew-jpg.github.io/Mentors-group-website/sitemap-index.xml

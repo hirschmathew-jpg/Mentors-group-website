@@ -1,4 +1,5 @@
 ---
+import { href } from '../lib/paths';
 interface Props {
   title?: string;
   body?: string;
@@ -17,7 +18,7 @@ const {
       <p class="body">{body}</p>
     </div>
     <div class="actions" data-reveal>
-      <a class="btn btn-gold" href="/contact/">Get in touch <span aria-hidden="true">→</span></a>
+      <a class="btn btn-gold" href={href('/contact/')}>Get in touch <span aria-hidden="true">→</span></a>
     </div>
   </div>
 </section>
