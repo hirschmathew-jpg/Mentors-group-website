@@ -42,19 +42,23 @@ const services = [
         </div>
       </div>
       <div class="hero-media">
-        <Placeholder label="Insert image" ratio="4 / 3" dark />
+        <Placeholder name="home-hero" label="Insert image" ratio="4 / 3" dark />
       </div>
     </div>
   </section>
 
-  <!-- Service strip -->
-  <div class="strip">
-    <div class="container strip-inner" aria-label="Group services">
-      {services.map((s, i) => (
-        <>
-          {i > 0 && <span class="diamond" aria-hidden="true">◆</span>}
-          <span>{s}</span>
-        </>
+  <!-- Service strip (marquee) -->
+  <div class="strip" aria-label="Group services">
+    <div class="marquee">
+      {[0, 1].map((copy) => (
+        <div class="marquee-track" aria-hidden={copy === 1 ? 'true' : undefined}>
+          {services.map((s) => (
+            <>
+              <span>{s}</span>
+              <span class="diamond" aria-hidden="true">◆</span>
+            </>
+          ))}
+        </div>
       ))}
     </div>
   </div>
@@ -81,7 +85,7 @@ const services = [
         </div>
       </div>
       <div class="intro-media" data-reveal>
-        <Placeholder label="Insert image" ratio="4 / 3" />
+        <Placeholder name="home-intro" label="Insert image" ratio="4 / 3" />
       </div>
     </div>
   </section>
@@ -101,7 +105,7 @@ const services = [
       </div>
       <div class="firm-cards">
         <a class="firm" href="https://www.hlb.ie" rel="noopener" data-reveal>
-          <Placeholder label="Insert image" ratio="16 / 9" />
+          <Placeholder name="firm-hlb" label="Insert image" ratio="16 / 9" />
           <span class="firm-body">
             <span class="tag">Audit, Accounting &amp; Tax</span>
             <span class="name">HLB Ireland <span class="go" aria-hidden="true">→</span></span>
@@ -109,7 +113,7 @@ const services = [
           </span>
         </a>
         <a class="firm" href="https://www.futurerange.ie" rel="noopener" data-reveal>
-          <Placeholder label="Insert image" ratio="16 / 9" />
+          <Placeholder name="firm-futurerange" label="Insert image" ratio="16 / 9" />
           <span class="firm-body">
             <span class="tag">Managed IT, Security &amp; Digital</span>
             <span class="name">FutureRange <span class="go" aria-hidden="true">→</span></span>
@@ -135,8 +139,8 @@ const services = [
       <dl class="stats" data-reveal>
         <div class="stat"><dt>HLB Ireland founded</dt><dd>1976</dd></div>
         <div class="stat"><dt>FutureRange established</dt><dd>1995</dd></div>
-        <div class="stat"><dt>Acquisitions in the past seven years</dt><dd>12</dd></div>
-        <div class="stat"><dt>Professionals across the group</dt><dd>180+</dd></div>
+        <div class="stat"><dt>Acquisitions in the past seven years</dt><dd data-countup="12">12</dd></div>
+        <div class="stat"><dt>Professionals across the group</dt><dd data-countup="180" data-suffix="+">180+</dd></div>
       </dl>
     </div>
   </section>
@@ -226,20 +230,36 @@ const services = [
   .strip {
     background: var(--ink-deep);
     border-top: 1px solid rgba(255, 255, 255, 0.08);
+    overflow: hidden;
   }
-  .strip-inner {
+  .marquee {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    width: max-content;
+  }
+  .marquee-track {
+    display: flex;
     align-items: center;
-    gap: 12px 18px;
-    padding-top: 18px;
-    padding-bottom: 18px;
+    gap: 34px;
+    padding: 18px 17px;
     font-size: 0.76rem;
     font-weight: 700;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: #a3b7bd;
+    white-space: nowrap;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .marquee { animation: ticker 36s linear infinite; }
+    .strip:hover .marquee { animation-play-state: paused; }
+  }
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee { flex-wrap: wrap; width: auto; }
+    .marquee-track[aria-hidden='true'] { display: none; }
+    .marquee-track { flex-wrap: wrap; }
   }
   .diamond { color: var(--gold); font-size: 0.55rem; }
 
@@ -275,9 +295,12 @@ const services = [
     background: #fff;
     border: 1px solid var(--line);
     border-top: 4px solid var(--gold);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
     color: inherit;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
+  .firm :global(.ph), .firm :global(.slot) { border-radius: 0; border-left: none; border-right: none; border-top: none; }
   @media (prefers-reduced-motion: no-preference) {
     .firm:hover {
       transform: translateY(-4px);
@@ -369,6 +392,8 @@ const services = [
     gap: 2px;
     background: var(--line);
     border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
   }
   .pillar {
     background: #fff;
@@ -431,3 +456,32 @@ const services = [
     .strip-inner { justify-content: flex-start; }
   }
 </style>
+
+<script>
+  // Count-up for stats, triggered on scroll into view; skipped for reduced motion.
+  const els = document.querySelectorAll('[data-countup]');
+  if (els.length) {
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reduced) {
+      const io = new IntersectionObserver((entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          io.unobserve(entry.target);
+          const el = entry.target as HTMLElement;
+          const target = parseInt(el.dataset.countup || '0', 10);
+          const suffix = el.dataset.suffix || '';
+          const start = performance.now();
+          const dur = 1400;
+          const tick = (now: number) => {
+            const p = Math.min((now - start) / dur, 1);
+            const eased = 1 - Math.pow(1 - p, 3);
+            el.textContent = Math.round(eased * target) + suffix;
+            if (p < 1) requestAnimationFrame(tick);
+          };
+          requestAnimationFrame(tick);
+        }
+      }, { threshold: 0.4 });
+      els.forEach((el) => io.observe(el));
+    }
+  }
+</script>

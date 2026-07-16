@@ -12,7 +12,7 @@ const { title, description, category } = post.data;
 
 <a class="post" href={href(`/insights/${post.id}/`)} data-reveal>
   <div class="thumb">
-    <Placeholder label="Insert image" ratio="16 / 10" />
+    <Placeholder name={`insight-${post.id}`} label="Insert image" ratio="16 / 10" />
   </div>
   <div class="meta">
     <span class="cat">{category}</span>
@@ -26,9 +26,12 @@ const { title, description, category } = post.data;
     display: block;
     background: #fff;
     border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
     color: inherit;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
+  .post :global(.ph), .post :global(.slot) { border-radius: 0; border-left: none; border-right: none; border-top: none; }
   @media (prefers-reduced-motion: no-preference) {
     .post:hover {
       transform: translateY(-4px);

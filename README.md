@@ -30,6 +30,26 @@ public/
   favicon.svg  og.png  robots.txt
 ```
 
+## Adding photos
+
+Every image slot on the site shows an "insert image" box until you add a
+photo. To fill a slot, drop an image into `src/assets/uploads/` named after
+the slot and push — the site picks it up automatically on the next deploy.
+
+| Slot (filename, + .jpg/.png/.webp) | Where it appears |
+| --- | --- |
+| `home-hero` | Homepage hero |
+| `home-intro` | Homepage "Who we are" |
+| `firm-hlb` | HLB Ireland card |
+| `firm-futurerange` | FutureRange card |
+| `about-hero` | About page hero |
+| `about-story` | About "Why Mentora exists" |
+| `insight-<article-slug>` | An article's card and header image |
+
+Example: `src/assets/uploads/home-hero.jpg` fills the homepage hero. Images
+are optimised and resized automatically at build time — upload the largest
+version you have.
+
 ## Editing content
 
 - **Add an Insights article**: create a new `.md` file in `src/content/insights/`

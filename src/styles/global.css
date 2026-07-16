@@ -38,6 +38,10 @@
   --text-on-dark: #c3d2d7;
   --muted-on-dark: #aec0c6;
 
+  --radius-sm: 10px;
+  --radius: 14px;
+  --radius-lg: 18px;
+
   --container: 1180px;
 
   --font-display: 'Manrope', system-ui, -apple-system, sans-serif;
@@ -111,10 +115,14 @@ h1, h2, h3, h4 {
   font-size: 0.85rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  padding: 1.05rem 1.9rem;
-  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  padding: 1.05rem 2rem;
+  border-radius: 999px;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
   cursor: pointer;
   border: none;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(26, 41, 48, 0.18); }
 }
 .btn [aria-hidden] { transition: transform 0.2s ease; }
 .btn:hover [aria-hidden] { transform: translateX(4px); }
