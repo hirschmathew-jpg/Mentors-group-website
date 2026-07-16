@@ -7,11 +7,7 @@ interface Props {
   post: CollectionEntry<'insights'>;
 }
 const { post } = Astro.props;
-const { title, description, category } = post.data;
-const catClass =
-  { News: 'cat-gold', Report: 'cat-teal', Cybersecurity: 'cat-violet', Advisory: 'cat-gold', Technology: 'cat-teal' }[
-    category
-  ] ?? 'cat-gold';
+const { title, description } = post.data;
 ---
 
 <a class="post" href={href(`/insights/${post.id}/`)} data-reveal>
@@ -19,7 +15,6 @@ const catClass =
     <Placeholder name={`insight-${post.id}`} label="Insert image" ratio="16 / 10" />
   </div>
   <div class="meta">
-    <span class={`cat ${catClass}`}>{category}</span>
     <h3>{title}</h3>
     <p>{description}</p>
   </div>
@@ -43,21 +38,9 @@ const catClass =
     }
   }
   .meta { padding: 26px 26px 30px; }
-  .cat {
-    display: inline-block;
-    text-transform: uppercase;
-    font-size: 0.68rem;
-    font-weight: 800;
-    letter-spacing: 0.14em;
-    padding: 0.32rem 0.75rem;
-    border-radius: 999px;
-  }
-  .cat-gold { color: var(--gold-deep); background: rgba(234, 182, 51, 0.16); }
-  .cat-teal { color: var(--teal-ink); background: rgba(59, 191, 208, 0.16); }
-  .cat-violet { color: var(--violet-ink); background: rgba(143, 127, 242, 0.16); }
   h3 {
     font-size: 1.18rem;
-    margin: 10px 0;
+    margin: 0 0 10px;
     line-height: 1.25;
   }
   p { font-size: 0.92rem; }
