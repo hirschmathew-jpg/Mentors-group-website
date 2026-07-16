@@ -140,12 +140,14 @@ const services = [
     <div class="container">
       <div class="legacy-head" data-reveal>
         <p class="eyebrow">The group in numbers</p>
-        <h2 class="section-title">Established expertise, held for the long term</h2>
-        <p class="legacy-sub">
-          Mentora exists to give both firms a permanent home — with the backing
-          to invest, acquire and grow, while every client keeps the team they
-          trust.
-        </p>
+        <figure class="legacy-quote">
+          <blockquote>
+            “The name Mentora is rooted in the word <em>mentor</em> — the
+            trusted guide whose value is measured in the quality of counsel
+            given over time.”
+          </blockquote>
+          <figcaption>Mark Butler — Group Managing Partner</figcaption>
+        </figure>
       </div>
       <dl class="stats" data-reveal>
         <div class="stat"><dt>HLB Ireland founded</dt><dd data-countup="1976">1976</dd></div>
@@ -524,9 +526,28 @@ const services = [
     pointer-events: none;
   }
   .legacy .container { position: relative; }
-  .legacy-head { max-width: 680px; margin-bottom: 64px; }
-  .legacy-head h2 { margin-bottom: 16px; }
-  .legacy-sub { color: var(--muted-on-dark); }
+  .legacy-head { max-width: 760px; margin-bottom: 64px; }
+  .legacy-quote blockquote {
+    font-family: var(--font-serif);
+    font-weight: 460;
+    font-size: clamp(1.5rem, 2.9vw, 2.3rem);
+    line-height: 1.4;
+    color: #f0f4f5;
+    letter-spacing: 0;
+    max-width: 28ch;
+  }
+  .legacy-quote em {
+    font-style: italic;
+    color: var(--gold);
+  }
+  .legacy-quote figcaption {
+    margin-top: 16px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted-on-dark);
+  }
   .stats {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
