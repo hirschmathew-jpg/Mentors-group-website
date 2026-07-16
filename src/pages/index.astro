@@ -20,13 +20,13 @@ const posts = (await getCollection('insights'))
   .slice(0, 3);
 
 const services = [
-  'Audit & Assurance',
-  'Taxation',
-  'Business Advisory',
-  'Corporate Finance',
-  'Cyber Security',
-  'Managed IT',
-  'Cloud, AI & Transformation',
+  { label: 'Audit & Assurance', url: 'https://www.hlb.ie/services/audit-assurance/' },
+  { label: 'Taxation', url: 'https://www.hlb.ie/services/taxation/' },
+  { label: 'Business Advisory', url: 'https://www.hlb.ie/services/business-advisory/' },
+  { label: 'Corporate Finance', url: 'https://www.hlb.ie/services/corporate-finance-2/' },
+  { label: 'Cyber Security', url: 'https://futurerange.ie/services/security/' },
+  { label: 'Managed IT', url: 'https://futurerange.ie/services/managed-services/' },
+  { label: 'Cloud, AI & Transformation', url: 'https://futurerange.ie/services/future-innovation/' },
 ];
 ---
 
@@ -83,7 +83,7 @@ const services = [
         <div class="marquee-track" aria-hidden={copy === 1 ? 'true' : undefined}>
           {services.map((s) => (
             <>
-              <span>{s}</span>
+              <a href={s.url} target="_blank" rel="noopener noreferrer" tabindex={copy === 1 ? -1 : 0}>{s.label}</a>
               <span class="diamond" aria-hidden="true">◆</span>
             </>
           ))}
@@ -387,6 +387,8 @@ const services = [
   }
   @media (prefers-reduced-motion: no-preference) {
     .marquee { animation: ticker 36s linear infinite; }
+    .strip:hover .marquee,
+    .strip:focus-within .marquee { animation-play-state: paused; }
   }
   @keyframes ticker {
     from { transform: translateX(0); }
@@ -399,6 +401,15 @@ const services = [
   }
   .diamond { color: var(--gold); font-size: 0.55rem; }
   .marquee-track .diamond:nth-of-type(even) { color: var(--teal-bright); }
+  .marquee-track a {
+    color: #a3b7bd;
+    text-underline-offset: 4px;
+  }
+  .marquee-track a:hover {
+    color: #fff;
+    text-decoration: underline;
+    text-decoration-color: var(--gold);
+  }
 
   .intro-grid {
     display: grid;
