@@ -164,35 +164,36 @@ const posts = (await getCollection('insights'))
     <div class="container">
       <div class="approach-head" data-reveal>
         <p class="eyebrow">How we work</p>
-        <h2 class="section-title">Clear, practical guidance with real commercial impact</h2>
-        <p>Our approach is rooted in understanding your objectives and challenges first.</p>
+        <h2 class="section-title">What the group gets you in practice</h2>
       </div>
       <div class="pillars" data-reveal>
         <div class="pillar">
           <div class="glyph" aria-hidden="true"></div>
-          <h3>Deep insight, built on relationships</h3>
+          <h3>Finance and IT at one table</h3>
           <p>
-            We take the time to understand your business — its ambitions,
-            challenges and context — so advice is informed, relevant and
-            grounded in long-term partnership.
+            The same group holds your accountants and your IT provider. When a
+            question spans both — systems for a new entity, security around
+            financial data, technology due diligence on a deal — HLB Ireland
+            and FutureRange work it together, and you deal with one group.
           </p>
         </div>
         <div class="pillar">
           <div class="glyph" aria-hidden="true"></div>
-          <h3>Clarity where it matters most</h3>
+          <h3>Partner-led, not passed down</h3>
           <p>
-            Drawing on expert financial, advisory and technology capability, we
-            provide practical guidance that helps you make confident decisions
-            at every stage of growth.
+            Every HLB Ireland assignment is led by a partner — you deal
+            directly with the person responsible for your work, with 180
+            professionals behind them when the job needs scale.
           </p>
         </div>
         <div class="pillar">
           <div class="glyph" aria-hidden="true"></div>
-          <h3>Execution through capability</h3>
+          <h3>A home for good practices</h3>
           <p>
-            From robust financial foundations to secure, future-ready
-            technology, we implement the solutions that move your business
-            forward — turning insight into action.
+            Twelve practices have joined the group in seven years, and we
+            remain open to more where the fit is right. Planning succession or
+            the sale of your practice? <a href={href('/contact/')}>Talk to us
+            in confidence</a>.
           </p>
         </div>
       </div>
@@ -438,6 +439,12 @@ const posts = (await getCollection('insights'))
   }
   .pillar h3 { font-size: 1.25rem; margin-bottom: 12px; font-weight: 560; }
   .pillar p { font-size: 0.95rem; }
+  .pillar a {
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .pillar a:hover { color: var(--gold-deep); }
 
   /* insights */
   .insights { padding: 0 0 110px; }
