@@ -151,7 +151,7 @@ const posts = (await getCollection('insights'))
   </section>
 
   <!-- Insights -->
-  <section class="insights band on-dark">
+  <section class="insights">
     <div class="container">
       <div class="insights-head" data-reveal>
         <div>
@@ -542,8 +542,8 @@ const posts = (await getCollection('insights'))
   }
   .pillar a:hover { color: var(--gold-deep); }
 
-  /* insights (darkest slate band) */
-  .insights { padding: 100px 0 110px; background: var(--ink-deep); }
+  /* insights — base page blue, same as the firms section */
+  .insights { padding: 100px 0 110px; }
   .insights-head {
     display: flex;
     justify-content: space-between;
