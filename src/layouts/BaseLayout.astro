@@ -127,10 +127,61 @@ const ogImage = new URL(href('/og.png'), Astro.site);
         document.addEventListener('astro:page-load', onScroll);
       }
 
+      const finePointer = () => window.matchMedia('(pointer: fine)').matches;
+
+      function initMicro() {
+        if (reduced() || !finePointer()) return;
+        // cursor-following glow on dark bands
+        document.querySelectorAll<HTMLElement>('.hero, .legacy, .cta, .page-hero, .spot').forEach((band) => {
+          if (band.dataset.glow) return;
+          band.dataset.glow = 'true';
+          const glow = document.createElement('i');
+          glow.className = 'cursor-glow';
+          glow.setAttribute('aria-hidden', 'true');
+          band.appendChild(glow);
+          band.addEventListener('pointermove', (e) => {
+            const r = band.getBoundingClientRect();
+            glow.style.setProperty('--mx', `${e.clientX - r.left}px`);
+            glow.style.setProperty('--my', `${e.clientY - r.top}px`);
+          });
+        });
+        // magnetic gold buttons
+        document.querySelectorAll<HTMLElement>('.btn-gold').forEach((btn) => {
+          if (btn.dataset.magnet) return;
+          btn.dataset.magnet = 'true';
+          btn.addEventListener('pointermove', (e) => {
+            const r = btn.getBoundingClientRect();
+            const dx = (e.clientX - r.left - r.width / 2) / r.width;
+            const dy = (e.clientY - r.top - r.height / 2) / r.height;
+            btn.style.translate = `${dx * 8}px ${dy * 6}px`;
+          });
+          btn.addEventListener('pointerleave', () => (btn.style.translate = ''));
+        });
+        // orbit tilt
+        const orbit = document.querySelector<HTMLElement>('.orbit');
+        const hero = document.querySelector<HTMLElement>('.hero');
+        if (orbit && hero && !orbit.dataset.tilt) {
+          orbit.dataset.tilt = 'true';
+          hero.addEventListener('pointermove', (e) => {
+            const r = hero.getBoundingClientRect();
+            const dx = (e.clientX - r.left) / r.width - 0.5;
+            const dy = (e.clientY - r.top) / r.height - 0.5;
+            orbit.style.transform = `perspective(900px) rotateY(${dx * 7}deg) rotateX(${dy * -7}deg)`;
+          });
+          hero.addEventListener('pointerleave', () => (orbit.style.transform = ''));
+        }
+      }
+
       document.addEventListener('astro:page-load', () => {
         initReveals();
         initCountups();
         initScrollFx();
+        initMicro();
+        // ambient videos obey reduced-motion
+        document.querySelectorAll<HTMLVideoElement>('video[data-ambient]').forEach((v) => {
+          if (reduced()) { v.pause(); v.style.display = 'none'; }
+          else v.play().catch(() => {});
+        });
       });
     </script>
 

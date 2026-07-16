@@ -5,6 +5,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Cta from '../components/Cta.astro';
 import PostCard from '../components/PostCard.astro';
 import Placeholder from '../components/Placeholder.astro';
+import Spotlight from '../components/Spotlight.astro';
+
+// Drop hero-video.mp4 into src/assets/uploads/ for a full-bleed hero video.
+const videos = import.meta.glob<string>('../assets/uploads/hero-video.mp4', {
+  eager: true,
+  query: '?url',
+  import: 'default',
+});
+const heroVideo = Object.values(videos)[0];
 
 const posts = (await getCollection('insights'))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
@@ -27,10 +36,20 @@ const services = [
 >
   <!-- Hero -->
   <section class="hero band on-dark">
+    {heroVideo && <video class="hero-video" data-ambient src={heroVideo} autoplay muted loop playsinline preload="metadata" aria-hidden="true"></video>}
     <div class="container hero-grid">
       <div class="hero-copy">
         <p class="eyebrow">The Mentora Group</p>
-        <h1>Audit<span class="dot">.</span> Advisory<span class="dot">.</span> Technology<span class="dot">.</span><br />One group<span class="dot">.</span></h1>
+        <h1>
+          <span class="line"><span class="inner">
+            <span class="rotator" aria-label="Audit, Advisory, Technology">
+              <span>Audit<span class="dot">.</span></span>
+              <span aria-hidden="true">Advisory<span class="dot">.</span></span>
+              <span aria-hidden="true">Technology<span class="dot">.</span></span>
+            </span>
+          </span></span>
+          <span class="line"><span class="inner sheen">One group<span class="dot">.</span></span></span>
+        </h1>
         <p class="lede">
           Mentora Group is the holding company of HLB Ireland and FutureRange
           — 180+ professionals across audit, accounting, tax and IT, for
@@ -76,6 +95,8 @@ const services = [
     </div>
   </div>
 
+  <Spotlight />
+
   <!-- Intro -->
   <section class="intro">
     <div class="container intro-grid">
@@ -106,14 +127,14 @@ const services = [
   <!-- Firms -->
   <section class="firms">
     <div class="container">
-      <div class="firms-head" data-reveal>
-        <div>
-          <p class="eyebrow">Our firms</p>
-          <h2 class="section-title">Two specialisms, one group</h2>
-        </div>
+      <div class="firms-grid">
+      <div class="firms-rail" data-reveal>
+        <p class="eyebrow">Our firms</p>
+        <h2 class="section-title title-accent">Two specialisms, one group</h2>
         <p>
           Audit, accounting, tax, cyber security, managed IT and digital
-          transformation — a comprehensive offering across the group.
+          transformation — a comprehensive offering across the group. Keep
+          scrolling to meet both firms.
         </p>
       </div>
       <div class="firm-cards">
@@ -133,6 +154,7 @@ const services = [
             <span class="desc">Cyber security &amp; managed operations, modern workplace, and cloud, AI &amp; transformation — since 1995.</span>
           </span>
         </a>
+      </div>
       </div>
     </div>
   </section>
@@ -246,6 +268,62 @@ const services = [
     pointer-events: none;
   }
   .hero-grid { position: relative; z-index: 1; }
+  .hero-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.26;
+    z-index: 0;
+    pointer-events: none;
+  }
+  /* kinetic headline */
+  h1 .line { display: block; overflow: hidden; }
+  h1 .inner { display: inline-block; }
+  .rotator {
+    display: inline-grid;
+    text-align: left;
+    vertical-align: bottom;
+  }
+  .rotator > span {
+    grid-area: 1 / 1;
+    display: inline-block;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .rotator > span {
+      opacity: 0;
+      transform: translateY(105%);
+      animation: word-cycle 10.5s cubic-bezier(0.2, 0.7, 0.2, 1) infinite;
+    }
+    .rotator > span:nth-child(2) { animation-delay: 3.5s; }
+    .rotator > span:nth-child(3) { animation-delay: 7s; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .rotator > span { visibility: hidden; }
+    .rotator > span:first-child { visibility: visible; }
+  }
+  @keyframes word-cycle {
+    0% { opacity: 0; transform: translateY(105%); }
+    4%, 30% { opacity: 1; transform: translateY(0); }
+    34%, 100% { opacity: 0; transform: translateY(-105%); }
+  }
+  /* gold sheen sweep on the static line */
+  @media (prefers-reduced-motion: no-preference) {
+    .sheen {
+      background: linear-gradient(110deg, #f6f5fa 42%, #f2c95e 50%, #f6f5fa 58%);
+      background-size: 220% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: sheen 7s ease-in-out infinite;
+    }
+    .sheen .dot { -webkit-text-fill-color: var(--gold); }
+  }
+  @keyframes sheen {
+    0%, 55% { background-position: 120% 0; }
+    85%, 100% { background-position: -60% 0; }
+  }
   /* entrance sequence */
   @media (prefers-reduced-motion: no-preference) {
     .hero-copy > *, .hero-media {
@@ -419,21 +497,26 @@ const services = [
   .intro .body p { max-width: 62ch; }
   .intro .body p + p { margin-top: 18px; }
 
-  /* firms */
+  /* firms — pinned rail + stacking cards */
   .firms { padding: 40px 0 110px; }
-  .firms-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    gap: 40px;
-    margin-bottom: 44px;
+  .firms-grid {
+    display: grid;
+    grid-template-columns: 0.85fr 1.15fr;
+    gap: 64px;
+    align-items: start;
   }
-  .firms-head p { max-width: 42ch; }
+  .firms-rail {
+    position: sticky;
+    top: 130px;
+  }
+  .firms-rail h2 { margin-bottom: 18px; }
+  .firms-rail p { max-width: 40ch; }
   .firm-cards {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 28px;
+    gap: 34px;
   }
+  .firm-cards > .firm:nth-child(1) { position: sticky; top: 110px; }
+  .firm-cards > .firm:nth-child(2) { position: sticky; top: 150px; }
   .firm {
     display: block;
     background: #fff;
@@ -612,11 +695,24 @@ const services = [
   }
 
   @media (max-width: 960px) {
-    .hero-grid, .intro-grid, .firm-cards { grid-template-columns: 1fr; }
+    .hero-grid, .intro-grid { grid-template-columns: 1fr; }
+    .firms-grid { grid-template-columns: 1fr; gap: 36px; }
+    .firms-rail { position: static; }
+    .firm-cards > .firm:nth-child(1),
+    .firm-cards > .firm:nth-child(2) { position: static; }
     .hero-grid { padding-top: 72px; padding-bottom: 80px; }
     .stats { grid-template-columns: 1fr 1fr; }
     .pillars { grid-template-columns: 1fr; }
-    .posts { grid-template-columns: 1fr; }
+    .posts {
+      grid-template-columns: none;
+      grid-auto-flow: column;
+      grid-auto-columns: 82%;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 12px;
+      -webkit-overflow-scrolling: touch;
+    }
+    .posts > :global(*) { scroll-snap-align: start; }
     .firms-head { flex-direction: column; align-items: flex-start; }
     .strip-inner { justify-content: flex-start; }
   }

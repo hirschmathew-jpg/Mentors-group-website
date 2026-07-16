@@ -1,0 +1,231 @@
+---
+// Auto-advancing full-width story carousel (Deloitte/EY pattern).
+// Pauses on hover/focus, swipeable, arrows always work; auto-advance is
+// disabled under prefers-reduced-motion.
+import { href } from '../lib/paths';
+import Placeholder from './Placeholder.astro';
+
+const slides = [
+  {
+    tag: 'Backing',
+    tagClass: 'gold',
+    title: 'Cardinal Capital backs the group',
+    text: 'A minority investment in 2025 gave the group the firepower for six acquisitions in fourteen months — and counting.',
+    link: href('/join-the-group/'),
+    linkText: 'What that means for your practice',
+    slot: 'spotlight-1',
+  },
+  {
+    tag: 'News',
+    tagClass: 'teal',
+    title: "Leahy O'Riordan joins HLB Ireland",
+    text: 'The Dublin practice became the twelfth acquisition in seven years, bringing the group to 180 professionals.',
+    link: href('/insights/hlb-ireland-acquires-leahy-oriordan-chartered-accountants/'),
+    linkText: 'Read the announcement',
+    slot: 'spotlight-2',
+  },
+  {
+    tag: 'Reach',
+    tagClass: 'violet',
+    title: 'FutureRange goes all-island',
+    text: 'Garry IT, DigitalWell, Echo IT and EOS Systems — four deals that took the IT firm to every corner of Ireland.',
+    link: href('/about/'),
+    linkText: 'The group story',
+    slot: 'spotlight-3',
+  },
+];
+---
+
+<section class="spotlight" data-reveal>
+  <div class="container">
+    <div class="spot" data-spotlight aria-roledescription="carousel" aria-label="Group highlights">
+      <div class="spot-track">
+        {slides.map((s) => (
+          <article class="spot-slide">
+            <div class="spot-copy">
+              <span class={`spot-tag ${s.tagClass}`}>{s.tag}</span>
+              <h2>{s.title}</h2>
+              <p>{s.text}</p>
+              <a class="spot-link" href={s.link}>{s.linkText} <span aria-hidden="true">→</span></a>
+            </div>
+            <div class="spot-media">
+              <Placeholder name={s.slot} label="Insert image" ratio="16 / 11" dark />
+            </div>
+          </article>
+        ))}
+      </div>
+      <div class="spot-ui">
+        <div class="spot-progress" aria-hidden="true">
+          {slides.map(() => <span class="seg"><i></i></span>)}
+        </div>
+        <div class="spot-arrows">
+          <button class="spot-btn" data-prev aria-label="Previous story">←</button>
+          <button class="spot-btn" data-next aria-label="Next story">→</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const root = document.querySelector<HTMLElement>('[data-spotlight]');
+    if (!root || root.dataset.init) return;
+    root.dataset.init = 'true';
+
+    const track = root.querySelector<HTMLElement>('.spot-track')!;
+    const slides = [...root.querySelectorAll('.spot-slide')];
+    const segs = [...root.querySelectorAll<HTMLElement>('.seg i')];
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const DUR = 6500;
+    let i = 0;
+    let timer: number | undefined;
+
+    const render = () => {
+      track.style.transform = `translateX(-${i * 100}%)`;
+      segs.forEach((seg, j) => {
+        seg.style.transition = 'none';
+        seg.style.width = j < i ? '100%' : '0%';
+        if (j === i && !reduced) {
+          requestAnimationFrame(() => {
+            seg.style.transition = `width ${DUR}ms linear`;
+            seg.style.width = '100%';
+          });
+        }
+      });
+      slides.forEach((s, j) => s.toggleAttribute('inert', j !== i));
+    };
+    const go = (n: number) => {
+      i = (n + slides.length) % slides.length;
+      render();
+      restart();
+    };
+    const restart = () => {
+      if (timer) clearInterval(timer);
+      if (!reduced) timer = window.setInterval(() => go(i + 1), DUR);
+    };
+
+    root.querySelector('[data-next]')?.addEventListener('click', () => go(i + 1));
+    root.querySelector('[data-prev]')?.addEventListener('click', () => go(i - 1));
+    root.addEventListener('pointerenter', () => timer && clearInterval(timer));
+    root.addEventListener('pointerleave', restart);
+
+    // swipe
+    let x0: number | null = null;
+    root.addEventListener('pointerdown', (e) => (x0 = e.clientX));
+    root.addEventListener('pointerup', (e) => {
+      if (x0 === null) return;
+      const dx = e.clientX - x0;
+      if (Math.abs(dx) > 48) go(i + (dx < 0 ? 1 : -1));
+      x0 = null;
+    });
+
+    render();
+    restart();
+  });
+</script>
+
+<style>
+  .spotlight { padding: 96px 0 0; }
+  .spot {
+    position: relative;
+    background: var(--band-bg);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    color: var(--text-on-dark);
+    touch-action: pan-y;
+  }
+  .spot::before {
+    content: "";
+    position: absolute;
+    inset: -20%;
+    background:
+      radial-gradient(520px 340px at 88% 12%, rgba(234, 182, 51, 0.14), transparent 60%),
+      radial-gradient(560px 380px at 4% 96%, rgba(59, 191, 208, 0.16), transparent 62%);
+    pointer-events: none;
+  }
+  .spot-track {
+    display: flex;
+    transition: transform 0.65s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .spot-track { transition: none; }
+  }
+  .spot-slide {
+    flex: none;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 48px;
+    align-items: center;
+    padding: 56px 60px 76px;
+  }
+  .spot-tag {
+    display: inline-block;
+    text-transform: uppercase;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    padding: 0.35rem 0.8rem;
+    border-radius: 999px;
+    margin-bottom: 18px;
+  }
+  .spot-tag.gold { color: #f4e3ae; background: rgba(234, 182, 51, 0.18); border: 1px solid rgba(234, 182, 51, 0.45); }
+  .spot-tag.teal { color: #c8eef4; background: rgba(59, 191, 208, 0.16); border: 1px solid rgba(59, 191, 208, 0.45); }
+  .spot-tag.violet { color: #ded8fb; background: rgba(143, 127, 242, 0.16); border: 1px solid rgba(143, 127, 242, 0.5); }
+  .spot h2 {
+    color: #f6f5fa;
+    font-size: clamp(1.7rem, 3.2vw, 2.6rem);
+    margin-bottom: 14px;
+  }
+  .spot p { max-width: 46ch; margin-bottom: 22px; }
+  .spot-link {
+    font-weight: 800;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--gold);
+  }
+  .spot-link:hover { color: #f6d67c; }
+  .spot-link [aria-hidden] { display: inline-block; transition: transform 0.2s ease; }
+  .spot-link:hover [aria-hidden] { transform: translateX(4px); }
+
+  .spot-ui {
+    position: absolute;
+    left: 60px;
+    right: 60px;
+    bottom: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    z-index: 2;
+  }
+  .spot-progress { display: flex; gap: 8px; flex: 1; max-width: 300px; }
+  .seg {
+    flex: 1;
+    height: 3px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.18);
+    overflow: hidden;
+  }
+  .seg i { display: block; height: 100%; width: 0; background: var(--gold); }
+  .spot-arrows { display: flex; gap: 10px; }
+  .spot-btn {
+    width: 42px;
+    height: 42px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: rgba(26, 41, 48, 0.4);
+    color: #f0f4f5;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  }
+  .spot-btn:hover { background: var(--gold); border-color: var(--gold); color: #06272c; }
+
+  @media (max-width: 900px) {
+    .spot-slide { grid-template-columns: 1fr; padding: 40px 28px 88px; gap: 28px; }
+    .spot-ui { left: 28px; right: 28px; }
+  }
+</style>

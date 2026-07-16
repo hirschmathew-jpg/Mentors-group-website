@@ -44,6 +44,9 @@ the slot and push — the site picks it up automatically on the next deploy.
 | `firm-futurerange` | FutureRange card |
 | `about-hero` | About page hero |
 | `about-story` | About "Why Mentora exists" |
+| `hero-carousel-1..3` | The rotating circle carousel in the homepage hero |
+| `spotlight-1..3` | The homepage spotlight story carousel |
+| `hero-video` (.mp4) | Full-bleed background video behind the homepage hero |
 | `insight-<article-slug>` | An article's card and header image |
 
 Example: `src/assets/uploads/home-hero.jpg` fills the homepage hero. Images
