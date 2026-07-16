@@ -28,6 +28,10 @@
   --body: #44575e;
   --gold: #eab633;
   --gold-deep: #8a6a15;
+  --teal-bright: #3bbfd0;
+  --teal-ink: #0d6a78;
+  --violet: #8f7ff2;
+  --violet-ink: #5b4bd1;
   --teal: #0f5e76;
   --line: #dce3e1;
   --hairline-dark: #46606b;
@@ -154,8 +158,42 @@ h1, h2, h3, h4 {
 }
 .band h1, .band h2, .band h3 { color: #f6f5fa; }
 
-/* page hero for interior pages */
-.page-hero { background: var(--band-bg); color: var(--text-on-dark); padding: 92px 0 84px; }
+/* page hero for interior pages — animated aurora + grid */
+.page-hero {
+  background: var(--band-bg);
+  color: var(--text-on-dark);
+  padding: 92px 0 84px;
+  position: relative;
+  overflow: hidden;
+}
+.page-hero::before {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  background:
+    radial-gradient(560px 380px at 85% 15%, rgba(234, 182, 51, 0.14), transparent 62%),
+    radial-gradient(700px 460px at 5% 95%, rgba(59, 191, 208, 0.18), transparent 62%);
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .page-hero::before { animation: page-aurora 18s ease-in-out infinite alternate; }
+}
+@keyframes page-aurora {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to { transform: translate3d(-3%, 4%, 0) scale(1.06); }
+}
+.page-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 46px 46px;
+  mask-image: radial-gradient(85% 90% at 75% 25%, black, transparent 78%);
+  pointer-events: none;
+}
+.page-hero .container { position: relative; z-index: 1; }
 .page-hero h1 { color: #f6f5fa; font-size: clamp(2.5rem, 5.2vw, 4rem); max-width: 20ch; margin-bottom: 20px; }
 .page-hero .lede { font-size: 1.12rem; max-width: 54ch; }
 

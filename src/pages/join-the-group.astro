@@ -77,7 +77,10 @@ const stats = [
       </div>
       <dl class="stats" data-reveal>
         {stats.map((s) => (
-          <div class="stat"><dt>{s.l}</dt><dd>{s.n}</dd></div>
+          <div class="stat">
+            <dt>{s.l}</dt>
+            <dd data-countup={s.n.replace(/\D/g, '')} data-suffix={s.n.replace(/[\d]/g, '')}>{s.n}</dd>
+          </div>
         ))}
       </dl>
     </div>
