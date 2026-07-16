@@ -254,3 +254,17 @@ h1, h2, h3, h4 {
 /* magnetic buttons move via translate; keep their own transition smooth */
 .btn-gold { transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease, translate 0.18s ease; }
 .orbit { transition: transform 0.25s ease; will-change: transform; }
+
+/* light section variant — re-scopes the dark theme's tokens locally */
+.section-light {
+  --head: #10303c;
+  --body: #44575e;
+  --surface: #ffffff;
+  --line: #dce3e1;
+  --gold-deep: #8a6a15;
+  --teal: #0f5e76;
+  --teal-ink: #0d6a78;
+  --violet-ink: #5b4bd1;
+  background: #f2f5f4;
+  color: var(--body);
+}
