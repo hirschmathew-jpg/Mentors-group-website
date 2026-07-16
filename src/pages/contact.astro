@@ -14,7 +14,7 @@ const areas = [
 
 <BaseLayout
   title="Contact — Mentora Group"
-  description="Get in touch with Mentora Group — advisory, accounting, technology and cybersecurity support for your business. Offices in Dublin, Cork and Limerick."
+  description="Get in touch with Mentora Group — advisory, accounting, technology and cybersecurity support for your business, from our Sandyford, Dublin office."
 >
   <section class="page-hero on-dark">
     <div class="container">
@@ -38,22 +38,24 @@ const areas = [
           business day.
         </p>
 
-        <h3 class="mini">Our offices</h3>
-        <ul class="offices">
-          <li>Dublin</li>
-          <li>Cork</li>
-          <li>Limerick</li>
-        </ul>
+        <h3 class="mini">Our office</h3>
+        <p class="address">
+          Carmanhall Road,<br />
+          Sandyford,<br />
+          Dublin 18, D18 NW62
+        </p>
 
         <h3 class="mini">Direct enquiries</h3>
         <dl class="direct">
           <div>
             <dt>HLB Ireland</dt>
             <dd><a href="mailto:info@hlb.ie">info@hlb.ie</a></dd>
+            <dd><a href="tel:+35312915265">+353 (0)1 291 5265</a></dd>
           </div>
           <div>
             <dt>FutureRange</dt>
             <dd><a href="mailto:info@futurerange.ie">info@futurerange.ie</a></dd>
+            <dd><a href="tel:+35312960560">+353 (0)1 296 0560</a></dd>
           </div>
         </dl>
       </div>
@@ -117,26 +119,11 @@ const areas = [
     color: var(--gold-deep);
     margin: 36px 0 12px;
   }
-  .offices {
-    list-style: none;
-    display: grid;
-    gap: 6px;
-  }
-  .offices li {
-    padding-left: 18px;
-    position: relative;
+  .address {
     color: var(--head);
     font-weight: 600;
-  }
-  .offices li::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0.62em;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--gold);
+    border-left: 3px solid var(--gold);
+    padding-left: 14px;
   }
   .direct { display: grid; gap: 12px; }
   .direct dt {

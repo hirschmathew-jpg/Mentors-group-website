@@ -21,7 +21,7 @@ Doyle & Partners has built a reputation for delivering clear, practical tax advi
 
 Existing Doyle & Partners clients will gain access to the full breadth of Mentora Group's services — including FutureRange's managed IT and cybersecurity offering, HLB Ireland's audit and corporate finance capability, and our growing wealth management practice.
 
-The combined team will operate from Cork, with the Doyle & Partners office joining HLB Ireland's existing Cork presence to create a significantly stronger advisory team in the region.
+The combined team will continue to operate from the Doyle & Partners office in Cork, giving the group an advisory base in Munster for the first time.
 
 ## The eighth acquisition
 
