@@ -1,4 +1,5 @@
 ---
+import { ClientRouter } from 'astro:transitions';
 import { href } from '../lib/paths';
 import '../styles/global.css';
 import Header from '../components/Header.astro';
@@ -43,8 +44,10 @@ const ogImage = new URL(href('/og.png'), Astro.site);
     <link rel="preload" href={href('/fonts/manrope.woff2')} as="font" type="font/woff2" crossorigin />
 
     <script is:inline>document.documentElement.classList.add('js');</script>
+    <ClientRouter />
   </head>
   <body>
+    <div id="scroll-progress" aria-hidden="true"></div>
     <a class="skip-link" href="#main">Skip to content</a>
     <Header />
     <main id="main">
@@ -53,26 +56,82 @@ const ogImage = new URL(href('/og.png'), Astro.site);
     <Footer />
 
     <script>
-      // Reveal-on-scroll: progressive enhancement only. Content is visible
-      // without JS; see global.css for the gating.
-      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      const items = document.querySelectorAll('[data-reveal]');
-      if (prefersReduced) {
-        items.forEach((el) => el.classList.add('revealed'));
-      } else {
+      // Site motion engine. Everything is progressive enhancement — content is
+      // fully visible without JS — and re-initialises after view transitions.
+      const reduced = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      function initReveals() {
+        const items = document.querySelectorAll('[data-reveal]:not(.revealed)');
+        if (reduced()) {
+          items.forEach((el) => el.classList.add('revealed'));
+          return;
+        }
         const io = new IntersectionObserver(
           (entries) => {
+            let i = 0;
             for (const entry of entries) {
-              if (entry.isIntersecting) {
-                entry.target.classList.add('revealed');
-                io.unobserve(entry.target);
-              }
+              if (!entry.isIntersecting) continue;
+              const el = entry.target as HTMLElement;
+              el.style.transitionDelay = `${Math.min(i * 80, 320)}ms`;
+              el.classList.add('revealed');
+              io.unobserve(el);
+              i++;
             }
           },
           { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
         );
         items.forEach((el) => io.observe(el));
       }
+
+      function initCountups() {
+        const els = document.querySelectorAll<HTMLElement>('[data-countup]:not([data-counted])');
+        if (!els.length || reduced()) return;
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (!entry.isIntersecting) continue;
+              io.unobserve(entry.target);
+              const el = entry.target as HTMLElement;
+              el.dataset.counted = 'true';
+              const target = parseInt(el.dataset.countup || '0', 10);
+              const suffix = el.dataset.suffix || '';
+              const start = performance.now();
+              const dur = 1400;
+              const tick = (now: number) => {
+                const p = Math.min((now - start) / dur, 1);
+                const eased = 1 - Math.pow(1 - p, 3);
+                el.textContent = Math.round(eased * target) + suffix;
+                if (p < 1) requestAnimationFrame(tick);
+              };
+              requestAnimationFrame(tick);
+            }
+          },
+          { threshold: 0.4 }
+        );
+        els.forEach((el) => io.observe(el));
+      }
+
+      // Bound once; survives view transitions.
+      let scrollBound = false;
+      function initScrollFx() {
+        if (scrollBound) return;
+        scrollBound = true;
+        const onScroll = () => {
+          const bar = document.getElementById('scroll-progress');
+          const header = document.querySelector('.site-header');
+          const max = document.documentElement.scrollHeight - window.innerHeight;
+          if (bar) bar.style.width = max > 0 ? `${(window.scrollY / max) * 100}%` : '0%';
+          if (header) header.classList.toggle('scrolled', window.scrollY > 20);
+        };
+        window.addEventListener('scroll', onScroll, { passive: true });
+        document.addEventListener('astro:page-load', onScroll);
+      }
+
+      document.addEventListener('astro:page-load', () => {
+        initReveals();
+        initCountups();
+        initScrollFx();
+      });
     </script>
 
     <style>
@@ -88,6 +147,15 @@ const ogImage = new URL(href('/og.png'), Astro.site);
       }
       .skip-link:focus {
         left: 0;
+      }
+      #scroll-progress {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 3px;
+        width: 0;
+        background: linear-gradient(90deg, var(--gold), #f6d67c);
+        z-index: 60;
       }
     </style>
   </body>

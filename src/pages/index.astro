@@ -96,7 +96,7 @@ const services = [
       <div class="firms-head" data-reveal>
         <div>
           <p class="eyebrow">Our firms</p>
-          <h2 class="section-title">Two specialisms, one owner</h2>
+          <h2 class="section-title">Two specialisms, one group</h2>
         </div>
         <p>
           Audit, accounting, tax, cyber security, managed IT and digital
@@ -203,8 +203,52 @@ const services = [
 </BaseLayout>
 
 <style>
-  /* hero */
-  .hero { overflow: hidden; }
+  /* hero — aurora glow + blueprint grid */
+  .hero { overflow: hidden; position: relative; }
+  .hero::before {
+    content: "";
+    position: absolute;
+    inset: -20%;
+    background:
+      radial-gradient(640px 420px at 82% 18%, rgba(234, 182, 51, 0.16), transparent 62%),
+      radial-gradient(820px 520px at 8% 92%, rgba(15, 94, 118, 0.35), transparent 62%);
+    pointer-events: none;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .hero::before { animation: aurora 16s ease-in-out infinite alternate; }
+  }
+  @keyframes aurora {
+    from { transform: translate3d(0, 0, 0) scale(1); }
+    to { transform: translate3d(-3%, 3%, 0) scale(1.07); }
+  }
+  .hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    background-size: 46px 46px;
+    mask-image: radial-gradient(90% 90% at 70% 30%, black, transparent 75%);
+    pointer-events: none;
+  }
+  .hero-grid { position: relative; z-index: 1; }
+  /* entrance sequence */
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-copy > *, .hero-media {
+      opacity: 0;
+      transform: translateY(22px);
+      animation: rise 0.75s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+    }
+    .hero-copy > :nth-child(1) { animation-delay: 0.05s; }
+    .hero-copy > :nth-child(2) { animation-delay: 0.14s; }
+    .hero-copy > :nth-child(3) { animation-delay: 0.24s; }
+    .hero-copy > :nth-child(4) { animation-delay: 0.34s; }
+    .hero-media { animation-delay: 0.42s; }
+  }
+  @keyframes rise {
+    to { opacity: 1; transform: none; }
+  }
   .hero-grid {
     display: grid;
     grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
@@ -303,8 +347,8 @@ const services = [
   .firm :global(.ph), .firm :global(.slot) { border-radius: 0; border-left: none; border-right: none; border-top: none; }
   @media (prefers-reduced-motion: no-preference) {
     .firm:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 18px 40px rgba(26, 41, 48, 0.14);
+      transform: translateY(-5px);
+      box-shadow: 0 22px 48px rgba(26, 41, 48, 0.16), 0 0 0 1px rgba(234, 182, 51, 0.55);
     }
   }
   .firm-body { display: block; padding: 28px 30px 32px; }
@@ -353,8 +397,16 @@ const services = [
     max-width: 46ch;
   }
 
-  /* numbers */
-  .legacy { padding: 100px 0; }
+  /* numbers — soft gold glow */
+  .legacy { padding: 100px 0; position: relative; overflow: hidden; }
+  .legacy::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(720px 420px at 88% 80%, rgba(234, 182, 51, 0.1), transparent 65%);
+    pointer-events: none;
+  }
+  .legacy .container { position: relative; }
   .legacy-head { max-width: 680px; margin-bottom: 64px; }
   .legacy-head h2 { margin-bottom: 16px; }
   .legacy-sub { color: var(--muted-on-dark); }
@@ -456,32 +508,3 @@ const services = [
     .strip-inner { justify-content: flex-start; }
   }
 </style>
-
-<script>
-  // Count-up for stats, triggered on scroll into view; skipped for reduced motion.
-  const els = document.querySelectorAll('[data-countup]');
-  if (els.length) {
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (!reduced) {
-      const io = new IntersectionObserver((entries) => {
-        for (const entry of entries) {
-          if (!entry.isIntersecting) continue;
-          io.unobserve(entry.target);
-          const el = entry.target as HTMLElement;
-          const target = parseInt(el.dataset.countup || '0', 10);
-          const suffix = el.dataset.suffix || '';
-          const start = performance.now();
-          const dur = 1400;
-          const tick = (now: number) => {
-            const p = Math.min((now - start) / dur, 1);
-            const eased = 1 - Math.pow(1 - p, 3);
-            el.textContent = Math.round(eased * target) + suffix;
-            if (p < 1) requestAnimationFrame(tick);
-          };
-          requestAnimationFrame(tick);
-        }
-      }, { threshold: 0.4 });
-      els.forEach((el) => io.observe(el));
-    }
-  }
-</script>
