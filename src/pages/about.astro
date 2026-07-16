@@ -1,0 +1,244 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Cta from '../components/Cta.astro';
+
+import sandyfordOffice from '../assets/photos/sandyford-office.webp';
+import markButler from '../assets/photos/mark-butler.webp';
+import ciaraMcFadden from '../assets/photos/ciara-mcfadden.webp';
+
+const people = [
+  {
+    name: 'Mark Butler',
+    role: 'Group Managing Partner',
+    email: 'mbutler@hlb.ie',
+    photo: markButler,
+  },
+  {
+    name: 'Ciara McFadden',
+    role: 'Chief Financial Officer',
+    email: 'cmcfadden@hlb.ie',
+    photo: ciaraMcFadden,
+  },
+];
+
+const timeline = [
+  {
+    year: '1976',
+    text: 'HLB Ireland founded. Partner-led advisory for owner-managed businesses.',
+  },
+  {
+    year: '1995',
+    text: 'FutureRange established. Managed IT, cybersecurity and digital transformation from Belfast, Dublin, Cork and Limerick.',
+  },
+  {
+    year: '2017',
+    text: 'HLB Ireland begins its acquisitions programme — eight practices joined in the years since.',
+  },
+  {
+    year: '2026',
+    text: 'Mentora Group formed as the parent of HLB Ireland and FutureRange.',
+  },
+];
+---
+
+<BaseLayout
+  title="About — Mentora Group"
+  description="Mentora Group is the parent of HLB Ireland and FutureRange — two firms, five decades of experience, one group serving owner-managed Irish businesses."
+>
+  <!-- Page hero -->
+  <section class="page-hero on-dark">
+    <div class="container hero-grid">
+      <div>
+        <p class="eyebrow">About Mentora</p>
+        <h1>Two firms. Five decades. One group.</h1>
+        <p class="lede">
+          Mentora Group brings together accounting, business advisory, IT
+          security, managed services and future-focused innovation to guide
+          your business through growth.
+        </p>
+      </div>
+      <div class="hero-media">
+        <Image
+          src={sandyfordOffice}
+          alt="The Mentora Group office in Sandyford, Dublin"
+          widths={[640, 960, 1280]}
+          sizes="(min-width: 960px) 42vw, 100vw"
+          loading="eager"
+          fetchpriority="high"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- Story + timeline -->
+  <section class="story">
+    <div class="container story-grid">
+      <div data-reveal>
+        <p class="eyebrow">Our story</p>
+        <h2 class="section-title">Built on decades of trust</h2>
+        <div class="body">
+          <p>
+            HLB Ireland was founded in 1976 by people who believed that
+            owner-managed businesses deserved the same quality of advisory as
+            the largest firms in the country.
+          </p>
+          <p>
+            FutureRange was established in 1995 — three decades of managed IT,
+            cybersecurity and digital transformation delivered from Belfast,
+            Dublin, Cork and Limerick.
+          </p>
+          <p>
+            Mentora is the group that holds them together — and the framework
+            that will bring future businesses into the same orbit.
+          </p>
+        </div>
+      </div>
+      <div data-reveal>
+        <h3 class="timeline-title">Timeline</h3>
+        <ol class="timeline">
+          {timeline.map((item) => (
+            <li>
+              <span class="year">{item.year}</span>
+              <span class="text">{item.text}</span>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- People -->
+  <section class="people-section">
+    <div class="container">
+      <div data-reveal>
+        <p class="eyebrow">Our people</p>
+        <h2 class="section-title">The people behind the group</h2>
+        <p class="people-sub">
+          Mentora Group is led by a team drawn from both firms — partners,
+          technologists and advisers who have spent their careers alongside
+          owner-managed businesses.
+        </p>
+      </div>
+      <div class="people">
+        {people.map((p) => (
+          <article class="person" data-reveal>
+            <div class="photo">
+              <Image src={p.photo} alt={`Portrait of ${p.name}`} widths={[400, 640]} sizes="(min-width: 800px) 25vw, 80vw" />
+            </div>
+            <h3>{p.name}</h3>
+            <p class="role">{p.role}</p>
+            <a class="email" href={`mailto:${p.email}`}>{p.email}</a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <Cta />
+</BaseLayout>
+
+<style>
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 56px;
+    align-items: center;
+  }
+  .hero-media :global(img) {
+    width: 100%;
+    height: auto;
+    clip-path: polygon(10% 0, 100% 0, 100% 100%, 0 100%);
+  }
+
+  .story { padding: 110px 0; }
+  .story-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 80px;
+    align-items: start;
+  }
+  .story h2 { margin-bottom: 26px; }
+  .story .body p { max-width: 58ch; }
+  .story .body p + p { margin-top: 18px; }
+
+  .timeline-title {
+    font-family: var(--font-sans);
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    font-size: 0.76rem;
+    font-weight: 700;
+    color: var(--gold-deep);
+    margin-bottom: 22px;
+  }
+  .timeline {
+    list-style: none;
+    border-left: 2px solid var(--line);
+  }
+  .timeline li {
+    position: relative;
+    padding: 0 0 28px 28px;
+  }
+  .timeline li:last-child { padding-bottom: 0; }
+  .timeline li::before {
+    content: "";
+    position: absolute;
+    left: -6px;
+    top: 8px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--gold);
+  }
+  .timeline .year {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 560;
+    color: var(--head);
+  }
+  .timeline .text { font-size: 0.95rem; }
+
+  .people-section {
+    padding: 0 0 110px;
+  }
+  .people-sub { max-width: 54ch; margin-bottom: 44px; }
+  .people {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 280px));
+    gap: 28px;
+  }
+  .person {
+    background: #fff;
+    border: 1px solid var(--line);
+  }
+  .photo { aspect-ratio: 4 / 5; overflow: hidden; }
+  .photo :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .person h3 {
+    font-size: 1.2rem;
+    font-weight: 560;
+    margin: 20px 22px 2px;
+  }
+  .role {
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--gold-deep);
+    font-weight: 700;
+    margin: 0 22px 6px;
+  }
+  .email {
+    display: block;
+    font-size: 0.9rem;
+    margin: 0 22px 22px;
+  }
+
+  @media (max-width: 900px) {
+    .hero-grid, .story-grid { grid-template-columns: 1fr; }
+    .hero-media :global(img) { clip-path: none; }
+  }
+</style>

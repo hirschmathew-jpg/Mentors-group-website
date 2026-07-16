@@ -1,0 +1,170 @@
+/* ==========================================================
+   Mentora Group — global styles
+   Direction: dark navy hero/bands, warm light body, gold accent
+   ========================================================== */
+
+@font-face {
+  font-family: 'Fraunces';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/fraunces.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap;
+  src: url('/fonts/manrope.woff2') format('woff2');
+}
+
+:root {
+  /* brand */
+  --ink: #001b24;
+  --ink-deep: #00141b;
+  --ink-2: #0a2e3a;
+  --paper: #f4f6f5;
+  --paper-2: #eaeeec;
+  --head: #10303c;
+  --body: #44575e;
+  --gold: #eab633;
+  --gold-deep: #b98d20;
+  --teal: #0f5e76;
+  --line: #dce3e1;
+  --hairline-dark: #16404d;
+  --text-on-dark: #b9cbd1;
+  --muted-on-dark: #a5b9bf;
+
+  --container: 1180px;
+
+  --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Manrope', system-ui, -apple-system, sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--paper);
+  color: var(--body);
+  line-height: 1.7;
+  font-size: 1rem;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; height: auto; display: block; }
+
+a { color: var(--teal); text-decoration: none; }
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  color: var(--head);
+  font-weight: 550;
+  line-height: 1.12;
+  text-wrap: balance;
+}
+
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+.container {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 28px;
+}
+
+/* ---------- shared primitives ---------- */
+
+.eyebrow {
+  font-family: var(--font-sans);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--gold-deep);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+.eyebrow::before { content: ""; width: 26px; height: 2px; background: var(--gold); flex: none; }
+.on-dark .eyebrow { color: var(--gold); }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-sans);
+  font-weight: 800;
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 1rem 1.7rem;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  cursor: pointer;
+  border: none;
+}
+.btn-gold { background: var(--gold); color: var(--ink); }
+.btn-gold:hover { background: #f2c44e; }
+.btn-ghost { border: 1px solid #3a5560; color: #e6edef; background: transparent; }
+.btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+.btn-outline { border: 1px solid var(--head); color: var(--head); background: transparent; }
+.btn-outline:hover { border-color: var(--gold-deep); color: var(--gold-deep); }
+
+.section-title { font-size: clamp(1.9rem, 3.4vw, 2.7rem); }
+
+/* dark band section base */
+.band {
+  background: var(--ink);
+  color: var(--text-on-dark);
+}
+.band h1, .band h2, .band h3 { color: #f6f5fa; }
+
+/* page hero for interior pages */
+.page-hero { background: var(--ink); color: var(--text-on-dark); padding: 92px 0 84px; }
+.page-hero h1 { color: #f6f5fa; font-size: clamp(2.3rem, 4.6vw, 3.4rem); font-weight: 480; max-width: 22ch; margin-bottom: 20px; }
+.page-hero .lede { font-size: 1.12rem; max-width: 54ch; }
+
+/* ---------- reveal-on-scroll (progressive enhancement) ----------
+   Content is fully visible by default. Only when JS is running AND
+   the user has no reduced-motion preference does the reveal apply. */
+@media (prefers-reduced-motion: no-preference) {
+  html.js [data-reveal] {
+    opacity: 0;
+    transform: translateY(1.4rem);
+    transition: opacity 0.65s ease, transform 0.65s ease;
+  }
+  html.js [data-reveal].revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ---------- prose (article bodies, legal pages) ---------- */
+.prose { max-width: 68ch; }
+.prose p + p { margin-top: 1.1em; }
+.prose h2 {
+  font-size: 1.55rem;
+  margin: 2em 0 0.6em;
+}
+.prose h3 { font-size: 1.2rem; margin: 1.6em 0 0.5em; }
+.prose ul, .prose ol { margin: 1.1em 0 1.1em 1.2em; }
+.prose li { margin-bottom: 0.45em; }
+.prose li::marker { color: var(--gold-deep); }
+.prose blockquote {
+  border-left: 3px solid var(--gold);
+  padding-left: 1.2em;
+  margin: 1.4em 0;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--head);
+}
+.prose a { text-decoration: underline; text-underline-offset: 3px; }

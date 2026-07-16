@@ -1,0 +1,194 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// TODO: when a form backend is chosen (e.g. a real Formspree form ID),
+// point the form's `action` at it and remove the mailto fallback note.
+const areas = [
+  'Business Advisory & Accounting',
+  'Technology & Managed IT',
+  'Cybersecurity',
+  'Wealth Management',
+  'Something else',
+];
+---
+
+<BaseLayout
+  title="Contact — Mentora Group"
+  description="Get in touch with Mentora Group — advisory, accounting, technology and cybersecurity support for your business. Offices in Dublin, Cork and Limerick."
+>
+  <section class="page-hero on-dark">
+    <div class="container">
+      <p class="eyebrow">Contact</p>
+      <h1>Let's talk about what comes next</h1>
+      <p class="lede">
+        Whether you're looking for advisory support, technology guidance, or
+        simply want to understand what Mentora Group can offer your business —
+        we'd like to hear from you.
+      </p>
+    </div>
+  </section>
+
+  <section class="contact">
+    <div class="container grid">
+      <div class="info" data-reveal>
+        <h2 class="section-title">How can we help?</h2>
+        <p>
+          The right conversation starts here. Tell us a little about what
+          you're working on and one of our team will be in touch within one
+          business day.
+        </p>
+
+        <h3 class="mini">Our offices</h3>
+        <ul class="offices">
+          <li>Dublin</li>
+          <li>Cork</li>
+          <li>Limerick</li>
+        </ul>
+
+        <h3 class="mini">Direct enquiries</h3>
+        <dl class="direct">
+          <div>
+            <dt>HLB Ireland</dt>
+            <dd><a href="mailto:info@hlb.ie">info@hlb.ie</a></dd>
+          </div>
+          <div>
+            <dt>FutureRange</dt>
+            <dd><a href="mailto:info@futurerange.ie">info@futurerange.ie</a></dd>
+          </div>
+        </dl>
+      </div>
+
+      <form class="form" method="get" action="mailto:info@hlb.ie" data-reveal>
+        <div class="row two">
+          <div class="field">
+            <label for="first-name">First name <span class="req" aria-hidden="true">*</span></label>
+            <input id="first-name" name="first_name" type="text" autocomplete="given-name" required />
+          </div>
+          <div class="field">
+            <label for="last-name">Last name <span class="req" aria-hidden="true">*</span></label>
+            <input id="last-name" name="last_name" type="text" autocomplete="family-name" required />
+          </div>
+        </div>
+        <div class="field">
+          <label for="email">Email address <span class="req" aria-hidden="true">*</span></label>
+          <input id="email" name="email" type="email" autocomplete="email" required />
+        </div>
+        <div class="field">
+          <label for="company">Company</label>
+          <input id="company" name="company" type="text" autocomplete="organization" />
+        </div>
+        <div class="field">
+          <label for="area">Area of interest</label>
+          <select id="area" name="area_of_interest">
+            <option value="" disabled selected>Select one…</option>
+            {areas.map((a) => <option value={a}>{a}</option>)}
+          </select>
+        </div>
+        <div class="field">
+          <label for="message">Message <span class="req" aria-hidden="true">*</span></label>
+          <textarea id="message" name="message" rows="6" required></textarea>
+        </div>
+        <button class="btn btn-gold" type="submit">Send message <span aria-hidden="true">→</span></button>
+        <p class="note">
+          Submitting opens an email to us in your mail app — or write to us
+          directly at the addresses on the left.
+        </p>
+      </form>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .contact { padding: 90px 0 110px; }
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 72px;
+    align-items: start;
+  }
+  .info h2 { margin-bottom: 16px; }
+  .info > p { max-width: 46ch; }
+  .mini {
+    font-family: var(--font-sans);
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    font-size: 0.76rem;
+    font-weight: 700;
+    color: var(--gold-deep);
+    margin: 36px 0 12px;
+  }
+  .offices {
+    list-style: none;
+    display: grid;
+    gap: 6px;
+  }
+  .offices li {
+    padding-left: 18px;
+    position: relative;
+    color: var(--head);
+    font-weight: 600;
+  }
+  .offices li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.62em;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--gold);
+  }
+  .direct { display: grid; gap: 12px; }
+  .direct dt {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--body);
+    font-weight: 700;
+  }
+  .direct dd a { font-weight: 600; }
+
+  .form {
+    background: #fff;
+    border: 1px solid var(--line);
+    padding: 40px;
+  }
+  .row.two {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+  .field { margin-bottom: 18px; display: flex; flex-direction: column; gap: 6px; }
+  label {
+    font-weight: 700;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--head);
+  }
+  .req { color: var(--gold-deep); }
+  input, select, textarea {
+    font: inherit;
+    color: var(--head);
+    padding: 0.75rem 0.9rem;
+    border: 1px solid var(--line);
+    background: var(--paper);
+    resize: vertical;
+  }
+  input:focus, select:focus, textarea:focus {
+    outline: 2px solid var(--gold);
+    outline-offset: 0;
+    border-color: var(--gold);
+  }
+  .note {
+    margin-top: 16px;
+    font-size: 0.88rem;
+    color: var(--body);
+  }
+
+  @media (max-width: 900px) {
+    .grid { grid-template-columns: 1fr; gap: 48px; }
+    .form { padding: 26px; }
+    .row.two { grid-template-columns: 1fr; gap: 0; }
+  }
+</style>

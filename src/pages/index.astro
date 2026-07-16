@@ -1,0 +1,479 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Cta from '../components/Cta.astro';
+import PostCard from '../components/PostCard.astro';
+
+import teamGroup from '../assets/photos/team-group.webp';
+import professionalsDesk from '../assets/photos/professionals-desk.webp';
+import teamCollaborating from '../assets/photos/team-collaborating.webp';
+import hlbReception from '../assets/photos/hlb-reception.webp';
+import futurerangeSign from '../assets/photos/futurerange-sign.webp';
+
+const posts = (await getCollection('insights'))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+---
+
+<BaseLayout
+  title="Mentora Group — Your partner in growth"
+  description="Mentora Group unites HLB Ireland and FutureRange — accounting expertise, strategic advisory, cybersecurity and technology for ambitious Irish businesses."
+>
+  <!-- Hero -->
+  <section class="hero band on-dark">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow">The Mentora Group</p>
+        <h1>Your partner in <em>growth</em></h1>
+        <p class="lede">
+          Mentora Group brings HLB Ireland and FutureRange together as one —
+          accounting expertise, strategic advisory, cybersecurity and
+          technology, working side by side for ambitious Irish businesses.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-gold" href="/contact/">Talk to us <span aria-hidden="true">→</span></a>
+          <a class="btn btn-ghost" href="/about/">About the group</a>
+        </div>
+      </div>
+      <div class="hero-media">
+        <Image
+          src={teamGroup}
+          alt="The Mentora Group team"
+          widths={[640, 960, 1280]}
+          sizes="(min-width: 960px) 45vw, 100vw"
+          loading="eager"
+          fetchpriority="high"
+        />
+        <p class="kicker">
+          <strong>Two firms. Five decades. One group.</strong>
+          Advisory since 1976. Technology since 1995. United in 2026.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Intro -->
+  <section class="intro">
+    <div class="container intro-grid">
+      <div data-reveal>
+        <p class="eyebrow">Who we are</p>
+        <h2 class="section-title">Financial expertise and technology capability, working as one</h2>
+        <div class="body">
+          <p>
+            Mentora Group unites deep accounting and advisory experience with
+            advanced technology capability under one roof — a team that
+            understands your business today and grows with you over time.
+          </p>
+          <p>
+            With a shared heritage built on decades of trust, HLB Ireland and
+            FutureRange combine to deliver continuity, insight and support when
+            it matters most.
+          </p>
+        </div>
+      </div>
+      <div class="intro-media" data-reveal>
+        <Image
+          class="ph-a"
+          src={professionalsDesk}
+          alt="Mentora Group professionals working together"
+          widths={[480, 800]}
+          sizes="(min-width: 960px) 32vw, 80vw"
+        />
+        <Image
+          class="ph-b"
+          src={teamCollaborating}
+          alt="Team collaborating in the office"
+          widths={[400, 640]}
+          sizes="(min-width: 960px) 20vw, 50vw"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- Firms -->
+  <section class="firms">
+    <div class="container">
+      <div class="firms-head" data-reveal>
+        <div>
+          <p class="eyebrow">Our firms</p>
+          <h2 class="section-title">One group, two specialisms</h2>
+        </div>
+        <p>
+          Expertise in advisory, accounting, tax, cybersecurity, AI and
+          technology — a comprehensive offering for owner-managed businesses.
+        </p>
+      </div>
+      <div class="firm-cards">
+        <a class="firm" href="https://www.hlb.ie" rel="noopener" data-reveal>
+          <Image
+            src={hlbReception}
+            alt="The HLB Ireland office reception"
+            widths={[640, 960, 1280]}
+            sizes="(min-width: 800px) 48vw, 100vw"
+          />
+          <span class="firm-label">
+            <span class="tag">Advisory, Accounting &amp; Tax</span>
+            <span class="name">HLB Ireland <span class="go" aria-hidden="true">→</span></span>
+            <span class="desc">Partner-led advisory for owner-managed businesses since 1976.</span>
+          </span>
+        </a>
+        <a class="firm" href="https://www.futurerange.ie" rel="noopener" data-reveal>
+          <Image
+            src={futurerangeSign}
+            alt="FutureRange office signage"
+            widths={[640, 960, 1280]}
+            sizes="(min-width: 800px) 48vw, 100vw"
+          />
+          <span class="firm-label">
+            <span class="tag">Managed IT, Security &amp; Digital</span>
+            <span class="name">FutureRange <span class="go" aria-hidden="true">→</span></span>
+            <span class="desc">Managed IT, cybersecurity and digital transformation since 1995.</span>
+          </span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Legacy: quote + stats -->
+  <section class="legacy band on-dark">
+    <div class="container">
+      <figure data-reveal>
+        <blockquote>
+          “The name Mentora is rooted in the word <em>mentor</em> — the trusted
+          guide whose value is measured in the quality of counsel given over
+          time.”
+        </blockquote>
+        <figcaption>Mark Butler, Group Managing Partner</figcaption>
+      </figure>
+      <dl class="stats" data-reveal>
+        <div class="stat"><dt>HLB Ireland founded</dt><dd>1976</dd></div>
+        <div class="stat"><dt>FutureRange established</dt><dd>1995</dd></div>
+        <div class="stat"><dt>Countries via HLB International</dt><dd>157</dd></div>
+        <div class="stat"><dt>Professionals in the global network</dt><dd>51k+</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- Approach -->
+  <section class="approach">
+    <div class="container">
+      <div class="approach-head" data-reveal>
+        <p class="eyebrow">How we work</p>
+        <h2 class="section-title">Clear, practical guidance with real commercial impact</h2>
+        <p>Our approach is rooted in understanding your objectives and challenges first.</p>
+      </div>
+      <div class="pillars" data-reveal>
+        <div class="pillar">
+          <div class="glyph" aria-hidden="true"></div>
+          <h3>Deep insight, built on relationships</h3>
+          <p>
+            We take the time to understand your business — its ambitions,
+            challenges and context — so advice is informed, relevant and
+            grounded in long-term partnership.
+          </p>
+        </div>
+        <div class="pillar">
+          <div class="glyph" aria-hidden="true"></div>
+          <h3>Clarity where it matters most</h3>
+          <p>
+            Drawing on expert financial, advisory and technology capability, we
+            provide practical guidance that helps you make confident decisions
+            at every stage of growth.
+          </p>
+        </div>
+        <div class="pillar">
+          <div class="glyph" aria-hidden="true"></div>
+          <h3>Execution through capability</h3>
+          <p>
+            From robust financial foundations to secure, future-ready
+            technology, we implement the solutions that move your business
+            forward — turning insight into action.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Insights -->
+  <section class="insights">
+    <div class="container">
+      <div class="insights-head" data-reveal>
+        <div>
+          <p class="eyebrow">Insights</p>
+          <h2 class="section-title">Latest from the group</h2>
+        </div>
+        <a class="all-link" href="/insights/">All insights</a>
+      </div>
+      <div class="posts">
+        {posts.map((post) => <PostCard post={post} />)}
+      </div>
+    </div>
+  </section>
+
+  <Cta />
+</BaseLayout>
+
+<style>
+  /* hero */
+  .hero { overflow: hidden; }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    align-items: center;
+    gap: 56px;
+    padding-top: 84px;
+    padding-bottom: 92px;
+  }
+  h1 {
+    color: #f6f5fa;
+    font-size: clamp(2.6rem, 5.2vw, 4.1rem);
+    font-weight: 480;
+    letter-spacing: -0.01em;
+    margin-bottom: 26px;
+    max-width: 12ch;
+  }
+  h1 em { font-style: italic; color: var(--gold); }
+  .lede {
+    font-size: 1.12rem;
+    max-width: 46ch;
+    margin-bottom: 38px;
+  }
+  .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+  .hero-media { position: relative; }
+  .hero-media :global(img) {
+    width: 100%;
+    height: auto;
+    clip-path: polygon(10% 0, 100% 0, 100% 100%, 0 100%);
+  }
+  .kicker {
+    position: absolute;
+    bottom: -22px;
+    right: -12px;
+    background: var(--ink-deep);
+    border-left: 3px solid var(--gold);
+    padding: 16px 22px;
+    max-width: 300px;
+    color: #dce7ea;
+    font-size: 0.86rem;
+    line-height: 1.55;
+  }
+  .kicker strong { color: #fff; display: block; font-size: 0.95rem; }
+
+  /* intro */
+  .intro { padding: 110px 0 90px; }
+  .intro-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 72px;
+    align-items: start;
+  }
+  .intro h2 { margin-bottom: 26px; }
+  .intro .body p { max-width: 62ch; }
+  .intro .body p + p { margin-top: 18px; }
+  .intro-media { position: relative; padding-bottom: 46px; }
+  .intro-media :global(.ph-a) { width: 82%; }
+  .intro-media :global(.ph-b) {
+    width: 52%;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    border: 6px solid var(--paper);
+  }
+  .intro-media::before {
+    content: "";
+    position: absolute;
+    top: -18px;
+    left: -18px;
+    width: 120px;
+    height: 120px;
+    background: linear-gradient(135deg, var(--gold) 49.5%, transparent 50%);
+    opacity: 0.9;
+  }
+
+  /* firms */
+  .firms { padding: 40px 0 110px; }
+  .firms-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 40px;
+    margin-bottom: 44px;
+  }
+  .firms-head p { max-width: 42ch; }
+  .firm-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+  }
+  .firm {
+    position: relative;
+    display: block;
+    min-height: 380px;
+    overflow: hidden;
+    color: #fff;
+    background: var(--ink);
+  }
+  .firm :global(img) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: saturate(0.9);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .firm :global(img) { transition: transform 0.5s ease; }
+    .firm:hover :global(img) { transform: scale(1.035); }
+  }
+  .firm::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(6deg, rgba(0, 27, 36, 0.92) 18%, rgba(0, 27, 36, 0.25) 60%, rgba(0, 27, 36, 0.05));
+  }
+  .firm-label {
+    position: absolute;
+    z-index: 2;
+    left: 34px;
+    right: 34px;
+    bottom: 30px;
+  }
+  .firm-label .tag {
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 8px;
+  }
+  .firm-label .name {
+    font-family: var(--font-display);
+    font-size: 1.9rem;
+    font-weight: 520;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .firm-label .go {
+    font-family: var(--font-sans);
+    font-size: 1.2rem;
+    font-weight: 400;
+    width: 44px;
+    height: 44px;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    display: grid;
+    place-items: center;
+    border-radius: 999px;
+    transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  }
+  .firm:hover .go {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--ink);
+  }
+  .firm-label .desc {
+    color: #c9d6da;
+    font-size: 0.95rem;
+    max-width: 46ch;
+    margin-top: 10px;
+    display: block;
+  }
+
+  /* legacy */
+  .legacy { padding: 96px 0; }
+  blockquote {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 2.8vw, 2.2rem);
+    font-weight: 460;
+    color: #f0f4f5;
+    line-height: 1.4;
+    max-width: 26ch;
+    margin-bottom: 14px;
+  }
+  blockquote em { color: var(--gold); }
+  figcaption { font-size: 0.9rem; color: #8fa6ad; margin-bottom: 64px; }
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 34px;
+    border-top: 1px solid var(--hairline-dark);
+    padding-top: 48px;
+  }
+  .stat { display: flex; flex-direction: column-reverse; }
+  .stat dd {
+    font-family: var(--font-display);
+    font-variant-numeric: tabular-nums;
+    font-size: clamp(2.4rem, 4vw, 3.4rem);
+    font-weight: 500;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .stat dt {
+    margin-top: 10px;
+    font-size: 0.85rem;
+    letter-spacing: 0.04em;
+    color: var(--muted-on-dark);
+    max-width: 20ch;
+  }
+
+  /* approach */
+  .approach { padding: 110px 0; }
+  .approach-head { max-width: 640px; margin-bottom: 56px; }
+  .approach-head h2 { margin-bottom: 18px; }
+  .pillars {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border: 1px solid var(--line);
+    background: #fff;
+  }
+  .pillar { padding: 44px 38px; border-left: 1px solid var(--line); }
+  .pillar:first-child { border-left: none; }
+  .glyph {
+    width: 46px;
+    height: 46px;
+    margin-bottom: 22px;
+    background: linear-gradient(135deg, var(--gold) 49.5%, transparent 50%);
+  }
+  .pillar h3 { font-size: 1.25rem; margin-bottom: 12px; font-weight: 560; }
+  .pillar p { font-size: 0.95rem; }
+
+  /* insights */
+  .insights { padding: 0 0 110px; }
+  .insights-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 44px;
+  }
+  .all-link {
+    font-weight: 800;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--head);
+    border-bottom: 2px solid var(--gold);
+    padding-bottom: 4px;
+  }
+  .all-link:hover { color: var(--gold-deep); }
+  .posts {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+  }
+
+  @media (max-width: 960px) {
+    .hero-grid, .intro-grid, .firm-cards { grid-template-columns: 1fr; }
+    .hero-media :global(img) { clip-path: none; }
+    .kicker { position: static; margin-top: 14px; max-width: none; }
+    .stats { grid-template-columns: 1fr 1fr; }
+    .pillars { grid-template-columns: 1fr; }
+    .pillar { border-left: none; border-top: 1px solid var(--line); }
+    .pillar:first-child { border-top: none; }
+    .posts { grid-template-columns: 1fr; }
+    .firms-head { flex-direction: column; align-items: flex-start; }
+  }
+</style>

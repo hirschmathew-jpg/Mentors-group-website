@@ -1,0 +1,76 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Cta from '../../components/Cta.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('insights');
+  return posts.map((post) => ({
+    params: { id: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const { title, description, category, date, image, imageAlt } = post.data;
+const formatted = date.toLocaleDateString('en-IE', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+});
+---
+
+<BaseLayout title={`${title} — Mentora Group`} description={description} type="article">
+  <article>
+    <header class="page-hero on-dark">
+      <div class="container">
+        <p class="crumbs">
+          <a href="/insights/">← Insights</a>
+          <span class="sep" aria-hidden="true">|</span>
+          <span class="cat">{category}</span>
+        </p>
+        <h1>{title}</h1>
+        <p class="lede">{description}</p>
+        <p class="date"><time datetime={date.toISOString().slice(0, 10)}>{formatted}</time></p>
+      </div>
+    </header>
+
+    <div class="container article-body">
+      <figure class="feature" data-reveal>
+        <Image src={image} alt={imageAlt} widths={[800, 1280]} sizes="(min-width: 1100px) 65vw, 100vw" />
+      </figure>
+      <div class="prose">
+        <Content />
+      </div>
+    </div>
+  </article>
+
+  <Cta title="Talk to us about what this means for your business" />
+</BaseLayout>
+
+<style>
+  .crumbs {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    margin-bottom: 22px;
+    font-size: 0.85rem;
+  }
+  .crumbs a { color: var(--text-on-dark); }
+  .crumbs a:hover { color: var(--gold); }
+  .sep { color: var(--hairline-dark); }
+  .cat {
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-weight: 700;
+    font-size: 0.72rem;
+    color: var(--gold);
+  }
+  .date { margin-top: 16px; font-size: 0.88rem; color: #8fa6ad; }
+
+  .article-body { padding: 70px 28px 100px; max-width: 880px; }
+  .feature { margin-bottom: 48px; }
+  .feature :global(img) { width: 100%; height: auto; }
+</style>

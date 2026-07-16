@@ -1,0 +1,129 @@
+---
+import logoOnDark from '../assets/logo-on-dark.svg?raw';
+
+const links = [
+  { href: '/about/', label: 'About' },
+  { href: '/insights/', label: 'Insights' },
+];
+const current = Astro.url.pathname;
+---
+
+<header class="site-header">
+  <div class="container inner">
+    <a class="logo" href="/" aria-label="Mentora Group — home" set:html={logoOnDark} />
+    <nav aria-label="Main">
+      <button id="menu-toggle" aria-expanded="false" aria-controls="site-nav">
+        Menu
+      </button>
+      <ul id="site-nav">
+        {links.map((l) => (
+          <li>
+            <a href={l.href} aria-current={current.startsWith(l.href) ? 'page' : undefined}>{l.label}</a>
+          </li>
+        ))}
+        <li><a class="cta" href="/contact/">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const toggle = document.getElementById('menu-toggle');
+  const nav = document.getElementById('site-nav');
+  toggle?.addEventListener('click', () => {
+    const open = nav?.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', String(Boolean(open)));
+  });
+</script>
+
+<style>
+  .site-header {
+    background: var(--ink);
+    position: sticky;
+    top: 0;
+    z-index: 40;
+  }
+  .inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 76px;
+  }
+  .logo :global(svg) {
+    height: 34px;
+    width: auto;
+    display: block;
+  }
+  ul {
+    display: flex;
+    gap: 34px;
+    align-items: center;
+    list-style: none;
+  }
+  ul a {
+    color: #c7d5d9;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  ul a:hover,
+  ul a[aria-current='page'] {
+    color: #fff;
+  }
+  ul a.cta {
+    color: var(--ink);
+    background: var(--gold);
+    padding: 0.65rem 1.4rem;
+    font-weight: 800;
+  }
+  ul a.cta:hover {
+    background: #f2c44e;
+    color: var(--ink);
+  }
+  #menu-toggle {
+    display: none;
+    background: none;
+    border: 1px solid var(--hairline-dark);
+    color: #c7d5d9;
+    font: inherit;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+  }
+
+  @media (max-width: 800px) {
+    #menu-toggle { display: block; }
+    ul {
+      display: none;
+      position: absolute;
+      top: 76px;
+      left: 0;
+      right: 0;
+      background: var(--ink);
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+      padding: 10px 0 16px;
+      border-bottom: 1px solid var(--hairline-dark);
+    }
+    ul.open { display: flex; }
+    ul a { display: block; padding: 14px 28px; }
+    ul a.cta { margin: 10px 28px 0; text-align: center; }
+    /* Without JS the toggle does nothing — keep the nav reachable. */
+    :global(html:not(.js)) #menu-toggle { display: none; }
+    :global(html:not(.js)) ul {
+      display: flex;
+      position: static;
+      flex-direction: row;
+      flex-wrap: wrap;
+      padding: 0;
+      border: none;
+    }
+    :global(html:not(.js)) ul a { padding: 8px 10px; }
+    :global(html:not(.js)) ul a.cta { margin: 0; }
+  }
+</style>

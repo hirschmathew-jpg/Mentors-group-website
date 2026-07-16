@@ -1,0 +1,90 @@
+---
+import logoOnDark from '../assets/logo-on-dark.svg?raw';
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="grid">
+      <div>
+        <a class="logo" href="/" aria-label="Mentora Group — home" set:html={logoOnDark} />
+        <p class="blurb">
+          The Mentora Group is the parent of HLB Ireland and FutureRange —
+          advisory, accounting, tax, technology and cybersecurity for ambitious
+          Irish businesses.
+        </p>
+      </div>
+      <div class="col">
+        <h4>Mentora Group</h4>
+        <a href="/about/">About</a>
+        <a href="/insights/">Insights</a>
+        <a href="/contact/">Contact</a>
+      </div>
+      <div class="col">
+        <h4>Our firms</h4>
+        <a href="https://www.hlb.ie" rel="noopener">HLB Ireland ↗</a>
+        <a href="https://www.futurerange.ie" rel="noopener">FutureRange ↗</a>
+      </div>
+    </div>
+    <div class="base">
+      <span>© {year} Mentora Group. All rights reserved.</span>
+      <span class="legal">
+        <a href="/privacy-policy/">Privacy</a>
+        <span aria-hidden="true">·</span>
+        <a href="/terms/">Terms</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--ink-deep);
+    color: #7e959d;
+    padding: 64px 0 40px;
+    font-size: 0.9rem;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 48px;
+    margin-bottom: 48px;
+  }
+  .logo :global(svg) {
+    height: 30px;
+    width: auto;
+    display: block;
+    margin-bottom: 18px;
+  }
+  .blurb { max-width: 38ch; }
+  .col h4 {
+    font-family: var(--font-sans);
+    color: #c7d5d9;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    margin-bottom: 16px;
+  }
+  .col a {
+    display: block;
+    color: #7e959d;
+    padding: 4px 0;
+  }
+  .col a:hover { color: var(--gold); }
+  .base {
+    border-top: 1px solid #12333e;
+    padding-top: 22px;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .legal { display: flex; gap: 10px; }
+  .legal a { color: inherit; }
+  .legal a:hover { color: var(--gold); }
+
+  @media (max-width: 800px) {
+    .grid { grid-template-columns: 1fr; gap: 32px; }
+  }
+</style>
