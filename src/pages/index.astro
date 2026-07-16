@@ -97,44 +97,21 @@ const services = [
 
   <Spotlight />
 
-  <!-- Intro -->
-  <section class="intro">
-    <div class="container intro-grid">
-      <div data-reveal>
-        <p class="eyebrow">Who we are</p>
-        <h2 class="section-title title-accent">One group. Two established firms.</h2>
-        <div class="body">
-          <p>
-            Mentora Group is the holding company of HLB Ireland, an audit,
-            accounting and tax advisory firm working with ambitious domestic
-            and international businesses since 1976, and FutureRange, an IT
-            services firm providing cyber security, managed services and
-            digital transformation since 1995.
-          </p>
-          <p>
-            Each firm keeps the name, team and relationships its clients know.
-            Behind them, the group provides shared strength, stability and
-            investment for the long term.
-          </p>
-        </div>
-      </div>
-      <div class="intro-media" data-reveal>
-        <Placeholder name="home-intro" label="Insert image" ratio="4 / 3" />
-      </div>
-    </div>
-  </section>
-
   <!-- Firms -->
   <section class="firms">
     <div class="container">
       <div class="firms-grid">
       <div class="firms-rail" data-reveal>
-        <p class="eyebrow">Our firms</p>
-        <h2 class="section-title title-accent">Two specialisms, one group</h2>
+        <p class="eyebrow">Who we are</p>
+        <h2 class="section-title title-accent">One group. Two established firms.</h2>
         <p>
-          Audit, accounting, tax, cyber security, managed IT and digital
-          transformation — a comprehensive offering across the group. Keep
-          scrolling to meet both firms.
+          Mentora Group is the holding company of HLB Ireland — audit,
+          accounting and tax advisory since 1976 — and FutureRange, IT
+          services since 1995.
+        </p>
+        <p>
+          Each firm keeps the name, team and relationships its clients know;
+          the group behind them provides stability and long-term investment.
         </p>
       </div>
       <div class="firm-cards">
@@ -467,25 +444,6 @@ const services = [
   .diamond { color: var(--gold); font-size: 0.55rem; }
   .marquee-track .diamond:nth-of-type(even) { color: var(--teal-bright); }
 
-  /* intro — soft colour wash */
-  .intro { padding: 110px 0 90px; position: relative; overflow: hidden; }
-  .intro::before {
-    content: "";
-    position: absolute;
-    inset: -10%;
-    background:
-      radial-gradient(520px 360px at 92% 8%, rgba(59, 191, 208, 0.09), transparent 60%),
-      radial-gradient(460px 320px at 4% 100%, rgba(234, 182, 51, 0.08), transparent 60%);
-    pointer-events: none;
-  }
-  @media (prefers-reduced-motion: no-preference) {
-    .intro::before { animation: wash 20s ease-in-out infinite alternate; }
-  }
-  @keyframes wash {
-    from { transform: translate3d(0, 0, 0); }
-    to { transform: translate3d(-2.5%, 2.5%, 0) scale(1.04); }
-  }
-  .intro .container { position: relative; }
   .intro-grid {
     display: grid;
     grid-template-columns: 1.1fr 0.9fr;
@@ -497,7 +455,7 @@ const services = [
   .intro .body p + p { margin-top: 18px; }
 
   /* firms — pinned rail + stacking cards */
-  .firms { padding: 40px 0 110px; }
+  .firms { padding: 110px 0; }
   .firms-grid {
     display: grid;
     grid-template-columns: 0.85fr 1.15fr;
@@ -510,6 +468,7 @@ const services = [
   }
   .firms-rail h2 { margin-bottom: 18px; }
   .firms-rail p { max-width: 40ch; }
+  .firms-rail p + p { margin-top: 14px; }
   .firm-cards {
     display: grid;
     gap: 34px;
@@ -694,7 +653,7 @@ const services = [
   }
 
   @media (max-width: 960px) {
-    .hero-grid, .intro-grid { grid-template-columns: 1fr; }
+    .hero-grid { grid-template-columns: 1fr; }
     .firms-grid { grid-template-columns: 1fr; gap: 36px; }
     .firms-rail { position: static; }
     .firm-cards > .firm:nth-child(1),

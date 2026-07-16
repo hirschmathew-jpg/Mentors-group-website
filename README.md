@@ -39,7 +39,6 @@ the slot and push — the site picks it up automatically on the next deploy.
 | Slot (filename, + .jpg/.png/.webp) | Where it appears |
 | --- | --- |
 | `home-hero` | Homepage hero |
-| `home-intro` | Homepage "Who we are" |
 | `firm-hlb` | HLB Ireland card |
 | `firm-futurerange` | FutureRange card |
 | `about-hero` | About page hero |
