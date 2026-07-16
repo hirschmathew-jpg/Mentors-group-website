@@ -33,4 +33,4 @@ This acquisition marks the eighth completed by HLB Ireland since beginning its a
 
 ## About Mentora Group
 
-Mentora Group is a professional services group that brings together financial advisory, technology solutions and wealth management expertise. Founded in 2026 as the parent of HLB Ireland and FutureRange, Mentora Group serves owner-managed businesses and private clients across Ireland.
+Mentora Group is the holding company of HLB Ireland, an advisory and accounting firm, and FutureRange, an IT services firm. Formed in 2026, the group serves owner-managed businesses and private clients across Ireland.

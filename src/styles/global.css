@@ -21,9 +21,9 @@
 
 :root {
   /* brand */
-  --ink: #001b24;
-  --ink-deep: #00141b;
-  --ink-2: #0a2e3a;
+  --ink: #2f4752;
+  --ink-deep: #24363f;
+  --ink-2: #3a545f;
   --paper: #f4f6f5;
   --paper-2: #eaeeec;
   --head: #10303c;
@@ -32,7 +32,7 @@
   --gold-deep: #b98d20;
   --teal: #0f5e76;
   --line: #dce3e1;
-  --hairline-dark: #16404d;
+  --hairline-dark: #46606b;
   /* dark page sections (heroes, stats, CTA) — brand slate blue.
      The header/footer chrome stays on --ink / --ink-deep. */
   --band-bg: #2f4752;
@@ -116,7 +116,7 @@ h1, h2, h3, h4 {
   cursor: pointer;
   border: none;
 }
-.btn-gold { background: var(--gold); color: var(--ink); }
+.btn-gold { background: var(--gold); color: #001b24; }
 .btn-gold:hover { background: #f2c44e; }
 .btn-ghost { border: 1px solid rgba(255, 255, 255, 0.45); color: #f0f4f5; background: transparent; }
 .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }

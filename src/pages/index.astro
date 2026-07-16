@@ -19,7 +19,7 @@ const posts = (await getCollection('insights'))
 
 <BaseLayout
   title="Mentora Group — Your partner in growth"
-  description="Mentora Group unites HLB Ireland and FutureRange — accounting expertise, strategic advisory, cybersecurity and technology for ambitious Irish businesses."
+  description="Mentora Group is the holding company of HLB Ireland, an advisory and accounting firm, and FutureRange, an IT services firm — serving ambitious businesses across Ireland."
 >
   <!-- Hero -->
   <section class="hero band on-dark">
@@ -28,9 +28,9 @@ const posts = (await getCollection('insights'))
         <p class="eyebrow">The Mentora Group</p>
         <h1>Your partner in <em>growth</em></h1>
         <p class="lede">
-          Mentora Group brings HLB Ireland and FutureRange together as one —
-          accounting expertise, strategic advisory, cybersecurity and
-          technology, working side by side for ambitious Irish businesses.
+          Mentora Group is the holding company of HLB Ireland and FutureRange
+          — advisory, accounting and IT services for ambitious businesses
+          across Ireland.
         </p>
         <div class="hero-actions">
           <a class="btn btn-gold" href={href('/contact/')}>Talk to us <span aria-hidden="true">→</span></a>
@@ -48,7 +48,7 @@ const posts = (await getCollection('insights'))
         />
         <p class="kicker">
           <strong>Two firms. Five decades. One group.</strong>
-          Advisory since 1976. Technology since 1995. United in 2026.
+          Advisory since 1976. Technology since 1995. One group since 2026.
         </p>
       </div>
     </div>
@@ -59,17 +59,19 @@ const posts = (await getCollection('insights'))
     <div class="container intro-grid">
       <div data-reveal>
         <p class="eyebrow">Who we are</p>
-        <h2 class="section-title">Financial expertise and technology capability, working as one</h2>
+        <h2 class="section-title">One group. Two established firms.</h2>
         <div class="body">
           <p>
-            Mentora Group unites deep accounting and advisory experience with
-            advanced technology capability under one roof — a team that
-            understands your business today and grows with you over time.
+            Mentora Group is the holding company of HLB Ireland, an advisory
+            and accounting firm working with ambitious domestic and
+            international businesses since 1976, and FutureRange, an IT
+            services firm providing cyber security, managed services and
+            digital transformation since 1995.
           </p>
           <p>
-            With a shared heritage built on decades of trust, HLB Ireland and
-            FutureRange combine to deliver continuity, insight and support when
-            it matters most.
+            Each firm keeps the name, team and relationships its clients know.
+            Behind them, the group provides shared strength, stability and
+            investment for the long term.
           </p>
         </div>
       </div>
@@ -101,8 +103,8 @@ const posts = (await getCollection('insights'))
           <h2 class="section-title">One group, two specialisms</h2>
         </div>
         <p>
-          Expertise in advisory, accounting, tax, cybersecurity, AI and
-          technology — a comprehensive offering for owner-managed businesses.
+          Advisory, accounting, tax, cyber security, managed IT and digital
+          transformation — a comprehensive offering across the group.
         </p>
       </div>
       <div class="firm-cards">
@@ -116,7 +118,7 @@ const posts = (await getCollection('insights'))
           <span class="firm-label">
             <span class="tag">Advisory, Accounting &amp; Tax</span>
             <span class="name">HLB Ireland <span class="go" aria-hidden="true">→</span></span>
-            <span class="desc">Partner-led advisory for owner-managed businesses since 1976.</span>
+            <span class="desc">Audit &amp; assurance, taxation, business advisory, corporate finance and outsourcing — since 1976.</span>
           </span>
         </a>
         <a class="firm" href="https://www.futurerange.ie" rel="noopener" data-reveal>
@@ -129,7 +131,7 @@ const posts = (await getCollection('insights'))
           <span class="firm-label">
             <span class="tag">Managed IT, Security &amp; Digital</span>
             <span class="name">FutureRange <span class="go" aria-hidden="true">→</span></span>
-            <span class="desc">Managed IT, cybersecurity and digital transformation since 1995.</span>
+            <span class="desc">Cyber security &amp; managed operations, modern workplace, and cloud, AI &amp; transformation — since 1995.</span>
           </span>
         </a>
       </div>
@@ -139,14 +141,15 @@ const posts = (await getCollection('insights'))
   <!-- Legacy: quote + stats -->
   <section class="legacy band on-dark">
     <div class="container">
-      <figure data-reveal>
-        <blockquote>
-          “The name Mentora is rooted in the word <em>mentor</em> — the trusted
-          guide whose value is measured in the quality of counsel given over
-          time.”
-        </blockquote>
-        <figcaption>Mark Butler, Group Managing Partner</figcaption>
-      </figure>
+      <div class="legacy-head" data-reveal>
+        <p class="eyebrow">The group</p>
+        <h2 class="section-title">Established expertise, held for the long term</h2>
+        <p class="legacy-sub">
+          Mentora exists to give both firms a permanent home — with the backing
+          to invest, acquire and grow, while every client keeps the team they
+          trust.
+        </p>
+      </div>
       <dl class="stats" data-reveal>
         <div class="stat"><dt>HLB Ireland founded</dt><dd>1976</dd></div>
         <div class="stat"><dt>FutureRange established</dt><dd>1995</dd></div>
@@ -331,7 +334,7 @@ const posts = (await getCollection('insights'))
     content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(6deg, rgba(0, 27, 36, 0.92) 18%, rgba(0, 27, 36, 0.25) 60%, rgba(0, 27, 36, 0.05));
+    background: linear-gradient(6deg, rgba(28, 42, 49, 0.92) 18%, rgba(28, 42, 49, 0.25) 60%, rgba(28, 42, 49, 0.05));
   }
   .firm-label {
     position: absolute;
@@ -386,17 +389,9 @@ const posts = (await getCollection('insights'))
 
   /* legacy */
   .legacy { padding: 96px 0; }
-  blockquote {
-    font-family: var(--font-display);
-    font-size: clamp(1.5rem, 2.8vw, 2.2rem);
-    font-weight: 460;
-    color: #f0f4f5;
-    line-height: 1.4;
-    max-width: 26ch;
-    margin-bottom: 14px;
-  }
-  blockquote em { color: var(--gold); }
-  figcaption { font-size: 0.9rem; color: var(--muted-on-dark); margin-bottom: 64px; }
+  .legacy-head { max-width: 640px; margin-bottom: 64px; }
+  .legacy-head h2 { margin-bottom: 16px; }
+  .legacy-sub { color: var(--muted-on-dark); }
   .stats {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
