@@ -23,17 +23,18 @@
   /* brand */
   --ink: #2f4752;
   --ink-deep: #1a2930;
-  --paper: #f4f6f5;
-  --head: #10303c;
-  --body: #44575e;
+  --paper: #223540;
+  --surface: #334d59;
+  --head: #eef4f5;
+  --body: #c2d1d6;
   --gold: #eab633;
-  --gold-deep: #8a6a15;
+  --gold-deep: #e2b545;
   --teal-bright: #3bbfd0;
-  --teal-ink: #0d6a78;
+  --teal-ink: #8bdae5;
   --violet: #8f7ff2;
-  --violet-ink: #5b4bd1;
-  --teal: #0f5e76;
-  --line: #dce3e1;
+  --violet-ink: #bcb1fb;
+  --teal: #7fc6d8;
+  --line: rgba(255, 255, 255, 0.14);
   --hairline-dark: #46606b;
   /* dark page sections (heroes, stats, CTA) — brand slate blue.
      The header/footer chrome stays on --ink / --ink-deep. */
