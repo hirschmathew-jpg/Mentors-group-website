@@ -38,28 +38,41 @@ const areas = [
           business day.
         </p>
 
-        <h3 class="mini">Head office</h3>
-        <p class="address">
-          The Courtyard,<br />
-          Carmanhall Road,<br />
-          Sandyford, Dublin 18, D18 NW62
-        </p>
-        <h3 class="mini">Locations</h3>
-        <p class="places">Sandyford · Beacon · Merrion · Galway · Cork · Limerick</p>
+        <div class="info-block">
+          <h3 class="mini">Head office</h3>
+          <address class="address">
+            The Courtyard, Carmanhall Road,<br />
+            Sandyford, Dublin 18, D18 NW62
+          </address>
+        </div>
 
-        <h3 class="mini">Direct enquiries</h3>
-        <dl class="direct">
-          <div>
-            <dt>HLB Ireland</dt>
-            <dd><a href="mailto:info@hlb.ie">info@hlb.ie</a></dd>
-            <dd><a href="tel:+35312915265">+353 (0)1 291 5265</a></dd>
-          </div>
-          <div>
-            <dt>FutureRange</dt>
-            <dd><a href="mailto:info@futurerange.ie">info@futurerange.ie</a></dd>
-            <dd><a href="tel:+35312960560">+353 (0)1 296 0560</a></dd>
-          </div>
-        </dl>
+        <div class="info-block">
+          <h3 class="mini">Locations</h3>
+          <ul class="places" role="list">
+            <li>Sandyford</li>
+            <li>Beacon</li>
+            <li>Merino</li>
+            <li>Galway</li>
+            <li>Cork</li>
+            <li>Limerick</li>
+          </ul>
+        </div>
+
+        <div class="info-block">
+          <h3 class="mini">Direct enquiries</h3>
+          <dl class="direct">
+            <div class="firm-contact">
+              <dt>HLB Ireland</dt>
+              <dd><a href="mailto:info@hlb.ie">info@hlb.ie</a></dd>
+              <dd><a href="tel:+35312915265">+353 (0)1 291 5265</a></dd>
+            </div>
+            <div class="firm-contact">
+              <dt>FutureRange</dt>
+              <dd><a href="mailto:info@futurerange.ie">info@futurerange.ie</a></dd>
+              <dd><a href="tel:+35312960560">+353 (0)1 296 0560</a></dd>
+            </div>
+          </dl>
+        </div>
       </div>
 
       <form class="form" method="get" action="mailto:info@hlb.ie" data-reveal>
@@ -112,6 +125,7 @@ const areas = [
   }
   .info h2 { margin-bottom: 16px; }
   .info > p { max-width: 46ch; }
+  .info-block { margin-top: 36px; }
   .mini {
     font-family: var(--font-sans);
     text-transform: uppercase;
@@ -119,24 +133,59 @@ const areas = [
     font-size: 0.76rem;
     font-weight: 700;
     color: var(--gold-deep);
-    margin: 36px 0 12px;
+    margin-bottom: 14px;
   }
   .address {
+    font-style: normal;
     color: var(--head);
     font-weight: 600;
+    line-height: 1.6;
+    background: #fff;
+    border: 1px solid var(--line);
     border-left: 3px solid var(--gold);
-    padding-left: 14px;
+    padding: 16px 20px;
+    display: inline-block;
   }
-  .places { color: var(--head); font-weight: 600; }
-  .direct { display: grid; gap: 12px; }
+  .places {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 0;
+  }
+  .places li {
+    background: #fff;
+    border: 1px solid var(--line);
+    color: var(--head);
+    font-weight: 600;
+    font-size: 0.88rem;
+    padding: 0.35rem 0.85rem;
+  }
+  .direct {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .firm-contact {
+    background: #fff;
+    border: 1px solid var(--line);
+    padding: 16px 20px;
+  }
   .direct dt {
-    font-size: 0.78rem;
+    font-size: 0.74rem;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--body);
-    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: var(--gold-deep);
+    font-weight: 800;
+    margin-bottom: 8px;
   }
-  .direct dd a { font-weight: 600; }
+  .direct dd { margin: 0; }
+  .direct dd a {
+    font-weight: 600;
+    display: inline-block;
+    padding: 2px 0;
+  }
+  .direct dd a:hover { color: var(--gold-deep); }
 
   .form {
     background: #fff;
@@ -180,5 +229,8 @@ const areas = [
     .grid { grid-template-columns: 1fr; gap: 48px; }
     .form { padding: 26px; }
     .row.two { grid-template-columns: 1fr; gap: 0; }
+  }
+  @media (max-width: 480px) {
+    .direct { grid-template-columns: 1fr; }
   }
 </style>
