@@ -3,8 +3,6 @@ title: 'Irish SME Technology Report 2026'
 description: 'How owner-managed businesses across Ireland are approaching AI, cybersecurity and digital transformation — and where the gaps remain.'
 category: 'Report'
 date: 2026-04-08
-image: '../../assets/photos/team-group.webp'
-imageAlt: 'The team behind the Irish SME Technology Report 2026'
 ---
 
 FutureRange, in partnership with Mentora Group, today publishes the Irish SME Technology Report 2026 — a detailed look at how owner-managed businesses across Ireland are navigating the rapidly evolving technology landscape.

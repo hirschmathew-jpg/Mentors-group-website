@@ -1,64 +1,64 @@
 ---
-import { Image } from 'astro:assets';
+import { href } from '../lib/paths';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Cta from '../components/Cta.astro';
-
-import sandyfordOffice from '../assets/photos/sandyford-office.webp';
-
+import Placeholder from '../components/Placeholder.astro';
 ---
 
 <BaseLayout
   title="About — Mentora Group"
-  description="Mentora Group is the holding company of HLB Ireland, an audit, accounting and tax advisory firm, and FutureRange, an IT services firm — two established firms, one group."
+  description="Mentora Group is the holding company of HLB Ireland, an audit, accounting and tax advisory firm, and FutureRange, an IT services firm — one owner, two independent firms."
 >
   <!-- Page hero -->
   <section class="page-hero on-dark">
     <div class="container hero-grid">
       <div>
         <p class="eyebrow">About Mentora</p>
-        <h1>Two firms. Five decades. One group.</h1>
+        <h1>The group behind the firms<span class="dot">.</span></h1>
         <p class="lede">
-          Mentora Group is the holding company of HLB Ireland, an audit,
-          accounting and tax advisory firm, and FutureRange, an IT services
-          firm — five decades of experience serving business across Ireland.
+          One owner, two independent firms, every discipline an ambitious
+          business needs — that is Mentora Group.
         </p>
       </div>
       <div class="hero-media">
-        <Image
-          src={sandyfordOffice}
-          alt="The Mentora Group office in Sandyford, Dublin"
-          widths={[640, 960, 1280]}
-          sizes="(min-width: 960px) 42vw, 100vw"
-          loading="eager"
-          fetchpriority="high"
-        />
+        <Placeholder label="Insert image" ratio="4 / 3" dark />
       </div>
     </div>
   </section>
 
   <!-- Story -->
   <section class="story">
-    <div class="container">
+    <div class="container story-grid">
       <div data-reveal>
         <p class="eyebrow">Our story</p>
-        <h2 class="section-title">Built on decades of trust</h2>
+        <h2 class="section-title title-accent">Why Mentora exists</h2>
         <div class="body">
           <p>
-            HLB Ireland was established in 1976 and is headquartered in Dublin
-            — a full-service advisory and accounting firm of 180 professionals,
-            where every assignment is partner-led.
+            Mentora Group was formed in 2026 to hold two of Ireland's
+            established firms under one owner: HLB Ireland, the
+            Dublin-headquartered audit, accounting and tax advisory firm
+            founded in 1976, and FutureRange, the IT services firm founded in
+            1995 and now operating across the island of Ireland.
           </p>
           <p>
-            FutureRange was founded in 1995 by entrepreneur Tom Haugh — three
-            decades of managed IT, cybersecurity and digital transformation,
-            today an all-island business.
+            The group exists for a simple reason: a business's finances and
+            its technology increasingly depend on each other, and almost
+            nobody handles both well. HLB Ireland brings 180 partner-led
+            professionals. FutureRange brings three decades of cyber security,
+            managed IT and cloud. Mentora holds them together — each firm
+            keeping its own name, team and clients.
           </p>
           <p>
-            Formed in 2026, Mentora Group is the holding company that brings
-            them together — and the structure through which the group will
-            continue to grow.
+            Backed by Cardinal Capital since 2025, the group has completed
+            twelve acquisitions in seven years — and is built to keep growing.
+            {/* JOIN-PAGE: remove this sentence if the join page is removed */}
+            If your practice is weighing its future,
+            <a href={href('/join-the-group/')}>see what joining looks like</a>.
           </p>
         </div>
+      </div>
+      <div class="story-media" data-reveal>
+        <Placeholder label="Insert image" ratio="3 / 4" />
       </div>
     </div>
   </section>
@@ -73,23 +73,26 @@ import sandyfordOffice from '../assets/photos/sandyford-office.webp';
     gap: 56px;
     align-items: center;
   }
-  .hero-media :global(img) {
-    width: 100%;
-    height: auto;
-    clip-path: polygon(10% 0, 100% 0, 100% 100%, 0 100%);
-  }
+  h1 .dot { color: var(--gold); }
 
   .story { padding: 110px 0; }
+  .story-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 80px;
+    align-items: start;
+  }
   .story h2 { margin-bottom: 26px; }
   .story .body p { max-width: 62ch; }
   .story .body p + p { margin-top: 18px; }
-
-
-  @media (prefers-reduced-motion: no-preference) {
-    }
+  .story .body a {
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .story .body a:hover { color: var(--gold-deep); }
 
   @media (max-width: 900px) {
-    .hero-grid { grid-template-columns: 1fr; }
-    .hero-media :global(img) { clip-path: none; }
+    .hero-grid, .story-grid { grid-template-columns: 1fr; }
   }
 </style>

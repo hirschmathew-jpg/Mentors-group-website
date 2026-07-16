@@ -3,15 +3,12 @@ import { glob } from 'astro/loaders';
 
 const insights = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/insights' }),
-  schema: ({ image }) =>
-    z.object({
-      title: z.string(),
-      description: z.string(),
-      category: z.enum(['News', 'Report', 'Cybersecurity', 'Advisory', 'Technology']),
-      date: z.coerce.date(),
-      image: image(),
-      imageAlt: z.string(),
-    }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    category: z.enum(['News', 'Report', 'Cybersecurity', 'Advisory', 'Technology']),
+    date: z.coerce.date(),
+  }),
 });
 
 export const collections = { insights };

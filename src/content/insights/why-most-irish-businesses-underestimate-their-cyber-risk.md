@@ -3,8 +3,6 @@ title: 'Why most Irish businesses underestimate their cyber risk'
 description: 'The gap between perceived risk and actual risk — and what owner-managed businesses need to do to close it before an incident occurs.'
 category: 'Cybersecurity'
 date: 2026-03-20
-image: '../../assets/photos/cyber-keyboard.webp'
-imageAlt: 'A backlit keyboard in a darkened room'
 ---
 
 There is a consistent pattern in how Irish businesses think about cybersecurity. They know it is important. They believe they have addressed it. And they are often wrong about the second part.

@@ -1,24 +1,28 @@
 ---
 import { href } from '../lib/paths';
-import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Cta from '../components/Cta.astro';
 import PostCard from '../components/PostCard.astro';
-
-import teamGroup from '../assets/photos/team-group.webp';
-import professionalsDesk from '../assets/photos/professionals-desk.webp';
-import teamCollaborating from '../assets/photos/team-collaborating.webp';
-import hlbReception from '../assets/photos/hlb-reception.webp';
-import futurerangeSign from '../assets/photos/futurerange-sign.webp';
+import Placeholder from '../components/Placeholder.astro';
 
 const posts = (await getCollection('insights'))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .slice(0, 3);
+
+const services = [
+  'Audit & Assurance',
+  'Taxation',
+  'Business Advisory',
+  'Corporate Finance',
+  'Cyber Security',
+  'Managed IT',
+  'Cloud, AI & Transformation',
+];
 ---
 
 <BaseLayout
-  title="Mentora Group — Your partner in growth"
+  title="Mentora Group — Audit. Advisory. Technology. One group."
   description="Mentora Group is the holding company of HLB Ireland, an audit, accounting and tax advisory firm, and FutureRange, an IT services firm — serving ambitious businesses across Ireland."
 >
   <!-- Hero -->
@@ -26,11 +30,11 @@ const posts = (await getCollection('insights'))
     <div class="container hero-grid">
       <div class="hero-copy">
         <p class="eyebrow">The Mentora Group</p>
-        <h1>Your partner in <em>growth</em></h1>
+        <h1>Audit<span class="dot">.</span> Advisory<span class="dot">.</span> Technology<span class="dot">.</span><br />One group<span class="dot">.</span></h1>
         <p class="lede">
           Mentora Group is the holding company of HLB Ireland and FutureRange
-          — audit, accounting, tax and IT services for ambitious businesses
-          across Ireland.
+          — 180+ professionals across audit, accounting, tax and IT, for
+          ambitious businesses across Ireland.
         </p>
         <div class="hero-actions">
           <a class="btn btn-gold" href={href('/contact/')}>Talk to us <span aria-hidden="true">→</span></a>
@@ -38,28 +42,29 @@ const posts = (await getCollection('insights'))
         </div>
       </div>
       <div class="hero-media">
-        <Image
-          src={teamGroup}
-          alt="The Mentora Group team"
-          widths={[640, 960, 1280]}
-          sizes="(min-width: 960px) 45vw, 100vw"
-          loading="eager"
-          fetchpriority="high"
-        />
-        <p class="kicker">
-          <strong>Two firms. Five decades. One group.</strong>
-          Advisory since 1976. Technology since 1995. One group since 2026.
-        </p>
+        <Placeholder label="Insert image" ratio="4 / 3" dark />
       </div>
     </div>
   </section>
+
+  <!-- Service strip -->
+  <div class="strip">
+    <div class="container strip-inner" aria-label="Group services">
+      {services.map((s, i) => (
+        <>
+          {i > 0 && <span class="diamond" aria-hidden="true">◆</span>}
+          <span>{s}</span>
+        </>
+      ))}
+    </div>
+  </div>
 
   <!-- Intro -->
   <section class="intro">
     <div class="container intro-grid">
       <div data-reveal>
         <p class="eyebrow">Who we are</p>
-        <h2 class="section-title">One group. Two established firms.</h2>
+        <h2 class="section-title title-accent">One group. Two established firms.</h2>
         <div class="body">
           <p>
             Mentora Group is the holding company of HLB Ireland, an audit,
@@ -76,20 +81,7 @@ const posts = (await getCollection('insights'))
         </div>
       </div>
       <div class="intro-media" data-reveal>
-        <Image
-          class="ph-a"
-          src={professionalsDesk}
-          alt="Mentora Group professionals working together"
-          widths={[480, 800]}
-          sizes="(min-width: 960px) 32vw, 80vw"
-        />
-        <Image
-          class="ph-b"
-          src={teamCollaborating}
-          alt="Team collaborating in the office"
-          widths={[400, 640]}
-          sizes="(min-width: 960px) 20vw, 50vw"
-        />
+        <Placeholder label="Insert image" ratio="4 / 3" />
       </div>
     </div>
   </section>
@@ -100,7 +92,7 @@ const posts = (await getCollection('insights'))
       <div class="firms-head" data-reveal>
         <div>
           <p class="eyebrow">Our firms</p>
-          <h2 class="section-title">One group, two specialisms</h2>
+          <h2 class="section-title">Two specialisms, one owner</h2>
         </div>
         <p>
           Audit, accounting, tax, cyber security, managed IT and digital
@@ -109,26 +101,16 @@ const posts = (await getCollection('insights'))
       </div>
       <div class="firm-cards">
         <a class="firm" href="https://www.hlb.ie" rel="noopener" data-reveal>
-          <Image
-            src={hlbReception}
-            alt="The HLB Ireland office reception"
-            widths={[640, 960, 1280]}
-            sizes="(min-width: 800px) 48vw, 100vw"
-          />
-          <span class="firm-label">
+          <Placeholder label="Insert image" ratio="16 / 9" />
+          <span class="firm-body">
             <span class="tag">Audit, Accounting &amp; Tax</span>
             <span class="name">HLB Ireland <span class="go" aria-hidden="true">→</span></span>
             <span class="desc">Audit &amp; assurance, accounting, taxation and business advisory — since 1976.</span>
           </span>
         </a>
         <a class="firm" href="https://www.futurerange.ie" rel="noopener" data-reveal>
-          <Image
-            src={futurerangeSign}
-            alt="FutureRange office signage"
-            widths={[640, 960, 1280]}
-            sizes="(min-width: 800px) 48vw, 100vw"
-          />
-          <span class="firm-label">
+          <Placeholder label="Insert image" ratio="16 / 9" />
+          <span class="firm-body">
             <span class="tag">Managed IT, Security &amp; Digital</span>
             <span class="name">FutureRange <span class="go" aria-hidden="true">→</span></span>
             <span class="desc">Cyber security &amp; managed operations, modern workplace, and cloud, AI &amp; transformation — since 1995.</span>
@@ -138,11 +120,11 @@ const posts = (await getCollection('insights'))
     </div>
   </section>
 
-  <!-- Legacy: quote + stats -->
+  <!-- The group in numbers -->
   <section class="legacy band on-dark">
     <div class="container">
       <div class="legacy-head" data-reveal>
-        <p class="eyebrow">The group</p>
+        <p class="eyebrow">The group in numbers</p>
         <h2 class="section-title">Established expertise, held for the long term</h2>
         <p class="legacy-sub">
           Mentora exists to give both firms a permanent home — with the backing
@@ -159,16 +141,15 @@ const posts = (await getCollection('insights'))
     </div>
   </section>
 
-  <!-- Approach -->
+  <!-- How we work -->
   <section class="approach">
     <div class="container">
       <div class="approach-head" data-reveal>
         <p class="eyebrow">How we work</p>
-        <h2 class="section-title">What the group gets you in practice</h2>
+        <h2 class="section-title title-accent">What the group gets you in practice</h2>
       </div>
       <div class="pillars" data-reveal>
         <div class="pillar">
-          <div class="glyph" aria-hidden="true"></div>
           <h3>Finance and IT at one table</h3>
           <p>
             The same group holds your accountants and your IT provider. When a
@@ -178,7 +159,6 @@ const posts = (await getCollection('insights'))
           </p>
         </div>
         <div class="pillar">
-          <div class="glyph" aria-hidden="true"></div>
           <h3>Partner-led, not passed down</h3>
           <p>
             Every HLB Ireland assignment is led by a partner — you deal
@@ -187,7 +167,6 @@ const posts = (await getCollection('insights'))
           </p>
         </div>
         <div class="pillar">
-          <div class="glyph" aria-hidden="true"></div>
           <h3>A home for good practices</h3>
           <p>
             Twelve practices have joined the group in seven years, and we
@@ -224,46 +203,45 @@ const posts = (await getCollection('insights'))
   .hero { overflow: hidden; }
   .hero-grid {
     display: grid;
-    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
     align-items: center;
-    gap: 56px;
-    padding-top: 84px;
-    padding-bottom: 92px;
+    gap: 64px;
+    padding-top: 96px;
+    padding-bottom: 104px;
   }
   h1 {
     color: #f6f5fa;
-    font-size: clamp(2.6rem, 5.2vw, 4.1rem);
-    font-weight: 480;
-    letter-spacing: -0.01em;
-    margin-bottom: 26px;
-    max-width: 12ch;
+    font-size: clamp(2.7rem, 5.6vw, 4.4rem);
+    margin-bottom: 28px;
   }
-  h1 em { font-style: italic; color: var(--gold); }
+  h1 .dot { color: var(--gold); }
   .lede {
-    font-size: 1.12rem;
-    max-width: 46ch;
-    margin-bottom: 38px;
+    font-size: 1.15rem;
+    max-width: 48ch;
+    margin-bottom: 40px;
   }
   .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
-  .hero-media { position: relative; }
-  .hero-media :global(img) {
-    width: 100%;
-    height: auto;
-    clip-path: polygon(10% 0, 100% 0, 100% 100%, 0 100%);
-  }
-  .kicker {
-    position: absolute;
-    bottom: -22px;
-    right: -12px;
+
+  /* service strip */
+  .strip {
     background: var(--ink-deep);
-    border-left: 3px solid var(--gold);
-    padding: 16px 22px;
-    max-width: 300px;
-    color: #dce7ea;
-    font-size: 0.86rem;
-    line-height: 1.55;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
   }
-  .kicker strong { color: #fff; display: block; font-size: 0.95rem; }
+  .strip-inner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px 18px;
+    padding-top: 18px;
+    padding-bottom: 18px;
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #a3b7bd;
+  }
+  .diamond { color: var(--gold); font-size: 0.55rem; }
 
   /* intro */
   .intro { padding: 110px 0 90px; }
@@ -271,30 +249,11 @@ const posts = (await getCollection('insights'))
     display: grid;
     grid-template-columns: 1.1fr 0.9fr;
     gap: 72px;
-    align-items: start;
+    align-items: center;
   }
   .intro h2 { margin-bottom: 26px; }
   .intro .body p { max-width: 62ch; }
   .intro .body p + p { margin-top: 18px; }
-  .intro-media { position: relative; padding-bottom: 46px; }
-  .intro-media :global(.ph-a) { width: 82%; }
-  .intro-media :global(.ph-b) {
-    width: 52%;
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    border: 6px solid var(--paper);
-  }
-  .intro-media::before {
-    content: "";
-    position: absolute;
-    top: -18px;
-    left: -18px;
-    width: 120px;
-    height: 120px;
-    background: linear-gradient(135deg, var(--gold) 49.5%, transparent 50%);
-    opacity: 0.9;
-  }
 
   /* firms */
   .firms { padding: 40px 0 110px; }
@@ -312,85 +271,68 @@ const posts = (await getCollection('insights'))
     gap: 28px;
   }
   .firm {
-    position: relative;
     display: block;
-    min-height: 380px;
-    overflow: hidden;
-    color: #fff;
-    background: var(--ink);
-  }
-  .firm :global(img) {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    filter: saturate(0.9);
+    background: #fff;
+    border: 1px solid var(--line);
+    border-top: 4px solid var(--gold);
+    color: inherit;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
   @media (prefers-reduced-motion: no-preference) {
-    .firm :global(img) { transition: transform 0.5s ease; }
-    .firm:hover :global(img) { transform: scale(1.035); }
+    .firm:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 40px rgba(26, 41, 48, 0.14);
+    }
   }
-  .firm::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(6deg, rgba(28, 42, 49, 0.92) 18%, rgba(28, 42, 49, 0.25) 60%, rgba(28, 42, 49, 0.05));
-  }
-  .firm-label {
-    position: absolute;
-    z-index: 2;
-    left: 34px;
-    right: 34px;
-    bottom: 30px;
-  }
-  .firm-label .tag {
+  .firm-body { display: block; padding: 28px 30px 32px; }
+  .firm .tag {
     text-transform: uppercase;
     letter-spacing: 0.15em;
     font-size: 0.72rem;
-    font-weight: 700;
-    color: var(--gold);
+    font-weight: 800;
+    color: var(--gold-deep);
     display: block;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
   }
-  .firm-label .name {
+  .firm .name {
     font-family: var(--font-display);
     font-size: 1.9rem;
-    font-weight: 520;
-    color: #fff;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--head);
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 16px;
   }
-  .firm-label .go {
-    font-family: var(--font-sans);
+  .firm .go {
     font-size: 1.2rem;
     font-weight: 400;
     width: 44px;
     height: 44px;
-    border: 1px solid rgba(255, 255, 255, 0.35);
+    border: 1px solid var(--line);
     display: grid;
     place-items: center;
     border-radius: 999px;
     transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    flex: none;
   }
   .firm:hover .go {
     background: var(--gold);
     border-color: var(--gold);
     color: var(--ink);
   }
-  .firm-label .desc {
-    color: #c9d6da;
-    font-size: 0.95rem;
-    max-width: 46ch;
-    margin-top: 10px;
+  .firm .desc {
     display: block;
+    color: var(--body);
+    font-size: 0.95rem;
+    margin-top: 10px;
+    max-width: 46ch;
   }
 
-  /* legacy */
-  .legacy { padding: 96px 0; }
-  .legacy-head { max-width: 640px; margin-bottom: 64px; }
+  /* numbers */
+  .legacy { padding: 100px 0; }
+  .legacy-head { max-width: 680px; margin-bottom: 64px; }
   .legacy-head h2 { margin-bottom: 16px; }
   .legacy-sub { color: var(--muted-on-dark); }
   .stats {
@@ -400,19 +342,18 @@ const posts = (await getCollection('insights'))
     border-top: 1px solid var(--hairline-band);
     padding-top: 48px;
   }
-  /* column-reverse puts the number above its label; flex-end packs the
-     stack to the cell's top so all numbers align regardless of label wrap */
   .stat { display: flex; flex-direction: column-reverse; justify-content: flex-end; }
   .stat dd {
     font-family: var(--font-display);
     font-variant-numeric: tabular-nums;
-    font-size: clamp(2.4rem, 4vw, 3.4rem);
-    font-weight: 500;
+    font-size: clamp(2.8rem, 4.6vw, 4.2rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
     color: var(--gold);
     line-height: 1;
   }
   .stat dt {
-    margin-top: 10px;
+    margin-top: 12px;
     font-size: 0.85rem;
     letter-spacing: 0.04em;
     color: var(--muted-on-dark);
@@ -421,23 +362,33 @@ const posts = (await getCollection('insights'))
 
   /* approach */
   .approach { padding: 110px 0; }
-  .approach-head { max-width: 640px; margin-bottom: 56px; }
-  .approach-head h2 { margin-bottom: 18px; }
+  .approach-head { max-width: 680px; margin-bottom: 56px; }
   .pillars {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    background: var(--line);
     border: 1px solid var(--line);
+  }
+  .pillar {
     background: #fff;
+    padding: 44px 38px;
+    position: relative;
   }
-  .pillar { padding: 44px 38px; border-left: 1px solid var(--line); }
-  .pillar:first-child { border-left: none; }
-  .glyph {
-    width: 46px;
-    height: 46px;
-    margin-bottom: 22px;
-    background: linear-gradient(135deg, var(--gold) 49.5%, transparent 50%);
+  .pillar::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 4px;
+    background: var(--gold);
   }
-  .pillar h3 { font-size: 1.25rem; margin-bottom: 12px; font-weight: 560; }
+  @media (prefers-reduced-motion: no-preference) {
+    .pillar::before { transition: width 0.3s ease; }
+  }
+  .pillar:hover::before { width: 100%; }
+  .pillar h3 { font-size: 1.3rem; margin-bottom: 12px; }
   .pillar p { font-size: 0.95rem; }
   .pillar a {
     font-weight: 700;
@@ -472,13 +423,11 @@ const posts = (await getCollection('insights'))
 
   @media (max-width: 960px) {
     .hero-grid, .intro-grid, .firm-cards { grid-template-columns: 1fr; }
-    .hero-media :global(img) { clip-path: none; }
-    .kicker { position: static; margin-top: 14px; max-width: none; }
+    .hero-grid { padding-top: 72px; padding-bottom: 80px; }
     .stats { grid-template-columns: 1fr 1fr; }
     .pillars { grid-template-columns: 1fr; }
-    .pillar { border-left: none; border-top: 1px solid var(--line); }
-    .pillar:first-child { border-top: none; }
     .posts { grid-template-columns: 1fr; }
     .firms-head { flex-direction: column; align-items: flex-start; }
+    .strip-inner { justify-content: flex-start; }
   }
 </style>

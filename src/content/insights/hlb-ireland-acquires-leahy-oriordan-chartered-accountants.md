@@ -3,8 +3,6 @@ title: "HLB Ireland completes acquisition of Leahy O'Riordan Chartered Accountan
 description: "The Dublin practice joins HLB Ireland in the group's twelfth acquisition in seven years, bringing headcount to 180."
 category: 'News'
 date: 2026-04-30
-image: '../../assets/photos/hlb-reception.webp'
-imageAlt: 'The HLB Ireland office reception'
 ---
 
 HLB Ireland has completed the acquisition of Leahy O'Riordan Chartered Accountants, a Dublin practice, in a deal finalised in April 2026. The move brings HLB Ireland's headcount to 180 professionals.

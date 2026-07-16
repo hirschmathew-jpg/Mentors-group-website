@@ -40,7 +40,8 @@
 
   --container: 1180px;
 
-  --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-display: 'Manrope', system-ui, -apple-system, sans-serif;
+  --font-serif: 'Fraunces', Georgia, 'Times New Roman', serif;
   --font-sans: 'Manrope', system-ui, -apple-system, sans-serif;
 }
 
@@ -67,8 +68,9 @@ a { color: var(--teal); text-decoration: none; }
 h1, h2, h3, h4 {
   font-family: var(--font-display);
   color: var(--head);
-  font-weight: 550;
-  line-height: 1.12;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.06;
   text-wrap: balance;
 }
 
@@ -103,23 +105,36 @@ h1, h2, h3, h4 {
 .btn {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   font-family: var(--font-sans);
   font-weight: 800;
   font-size: 0.85rem;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  padding: 1rem 1.7rem;
+  padding: 1.05rem 1.9rem;
   transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
   cursor: pointer;
   border: none;
 }
+.btn [aria-hidden] { transition: transform 0.2s ease; }
+.btn:hover [aria-hidden] { transform: translateX(4px); }
 .btn-gold { background: var(--gold); color: #001b24; }
 .btn-gold:hover { background: #f2c44e; }
 .btn-ghost { border: 1px solid rgba(255, 255, 255, 0.45); color: #f0f4f5; background: transparent; }
 .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
 
-.section-title { font-size: clamp(1.9rem, 3.4vw, 2.7rem); }
+.section-title { font-size: clamp(2rem, 3.8vw, 3.1rem); }
+/* gold underscore accent for section titles that want extra punch */
+.title-accent { position: relative; padding-bottom: 18px; }
+.title-accent::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 64px;
+  height: 5px;
+  background: var(--gold);
+}
 
 /* dark band section base */
 .band {
@@ -130,7 +145,7 @@ h1, h2, h3, h4 {
 
 /* page hero for interior pages */
 .page-hero { background: var(--band-bg); color: var(--text-on-dark); padding: 92px 0 84px; }
-.page-hero h1 { color: #f6f5fa; font-size: clamp(2.3rem, 4.6vw, 3.4rem); font-weight: 480; max-width: 22ch; margin-bottom: 20px; }
+.page-hero h1 { color: #f6f5fa; font-size: clamp(2.5rem, 5.2vw, 4rem); max-width: 20ch; margin-bottom: 20px; }
 .page-hero .lede { font-size: 1.12rem; max-width: 54ch; }
 
 /* ---------- reveal-on-scroll (progressive enhancement) ----------
@@ -163,7 +178,7 @@ h1, h2, h3, h4 {
   border-left: 3px solid var(--gold);
   padding-left: 1.2em;
   margin: 1.4em 0;
-  font-family: var(--font-display);
+  font-family: var(--font-serif);
   font-size: 1.15rem;
   color: var(--head);
 }
