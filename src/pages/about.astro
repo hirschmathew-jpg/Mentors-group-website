@@ -4,54 +4,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Cta from '../components/Cta.astro';
 
 import sandyfordOffice from '../assets/photos/sandyford-office.webp';
-import markButler from '../assets/photos/mark-butler.webp';
-import ciaraMcFadden from '../assets/photos/ciara-mcfadden.webp';
 
-const people = [
-  {
-    name: 'Mark Butler',
-    role: 'Group Managing Partner',
-    email: 'mbutler@hlb.ie',
-    photo: markButler,
-    bio: [
-      'A member of the Institute of Chartered Certified Accountants and Institute of Certified Public Accountants in Ireland, Mark is a registered auditor in both Ireland and the UK. Mark is our Managing Partner focusing on the implementation of the firm’s growth objective and leads our consulting services.',
-      'Mark is an expert in strategic business planning with over twenty years’ experience advising domestic and international businesses. He focuses on a number of sectors including veterinary practice, food, hotel & leisure and property investment.',
-    ],
-  },
-  {
-    name: 'Ciara McFadden',
-    role: 'Chief Financial Officer',
-    email: 'cmcfadden@hlb.ie',
-    photo: ciaraMcFadden,
-    bio: [
-      'A Fellow of the Institute of Chartered Accountants, Ciara is an experienced finance leader with a background in scaling technology, fast-moving consumer goods and high-growth decarbonisation sectors.',
-      'Having trained with a Big 4 firm, Ciara has held leadership roles across the full finance function, building and leading high-performing teams, driving finance transformation initiatives and supporting organisations through significant growth and operational change.',
-    ],
-  },
-];
-
-const timeline = [
-  {
-    year: '1976',
-    text: 'HLB Ireland founded. Partner-led advisory for owner-managed businesses.',
-  },
-  {
-    year: '1995',
-    text: 'FutureRange founded by Tom Haugh. Managed IT, cybersecurity and digital transformation for organisations across Ireland.',
-  },
-  {
-    year: '2019',
-    text: "Conlan Crotty Murray joins in HLB Ireland's first major merger — the start of an acquisition programme that has completed 12 transactions in seven years.",
-  },
-  {
-    year: '2025',
-    text: "Cardinal Capital takes a minority investment, accelerating the group's growth — six acquisitions follow in 14 months, while FutureRange expands through Garry IT, DigitalWell, Echo IT and EOS Systems to become an all-island business.",
-  },
-  {
-    year: '2026',
-    text: 'Mentora Group formed as the holding company of HLB Ireland and FutureRange.',
-  },
-];
 ---
 
 <BaseLayout
@@ -83,9 +36,9 @@ const timeline = [
     </div>
   </section>
 
-  <!-- Story + timeline -->
+  <!-- Story -->
   <section class="story">
-    <div class="container story-grid">
+    <div class="container">
       <div data-reveal>
         <p class="eyebrow">Our story</p>
         <h2 class="section-title">Built on decades of trust</h2>
@@ -107,49 +60,6 @@ const timeline = [
           </p>
         </div>
       </div>
-      <div data-reveal>
-        <h3 class="timeline-title">Timeline</h3>
-        <ol class="timeline">
-          {timeline.map((item) => (
-            <li>
-              <span class="year">{item.year}</span>
-              <span class="text">{item.text}</span>
-            </li>
-          ))}
-        </ol>
-      </div>
-    </div>
-  </section>
-
-  <!-- People -->
-  <section class="people-section">
-    <div class="container">
-      <div data-reveal>
-        <p class="eyebrow">Our people</p>
-        <h2 class="section-title">The people behind the group</h2>
-        <p class="people-sub">
-          Mentora Group is led by a team drawn from both firms — partners,
-          technologists and advisers who have spent their careers alongside
-          owner-managed businesses.
-        </p>
-      </div>
-      <div class="people">
-        {people.map((p) => (
-          <article class="person" data-reveal>
-            <div class="photo">
-              <Image src={p.photo} alt={`Portrait of ${p.name}`} widths={[400, 640]} sizes="(min-width: 800px) 25vw, 80vw" />
-            </div>
-            <h3>{p.name}</h3>
-            <p class="role">{p.role}</p>
-            <a class="email" href={`mailto:${p.email}`}>{p.email}</a>
-            <div class="bio" aria-hidden="false">
-              <h3>{p.name}</h3>
-              <p class="role">{p.role}</p>
-              {p.bio.map((para) => <p class="bio-text">{para}</p>)}
-            </div>
-          </article>
-        ))}
-      </div>
     </div>
   </section>
 
@@ -170,118 +80,16 @@ const timeline = [
   }
 
   .story { padding: 110px 0; }
-  .story-grid {
-    display: grid;
-    grid-template-columns: 1.1fr 0.9fr;
-    gap: 80px;
-    align-items: start;
-  }
   .story h2 { margin-bottom: 26px; }
-  .story .body p { max-width: 58ch; }
+  .story .body p { max-width: 62ch; }
   .story .body p + p { margin-top: 18px; }
 
-  .timeline-title {
-    font-family: var(--font-sans);
-    text-transform: uppercase;
-    letter-spacing: 0.16em;
-    font-size: 0.76rem;
-    font-weight: 700;
-    color: var(--gold-deep);
-    margin-bottom: 22px;
-  }
-  .timeline {
-    list-style: none;
-    border-left: 2px solid var(--line);
-  }
-  .timeline li {
-    position: relative;
-    padding: 0 0 28px 28px;
-  }
-  .timeline li:last-child { padding-bottom: 0; }
-  .timeline li::before {
-    content: "";
-    position: absolute;
-    left: -6px;
-    top: 8px;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: var(--gold);
-  }
-  .timeline .year {
-    display: block;
-    font-family: var(--font-display);
-    font-size: 1.25rem;
-    font-weight: 560;
-    color: var(--head);
-  }
-  .timeline .text { font-size: 0.95rem; }
 
-  .people-section {
-    padding: 0 0 110px;
-  }
-  .people-sub { max-width: 54ch; margin-bottom: 44px; }
-  .people {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 280px));
-    gap: 28px;
-  }
-  .person {
-    background: #fff;
-    border: 1px solid var(--line);
-    position: relative;
-    overflow: hidden;
-  }
-  /* bio slides up over the card on hover / keyboard focus */
-  .bio {
-    position: absolute;
-    inset: 0;
-    background: #fff;
-    padding: 20px 22px;
-    overflow-y: auto;
-    transform: translateY(100%);
-  }
   @media (prefers-reduced-motion: no-preference) {
-    .bio { transition: transform 0.45s ease; }
-  }
-  .person:hover .bio,
-  .person:focus-within .bio {
-    transform: translateY(0);
-  }
-  .bio h3 { margin: 0 0 2px; font-size: 1.2rem; font-weight: 560; }
-  .bio .role { margin: 0 0 14px; }
-  .bio-text {
-    font-size: 0.85rem;
-    line-height: 1.55;
-  }
-  .bio-text + .bio-text { margin-top: 10px; }
-  .photo { aspect-ratio: 4 / 5; overflow: hidden; }
-  .photo :global(img) {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  .person h3 {
-    font-size: 1.2rem;
-    font-weight: 560;
-    margin: 20px 22px 2px;
-  }
-  .role {
-    font-size: 0.82rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--gold-deep);
-    font-weight: 700;
-    margin: 0 22px 6px;
-  }
-  .email {
-    display: block;
-    font-size: 0.9rem;
-    margin: 0 22px 22px;
-  }
+    }
 
   @media (max-width: 900px) {
-    .hero-grid, .story-grid { grid-template-columns: 1fr; }
+    .hero-grid { grid-template-columns: 1fr; }
     .hero-media :global(img) { clip-path: none; }
   }
 </style>
