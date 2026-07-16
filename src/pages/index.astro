@@ -41,14 +41,14 @@ const services = [
       <div class="hero-copy">
         <p class="eyebrow">The Mentora Group</p>
         <h1>
-          <span class="line"><span class="inner">
-            <span class="rotator" aria-label="Audit, Advisory, Technology">
-              <span>Audit<span class="dot">.</span></span>
-              <span aria-hidden="true">Advisory<span class="dot">.</span></span>
-              <span aria-hidden="true">Technology<span class="dot">.</span></span>
-            </span>
-          </span></span>
-          <span class="line"><span class="inner sheen">One group<span class="dot">.</span></span></span>
+          <span class="line">
+            <span class="w" style="--d: 0.1s">Audit<span class="dot">.</span></span>
+            <span class="w" style="--d: 0.22s">Advisory<span class="dot">.</span></span>
+            <span class="w" style="--d: 0.34s">Technology<span class="dot">.</span></span>
+          </span>
+          <span class="line">
+            <span class="w sheen" style="--d: 0.5s">One group<span class="dot">.</span></span>
+          </span>
         </h1>
         <p class="lede">
           Mentora Group is the holding company of HLB Ireland and FutureRange
@@ -255,35 +255,17 @@ const services = [
     z-index: 0;
     pointer-events: none;
   }
-  /* kinetic headline */
-  h1 .line { display: block; overflow: hidden; }
-  h1 .inner { display: inline-block; }
-  .rotator {
-    display: inline-grid;
-    text-align: left;
-    vertical-align: bottom;
-  }
-  .rotator > span {
-    grid-area: 1 / 1;
-    display: inline-block;
-  }
+  /* kinetic headline — every word visible, staggered entrance */
+  h1 .line { display: block; }
+  h1 .w { display: inline-block; }
   @media (prefers-reduced-motion: no-preference) {
-    .rotator > span {
+    .hero-copy h1 { animation: none; opacity: 1; transform: none; }
+    h1 .w {
       opacity: 0;
-      transform: translateY(105%);
-      animation: word-cycle 10.5s cubic-bezier(0.2, 0.7, 0.2, 1) infinite;
+      transform: translateY(26px);
+      animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+      animation-delay: var(--d, 0s);
     }
-    .rotator > span:nth-child(2) { animation-delay: 3.5s; }
-    .rotator > span:nth-child(3) { animation-delay: 7s; }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .rotator > span { visibility: hidden; }
-    .rotator > span:first-child { visibility: visible; }
-  }
-  @keyframes word-cycle {
-    0% { opacity: 0; transform: translateY(105%); }
-    4%, 30% { opacity: 1; transform: translateY(0); }
-    34%, 100% { opacity: 0; transform: translateY(-105%); }
   }
   /* gold sheen sweep on the static line */
   @media (prefers-reduced-motion: no-preference) {
