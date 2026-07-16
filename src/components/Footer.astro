@@ -1,6 +1,9 @@
 ---
 import { href } from '../lib/paths';
 import logoOnDark from '../assets/logo-on-dark.svg?raw';
+// The same SVG is inlined in the header; suffix its internal clipPath id so
+// the two instances on a page don't collide (ids must be document-unique).
+const footerLogo = logoOnDark.replaceAll('clip0_982_27568', 'clip0_982_27568_footer');
 const year = new Date().getFullYear();
 ---
 
@@ -8,7 +11,7 @@ const year = new Date().getFullYear();
   <div class="container">
     <div class="grid">
       <div>
-        <a class="logo" href={href('/')} aria-label="Mentora Group — home" set:html={logoOnDark} />
+        <a class="logo" href={href('/')} aria-label="Mentora Group — home" set:html={footerLogo} />
         <p class="blurb">
           Mentora Group is the holding company of HLB Ireland (advisory &amp;
           accounting) and FutureRange (IT services) — serving ambitious
