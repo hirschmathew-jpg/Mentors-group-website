@@ -67,6 +67,7 @@ const services = [
               <Placeholder name="hero-carousel-1" label="Insert image" ratio="1 / 1" dark />
               <Placeholder name="hero-carousel-2" label="Insert image" ratio="1 / 1" dark />
               <Placeholder name="hero-carousel-3" label="Insert image" ratio="1 / 1" dark />
+              <Placeholder name="hero-carousel-4" label="Insert image" ratio="1 / 1" dark />
               <Placeholder name="hero-carousel-1" label="Insert image" ratio="1 / 1" dark />
             </div>
           </div>
@@ -171,7 +172,7 @@ const services = [
   </section>
 
   <!-- Insights -->
-  <section class="insights">
+  <section class="insights band on-dark">
     <div class="container">
       <div class="insights-head" data-reveal>
         <div>
@@ -349,17 +350,18 @@ const services = [
     overflow: hidden;
     box-shadow: 0 30px 80px rgba(0, 10, 14, 0.45);
   }
-  .orbit-track { display: flex; flex-direction: column; height: 400%; }
+  .orbit-track { display: flex; flex-direction: column; height: 500%; }
   .orbit-track > :global(*) { flex: none; width: 100%; }
   .orbit-track :global(.ph), .orbit-track :global(.slot) { border-radius: 0; border: none; }
   @media (prefers-reduced-motion: no-preference) {
-    .orbit-track { animation: carousel 15s cubic-bezier(0.6, 0, 0.2, 1) infinite; }
+    .orbit-track { animation: carousel 20s cubic-bezier(0.6, 0, 0.2, 1) infinite; }
   }
   @keyframes carousel {
-    0%, 27% { transform: translateY(0); }
-    33%, 60% { transform: translateY(-25%); }
-    66%, 94% { transform: translateY(-50%); }
-    100% { transform: translateY(-75%); }
+    0%, 20.5% { transform: translateY(0); }
+    25%, 45.5% { transform: translateY(-20%); }
+    50%, 70.5% { transform: translateY(-40%); }
+    75%, 95.5% { transform: translateY(-60%); }
+    100% { transform: translateY(-80%); }
   }
 
   /* service strip */
@@ -513,8 +515,8 @@ const services = [
     max-width: 46ch;
   }
 
-  /* numbers — soft gold glow */
-  .legacy { padding: 100px 0; position: relative; overflow: hidden; background: var(--ink-deep); }
+  /* numbers — soft gold glow (lighter slate band) */
+  .legacy { padding: 100px 0; position: relative; overflow: hidden; }
   .legacy::before {
     content: "";
     position: absolute;
@@ -609,8 +611,8 @@ const services = [
   }
   .pillar a:hover { color: var(--gold-deep); }
 
-  /* insights */
-  .insights { padding: 0 0 110px; }
+  /* insights (darkest slate band) */
+  .insights { padding: 100px 0 110px; background: var(--ink-deep); }
   .insights-head {
     display: flex;
     justify-content: space-between;

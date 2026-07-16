@@ -43,7 +43,7 @@ the slot and push — the site picks it up automatically on the next deploy.
 | `firm-futurerange` | FutureRange card |
 | `about-hero` | About page hero |
 | `about-story` | About "Why Mentora exists" |
-| `hero-carousel-1..3` | The rotating circle carousel in the homepage hero |
+| `hero-carousel-1..4` | The rotating circle carousel in the homepage hero |
 | `hero-video` (.mp4) | Full-bleed background video behind the homepage hero |
 | `insight-<article-slug>` | An article's card and header image |
 

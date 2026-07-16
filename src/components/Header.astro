@@ -3,10 +3,12 @@ import { href } from '../lib/paths';
 import logoOnDark from '../assets/logo-on-dark.svg?raw';
 
 const links = [
+  { href: href('/'), label: 'Home', exact: true },
   { href: href('/about/'), label: 'About' },
   { href: href('/insights/'), label: 'Insights' },
 ];
 const current = Astro.url.pathname;
+const norm = (p: string) => p.replace(/\/+$/, '');
 ---
 
 <header class="site-header">
@@ -19,7 +21,7 @@ const current = Astro.url.pathname;
       <ul id="site-nav">
         {links.map((l) => (
           <li>
-            <a href={l.href} aria-current={current.startsWith(l.href) ? 'page' : undefined}>{l.label}</a>
+            <a href={l.href} aria-current={(l.exact ? norm(current) === norm(l.href) : current.startsWith(l.href)) ? 'page' : undefined}>{l.label}</a>
           </li>
         ))}
         <li><a class="cta" href={href('/contact/')}>Contact</a></li>
