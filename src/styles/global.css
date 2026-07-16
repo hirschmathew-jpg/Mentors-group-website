@@ -23,9 +23,7 @@
   /* brand */
   --ink: #2f4752;
   --ink-deep: #1a2930;
-  --ink-2: #3a545f;
   --paper: #f4f6f5;
-  --paper-2: #eaeeec;
   --head: #10303c;
   --body: #44575e;
   --gold: #eab633;
@@ -120,8 +118,6 @@ h1, h2, h3, h4 {
 .btn-gold:hover { background: #f2c44e; }
 .btn-ghost { border: 1px solid rgba(255, 255, 255, 0.45); color: #f0f4f5; background: transparent; }
 .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
-.btn-outline { border: 1px solid var(--head); color: var(--head); background: transparent; }
-.btn-outline:hover { border-color: var(--gold-deep); color: var(--gold-deep); }
 
 .section-title { font-size: clamp(1.9rem, 3.4vw, 2.7rem); }
 
