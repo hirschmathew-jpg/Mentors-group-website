@@ -5,7 +5,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Cta from '../components/Cta.astro';
 import PostCard from '../components/PostCard.astro';
 import Placeholder from '../components/Placeholder.astro';
-import Spotlight from '../components/Spotlight.astro';
 
 // Drop hero-video.mp4 into src/assets/uploads/ for a full-bleed hero video.
 const videos = import.meta.glob<string>('../assets/uploads/hero-video.mp4', {
@@ -92,8 +91,6 @@ const services = [
     </div>
   </div>
 
-  <Spotlight />
-
   <!-- Firms -->
   <section class="firms">
     <div class="container">
@@ -132,29 +129,6 @@ const services = [
           </span>
         </a>
       </div>
-    </div>
-  </section>
-
-  <!-- The group in numbers -->
-  <section class="legacy band on-dark">
-    <div class="container">
-      <div class="legacy-head" data-reveal>
-        <p class="eyebrow">The group in numbers</p>
-        <figure class="legacy-quote">
-          <blockquote>
-            “The name Mentora is rooted in the word <em>mentor</em> — the
-            trusted guide whose value is measured in the quality of counsel
-            given over time.”
-          </blockquote>
-          <figcaption>Mark Butler — Group Managing Partner</figcaption>
-        </figure>
-      </div>
-      <dl class="stats" data-reveal>
-        <div class="stat"><dt>HLB Ireland founded</dt><dd data-countup="1976">1976</dd></div>
-        <div class="stat"><dt>FutureRange established</dt><dd data-countup="1995">1995</dd></div>
-        <div class="stat"><dt>Acquisitions in the past seven years</dt><dd data-countup="12">12</dd></div>
-        <div class="stat"><dt>Professionals across the group</dt><dd data-countup="180" data-suffix="+">180+</dd></div>
-      </dl>
     </div>
   </section>
 
@@ -209,6 +183,29 @@ const services = [
       <div class="posts">
         {posts.map((post) => <PostCard post={post} />)}
       </div>
+    </div>
+  </section>
+
+  <!-- The group in numbers -->
+  <section class="legacy band on-dark">
+    <div class="container">
+      <div class="legacy-head" data-reveal>
+        <p class="eyebrow">The group in numbers</p>
+        <figure class="legacy-quote">
+          <blockquote>
+            “The name Mentora is rooted in the word <em>mentor</em> — the
+            trusted guide whose value is measured in the quality of counsel
+            given over time.”
+          </blockquote>
+          <figcaption>Mark Butler — Group Managing Partner</figcaption>
+        </figure>
+      </div>
+      <dl class="stats" data-reveal>
+        <div class="stat"><dt>HLB Ireland founded</dt><dd data-countup="1976">1976</dd></div>
+        <div class="stat"><dt>FutureRange established</dt><dd data-countup="1995">1995</dd></div>
+        <div class="stat"><dt>Acquisitions in the past seven years</dt><dd data-countup="12">12</dd></div>
+        <div class="stat"><dt>Professionals across the group</dt><dd data-countup="180" data-suffix="+">180+</dd></div>
+      </dl>
     </div>
   </section>
 
