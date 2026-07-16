@@ -396,12 +396,12 @@ const posts = (await getCollection('insights'))
     margin-bottom: 14px;
   }
   blockquote em { color: var(--gold); }
-  figcaption { font-size: 0.9rem; color: #8fa6ad; margin-bottom: 64px; }
+  figcaption { font-size: 0.9rem; color: var(--muted-on-dark); margin-bottom: 64px; }
   .stats {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 34px;
-    border-top: 1px solid var(--hairline-dark);
+    border-top: 1px solid var(--hairline-band);
     padding-top: 48px;
   }
   .stat { display: flex; flex-direction: column-reverse; }

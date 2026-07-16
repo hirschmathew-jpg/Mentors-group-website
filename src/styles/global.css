@@ -33,8 +33,12 @@
   --teal: #0f5e76;
   --line: #dce3e1;
   --hairline-dark: #16404d;
-  --text-on-dark: #b9cbd1;
-  --muted-on-dark: #a5b9bf;
+  /* dark page sections (heroes, stats, CTA) — brand slate blue.
+     The header/footer chrome stays on --ink / --ink-deep. */
+  --band-bg: #2f4752;
+  --hairline-band: rgba(255, 255, 255, 0.18);
+  --text-on-dark: #c3d2d7;
+  --muted-on-dark: #aec0c6;
 
   --container: 1180px;
 
@@ -114,7 +118,7 @@ h1, h2, h3, h4 {
 }
 .btn-gold { background: var(--gold); color: var(--ink); }
 .btn-gold:hover { background: #f2c44e; }
-.btn-ghost { border: 1px solid #3a5560; color: #e6edef; background: transparent; }
+.btn-ghost { border: 1px solid rgba(255, 255, 255, 0.45); color: #f0f4f5; background: transparent; }
 .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
 .btn-outline { border: 1px solid var(--head); color: var(--head); background: transparent; }
 .btn-outline:hover { border-color: var(--gold-deep); color: var(--gold-deep); }
@@ -123,13 +127,13 @@ h1, h2, h3, h4 {
 
 /* dark band section base */
 .band {
-  background: var(--ink);
+  background: var(--band-bg);
   color: var(--text-on-dark);
 }
 .band h1, .band h2, .band h3 { color: #f6f5fa; }
 
 /* page hero for interior pages */
-.page-hero { background: var(--ink); color: var(--text-on-dark); padding: 92px 0 84px; }
+.page-hero { background: var(--band-bg); color: var(--text-on-dark); padding: 92px 0 84px; }
 .page-hero h1 { color: #f6f5fa; font-size: clamp(2.3rem, 4.6vw, 3.4rem); font-weight: 480; max-width: 22ch; margin-bottom: 20px; }
 .page-hero .lede { font-size: 1.12rem; max-width: 54ch; }
 
