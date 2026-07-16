@@ -584,5 +584,11 @@ const posts = (await getCollection('insights'))
     }
     .posts > :global(*) { scroll-snap-align: start; }
     .firms-head { flex-direction: column; align-items: flex-start; }
+    .insights-head {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+    }
+    .all-link { white-space: nowrap; }
   }
 </style>
