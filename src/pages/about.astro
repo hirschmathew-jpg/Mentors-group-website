@@ -3,6 +3,14 @@ import { href } from '../lib/paths';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Cta from '../components/Cta.astro';
 import Placeholder from '../components/Placeholder.astro';
+
+const timeline = [
+  { year: '1976', title: 'HLB Ireland founded', text: 'Partner-led audit, accounting and tax advisory, headquartered in Dublin.' },
+  { year: '1995', title: 'FutureRange founded', text: 'Tom Haugh sets out to help businesses get real value from technology.' },
+  { year: '2019', title: 'First major merger', text: 'Conlan Crotty Murray joins — the acquisition programme begins.' },
+  { year: '2025', title: 'Cardinal Capital invests', text: 'Minority backing accelerates growth: six acquisitions follow in fourteen months.' },
+  { year: '2026', title: 'Mentora Group formed', text: 'One group holds both firms — 12 acquisitions in, 180+ professionals strong.' },
+];
 ---
 
 <BaseLayout
@@ -63,6 +71,26 @@ import Placeholder from '../components/Placeholder.astro';
     </div>
   </section>
 
+  <!-- Timeline -->
+  <section class="tl band on-dark">
+    <div class="container">
+      <div data-reveal>
+        <p class="eyebrow">Timeline</p>
+        <h2 class="section-title title-accent">How the group came together</h2>
+      </div>
+      <ol class="tl-rail">
+        {timeline.map((item) => (
+          <li class="tl-item" data-reveal>
+            <span class="tl-node" aria-hidden="true"></span>
+            <span class="tl-year">{item.year}</span>
+            <span class="tl-title">{item.title}</span>
+            <span class="tl-text">{item.text}</span>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
   <Cta />
 </BaseLayout>
 
@@ -92,7 +120,83 @@ import Placeholder from '../components/Placeholder.astro';
   }
   .story .body a:hover { color: var(--gold-deep); }
 
+  /* timeline — gradient rail with glowing nodes */
+  .tl { padding: 100px 0; position: relative; overflow: hidden; }
+  .tl-rail {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 28px;
+    margin-top: 64px;
+    position: relative;
+    padding: 0;
+  }
+  .tl-rail::before {
+    content: "";
+    position: absolute;
+    top: 7px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--gold), var(--teal-bright), var(--violet));
+    opacity: 0.65;
+  }
+  .tl-item { position: relative; padding-top: 34px; }
+  .tl-node {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--gold);
+    box-shadow: 0 0 0 5px rgba(234, 182, 51, 0.18);
+  }
+  .tl-item:nth-child(2) .tl-node { background: var(--teal-bright); box-shadow: 0 0 0 5px rgba(59, 191, 208, 0.18); }
+  .tl-item:nth-child(3) .tl-node { background: var(--gold); }
+  .tl-item:nth-child(4) .tl-node { background: var(--teal-bright); box-shadow: 0 0 0 5px rgba(59, 191, 208, 0.18); }
+  .tl-item:nth-child(5) .tl-node { background: var(--violet); box-shadow: 0 0 0 5px rgba(143, 127, 242, 0.2); }
+  @media (prefers-reduced-motion: no-preference) {
+    .tl-node { animation: pulse 3.2s ease-in-out infinite; }
+    .tl-item:nth-child(2) .tl-node { animation-delay: 0.5s; }
+    .tl-item:nth-child(3) .tl-node { animation-delay: 1s; }
+    .tl-item:nth-child(4) .tl-node { animation-delay: 1.5s; }
+    .tl-item:nth-child(5) .tl-node { animation-delay: 2s; }
+  }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.25); }
+  }
+  .tl-year {
+    display: block;
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 2.6vw, 2.4rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 10px;
+  }
+  .tl-item:nth-child(2) .tl-year { color: var(--teal-bright); }
+  .tl-item:nth-child(4) .tl-year { color: var(--teal-bright); }
+  .tl-item:nth-child(5) .tl-year { color: var(--violet-ink); }
+  .tl-title {
+    display: block;
+    font-weight: 800;
+    color: #f0f4f5;
+    margin-bottom: 8px;
+  }
+  .tl-text { display: block; font-size: 0.9rem; color: var(--muted-on-dark); }
+
   @media (max-width: 900px) {
     .hero-grid, .story-grid { grid-template-columns: 1fr; }
+    .tl-rail {
+      grid-template-columns: repeat(5, minmax(230px, 1fr));
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 14px;
+      -webkit-overflow-scrolling: touch;
+    }
+    .tl-item { scroll-snap-align: start; }
   }
 </style>
