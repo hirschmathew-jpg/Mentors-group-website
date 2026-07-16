@@ -97,19 +97,22 @@ const services = [
   <!-- Firms -->
   <section class="firms">
     <div class="container">
-      <div class="firms-grid">
-      <div class="firms-rail" data-reveal>
-        <p class="eyebrow">Who we are</p>
-        <h2 class="section-title title-accent">One group. Two established firms.</h2>
-        <p>
-          Mentora Group is the holding company of HLB Ireland — audit,
-          accounting and tax advisory since 1976 — and FutureRange, IT
-          services since 1995.
-        </p>
-        <p>
-          Each firm keeps the name, team and relationships its clients know;
-          the group behind them provides stability and long-term investment.
-        </p>
+      <div class="firms-head" data-reveal>
+        <div>
+          <p class="eyebrow">Who we are</p>
+          <h2 class="section-title title-accent">One group. Two established firms.</h2>
+        </div>
+        <div class="firms-copy">
+          <p>
+            Mentora Group is the holding company of HLB Ireland — audit,
+            accounting and tax advisory since 1976 — and FutureRange, IT
+            services since 1995.
+          </p>
+          <p>
+            Each firm keeps the name, team and relationships its clients know;
+            the group behind them provides stability and long-term investment.
+          </p>
+        </div>
       </div>
       <div class="firm-cards">
         <a class="firm" href="https://www.hlb.ie" target="_blank" rel="noopener noreferrer" data-reveal>
@@ -128,7 +131,6 @@ const services = [
             <span class="desc">Cyber security &amp; managed operations, modern workplace, and cloud, AI &amp; transformation — since 1995.</span>
           </span>
         </a>
-      </div>
       </div>
     </div>
   </section>
@@ -408,24 +410,22 @@ const services = [
   .intro .body p { max-width: 62ch; }
   .intro .body p + p { margin-top: 18px; }
 
-  /* firms — pinned rail + stacking cards */
+  /* firms */
   .firms { padding: 110px 0; }
-  .firms-grid {
+  .firms-head {
     display: grid;
-    grid-template-columns: 0.85fr 1.15fr;
-    gap: 64px;
-    align-items: start;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 56px;
+    align-items: end;
+    margin-bottom: 46px;
   }
-  .firms-rail {
-    position: sticky;
-    top: 130px;
-  }
-  .firms-rail h2 { margin-bottom: 18px; }
-  .firms-rail p { max-width: 40ch; }
-  .firms-rail p + p { margin-top: 14px; }
+  .firms-head h2 { margin-bottom: 0; }
+  .firms-copy p { max-width: 52ch; }
+  .firms-copy p + p { margin-top: 12px; }
   .firm-cards {
     display: grid;
-    gap: 34px;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
   }
   .firm {
     display: block;
@@ -606,8 +606,8 @@ const services = [
 
   @media (max-width: 960px) {
     .hero-grid { grid-template-columns: 1fr; }
-    .firms-grid { grid-template-columns: 1fr; gap: 36px; }
-    .firms-rail { position: static; }
+    .firms-head { grid-template-columns: 1fr; gap: 18px; }
+    .firm-cards { grid-template-columns: 1fr; }
     .hero-grid { padding-top: 72px; padding-bottom: 80px; }
     .stats { grid-template-columns: 1fr 1fr; }
     .pillars { grid-template-columns: 1fr; }
