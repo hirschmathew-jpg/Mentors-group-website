@@ -13,6 +13,8 @@ interface Props {
 }
 
 const { title, description, type = 'website' } = Astro.props;
+// The 404 page has no canonical URL of its own — don't emit one for it.
+const is404 = Astro.url.pathname.includes('/404');
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const ogImage = new URL(href('/og.png'), Astro.site);
 ---
@@ -24,7 +26,7 @@ const ogImage = new URL(href('/og.png'), Astro.site);
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={canonical} />
+    {!is404 && <link rel="canonical" href={canonical} />}
     <link rel="icon" type="image/svg+xml" href={href('/favicon.svg')} />
     <link rel="sitemap" href={href('/sitemap-index.xml')} />
     <meta name="theme-color" content="#1a2930" />
@@ -33,7 +35,7 @@ const ogImage = new URL(href('/og.png'), Astro.site);
     <meta property="og:site_name" content="Mentora Group" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:url" content={canonical} />
+    {!is404 && <meta property="og:url" content={canonical} />}
     <meta property="og:image" content={ogImage} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
@@ -43,7 +45,13 @@ const ogImage = new URL(href('/og.png'), Astro.site);
     <link rel="preload" href={href('/fonts/fraunces.woff2')} as="font" type="font/woff2" crossorigin />
     <link rel="preload" href={href('/fonts/manrope.woff2')} as="font" type="font/woff2" crossorigin />
 
-    <script is:inline>document.documentElement.classList.add('js');</script>
+    <script is:inline>
+      // Mark the document as JS-capable. The ClientRouter swap replaces the
+      // <html> attributes from the incoming static page, so re-add the class
+      // after every view transition or the no-JS fallbacks kick back in.
+      document.documentElement.classList.add('js');
+      document.addEventListener('astro:after-swap', () => document.documentElement.classList.add('js'));
+    </script>
     <ClientRouter />
   </head>
   <body>
