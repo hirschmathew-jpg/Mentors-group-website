@@ -5,6 +5,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Cta from '../components/Cta.astro';
 import PostCard from '../components/PostCard.astro';
 import Placeholder from '../components/Placeholder.astro';
+import ServicesStrip from '../components/ServicesStrip.astro';
 
 // Drop hero-video.mp4 into src/assets/uploads/ for a full-bleed hero video.
 const videos = import.meta.glob<string>('../assets/uploads/hero-video.mp4', {
@@ -18,15 +19,6 @@ const posts = (await getCollection('insights'))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .slice(0, 3);
 
-const services = [
-  { label: 'Audit & Assurance', url: 'https://www.hlb.ie/services/audit-assurance/' },
-  { label: 'Taxation', url: 'https://www.hlb.ie/services/taxation/' },
-  { label: 'Business Advisory', url: 'https://www.hlb.ie/services/business-advisory/' },
-  { label: 'Corporate Finance', url: 'https://www.hlb.ie/services/corporate-finance-2/' },
-  { label: 'Cyber Security', url: 'https://futurerange.ie/services/security/' },
-  { label: 'Managed IT', url: 'https://futurerange.ie/services/managed-services/' },
-  { label: 'Cloud, AI & Transformation', url: 'https://futurerange.ie/services/future-innovation/' },
-];
 ---
 
 <BaseLayout
@@ -77,20 +69,7 @@ const services = [
   </section>
 
   <!-- Service strip (marquee) -->
-  <div class="strip" aria-label="Group services">
-    <div class="marquee">
-      {[0, 1].map((copy) => (
-        <div class="marquee-track" aria-hidden={copy === 1 ? 'true' : undefined}>
-          {services.map((s) => (
-            <>
-              <a href={s.url} target="_blank" rel="noopener noreferrer" tabindex={copy === 1 ? -1 : 0}>{s.label}</a>
-              <span class="diamond" aria-hidden="true">◆</span>
-            </>
-          ))}
-        </div>
-      ))}
-    </div>
-  </div>
+  <ServicesStrip />
 
   <!-- Firms -->
   <section class="firms">
@@ -364,54 +343,6 @@ const services = [
     100% { transform: translateY(-80%); }
   }
 
-  /* service strip */
-  .strip {
-    background: var(--ink-deep);
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-    overflow: hidden;
-  }
-  .marquee {
-    display: flex;
-    width: max-content;
-  }
-  .marquee-track {
-    display: flex;
-    align-items: center;
-    gap: 34px;
-    padding: 18px 17px;
-    font-size: 0.76rem;
-    font-weight: 700;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: #a3b7bd;
-    white-space: nowrap;
-  }
-  @media (prefers-reduced-motion: no-preference) {
-    .marquee { animation: ticker 36s linear infinite; }
-    .strip:hover .marquee,
-    .strip:has(:focus-visible) .marquee { animation-play-state: paused; }
-  }
-  @keyframes ticker {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .marquee { flex-wrap: wrap; width: auto; }
-    .marquee-track[aria-hidden='true'] { display: none; }
-    .marquee-track { flex-wrap: wrap; }
-  }
-  .diamond { color: var(--gold); font-size: 0.55rem; }
-  .marquee-track .diamond:nth-of-type(even) { color: var(--teal-bright); }
-  .marquee-track a {
-    color: #a3b7bd;
-    text-underline-offset: 4px;
-  }
-  .marquee-track a:hover {
-    color: #fff;
-    text-decoration: underline;
-    text-decoration-color: var(--gold);
-  }
-
   .intro-grid {
     display: grid;
     grid-template-columns: 1.1fr 0.9fr;
@@ -653,6 +584,5 @@ const services = [
     }
     .posts > :global(*) { scroll-snap-align: start; }
     .firms-head { flex-direction: column; align-items: flex-start; }
-    .strip-inner { justify-content: flex-start; }
   }
 </style>

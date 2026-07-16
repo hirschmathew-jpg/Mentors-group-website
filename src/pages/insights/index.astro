@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Cta from '../../components/Cta.astro';
 import PostCard from '../../components/PostCard.astro';
+import ServicesStrip from '../../components/ServicesStrip.astro';
 
 const posts = (await getCollection('insights')).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
@@ -23,6 +24,9 @@ const posts = (await getCollection('insights')).sort(
       </p>
     </div>
   </section>
+
+  <!-- Service strip (marquee) -->
+  <ServicesStrip />
 
   <section class="listing">
     <div class="container">

@@ -3,6 +3,7 @@ import { href } from '../lib/paths';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Cta from '../components/Cta.astro';
 import Placeholder from '../components/Placeholder.astro';
+import ServicesStrip from '../components/ServicesStrip.astro';
 
 const timeline = [
   { year: '1976', title: 'HLB Ireland founded', text: 'Partner-led audit, accounting and tax advisory, headquartered in Dublin.' },
@@ -33,6 +34,9 @@ const timeline = [
       </div>
     </div>
   </section>
+
+  <!-- Service strip (marquee) -->
+  <ServicesStrip />
 
   <!-- Story -->
   <section class="story">
