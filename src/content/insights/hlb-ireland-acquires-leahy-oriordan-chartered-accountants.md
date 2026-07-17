@@ -9,7 +9,7 @@ HLB Ireland has completed the acquisition of Leahy O'Riordan Chartered Accountan
 
 ## A growing group
 
-The acquisition is the twelfth completed by HLB Ireland in the past seven years, in a programme that began with the firm's first major merger — Conlan Crotty Murray — in 2019. Six of those transactions have been completed in the fourteen months since Cardinal Capital took a minority investment in the firm in April 2025.
+The acquisition is the twelfth completed by HLB Ireland in the past seven years, in a programme that began with the firm's first major acquisition — Conlan Crotty Murray — in 2019. Six of those transactions have been completed in the fourteen months since Cardinal Capital took a minority investment in the firm in April 2025.
 
 > "We're very much focused on building one integrated professional services business managed and controlled in Ireland."
 >
