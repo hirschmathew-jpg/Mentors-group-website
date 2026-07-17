@@ -28,8 +28,9 @@ const posts = (await getCollection('insights')).sort(
   <!-- Service strip (marquee) -->
   <ServicesStrip />
 
-  <section class="listing">
+  <section class="listing" aria-label="Articles">
     <div class="container">
+      <h2 class="visually-hidden">Latest articles</h2>
       <div class="posts">
         {posts.map((post) => <PostCard post={post} />)}
       </div>
