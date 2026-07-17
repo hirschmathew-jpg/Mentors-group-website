@@ -19,34 +19,38 @@ const posts = (await getCollection('insights'))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .slice(0, 3);
 
-// Credentials — all verifiable from the firms' own sites; both firms covered.
-const credentials = [
-  { main: '1976 & 1995', sub: 'Two firms, five decades' },
-  { main: 'Registered Auditors', sub: 'Chartered Accountants Ireland' },
-  { main: 'Great Place to Work®', sub: 'HLB Ireland, certified' },
-  { main: 'HLB Global', sub: 'Network across 155 countries' },
-  { main: 'All-island', sub: 'Offices across Ireland & NI' },
+// Real certifications held by the group's firms (badges from their own sites).
+const certs = [
+  { img: 'iso-27001', alt: 'ISO/IEC 27001 certified', label: 'ISO/IEC 27001', sub: 'HLB Ireland & FutureRange' },
+  { img: 'great-place-to-work', alt: 'Great Place to Work certified', label: 'Great Place to Work®', sub: 'HLB Ireland' },
+  { img: 'most-loved-workplace', alt: 'Most Loved Workplace certified', label: 'Most Loved Workplace®', sub: 'HLB Ireland' },
 ];
 
-// Real client testimonials from FutureRange's website.
+// Real, attributed client testimonials from the firms' own websites — both covered.
 const testimonials = [
   {
     quote:
-      'FutureRange planned and executed our move to Office 365 meticulously. I have moved my IT support to FutureRange and found them equally impressive and very knowledgeable on all aspects of IT.',
-    who: 'Paul Dunne',
-    org: 'Hisun Technologies',
+      'Bruce and his team provide an outstanding, confidential service. They handle our partners’ and professionals’ tax affairs seamlessly, allowing us to focus on running the firm.',
+    who: 'Law & consulting firm client',
+    firm: 'HLB Ireland',
   },
   {
     quote:
-      'FutureRange provided immensely beneficial knowledge transfer to our IT professionals and staff. We feel a very high level of trust and confidence with FutureRange now and into the future.',
-    who: 'Head of IT',
-    org: 'Zenith Technologies',
+      'FutureRange planned and executed our move to Office 365 meticulously, and I have found them equally impressive and very knowledgeable on all aspects of IT.',
+    who: 'Paul Dunne · Hisun Technologies',
+    firm: 'FutureRange',
+  },
+  {
+    quote:
+      'HLB Ireland’s responsiveness and expertise make them a trusted extension of our internal finance team.',
+    who: 'Professional services client',
+    firm: 'HLB Ireland',
   },
   {
     quote:
       'I have always found the staff in FutureRange pleasant to deal with and very responsive to any IT issues we have.',
-    who: 'Margaret Wafer',
-    org: 'Director of Nursing, Belmont House',
+    who: 'Margaret Wafer · Belmont House',
+    firm: 'FutureRange',
   },
 ];
 ---
@@ -142,15 +146,21 @@ const testimonials = [
     </div>
   </section>
 
-  <!-- Trust / accreditations -->
-  <section class="trust" aria-label="Credentials">
-    <div class="container trust-inner" data-reveal>
-      {credentials.map((c) => (
-        <div class="cred">
-          <span class="cred-main">{c.main}</span>
-          <span class="cred-sub">{c.sub}</span>
-        </div>
-      ))}
+  <!-- Certifications -->
+  <section class="trust" aria-label="Certifications">
+    <div class="container" data-reveal>
+      <p class="trust-eyebrow">Certified &amp; accredited</p>
+      <div class="certs">
+        {certs.map((c) => (
+          <div class="cert">
+            <span class="cert-chip">
+              <img src={href(`/certs/${c.img}.webp`)} alt={c.alt} loading="lazy" decoding="async" />
+            </span>
+            <span class="cert-label">{c.label}</span>
+            <span class="cert-sub">{c.sub}</span>
+          </div>
+        ))}
+      </div>
     </div>
   </section>
 
@@ -201,11 +211,11 @@ const testimonials = [
       </div>
       <div class="voices-grid">
         {testimonials.map((t) => (
-          <figure class="voice" data-reveal>
+          <figure class:list={['voice', { fr: t.firm === 'FutureRange' }]} data-reveal>
             <blockquote>{t.quote}</blockquote>
             <figcaption>
               <span class="who">{t.who}</span>
-              <span class="org">{t.org}</span>
+              <span class="firm-tag">{t.firm}</span>
             </figcaption>
           </figure>
         ))}
@@ -509,75 +519,108 @@ const testimonials = [
     max-width: 46ch;
   }
 
-  /* trust bar — slim credential strip, continuous with the firms section */
+  /* certifications — real badges on light chips, continuous with firms */
   .trust { padding: 0 0 100px; }
-  .trust-inner {
+  .trust .container { padding-top: 44px; border-top: 1px solid var(--line); }
+  .trust-eyebrow {
+    text-align: center;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold-deep);
+    margin-bottom: 28px;
+  }
+  .certs {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 24px 40px;
-    padding-top: 40px;
-    border-top: 1px solid var(--line);
+    justify-content: center;
+    gap: 20px 48px;
   }
-  .cred { display: flex; flex-direction: column; gap: 4px; }
-  .cred-main {
-    font-weight: 800;
-    font-size: 1rem;
-    color: var(--head);
-    letter-spacing: -0.01em;
+  .cert {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    text-align: center;
   }
-  .cred-sub {
-    font-size: 0.78rem;
+  .cert-chip {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 150px;
+    height: 106px;
+    padding: 14px;
+    overflow: hidden;
+    background: #fff;
+    border-radius: var(--radius-sm);
+    box-shadow: 0 10px 26px rgba(0, 10, 14, 0.28);
+  }
+  .cert-chip img { height: auto; width: auto; max-height: 74px; max-width: 118px; object-fit: contain; display: block; }
+  .cert-label { font-weight: 800; font-size: 0.92rem; color: var(--head); }
+  .cert-sub {
+    font-size: 0.72rem;
     text-transform: uppercase;
     letter-spacing: 0.1em;
     color: var(--body);
   }
 
-  /* testimonials */
-  .voices { padding: 100px 0; background: var(--ink-deep); }
-  .voices-head { max-width: 640px; margin-bottom: 56px; }
-  .voices-head .section-title { color: #f0f4f5; }
+  /* testimonials (base blue — same rhythm as the rest of the body) */
+  .voices { padding: 100px 0; }
+  .voices-head { max-width: 640px; margin-bottom: 52px; }
   .voices-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 26px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
   }
   .voice {
     margin: 0;
     background: var(--surface);
-    border: 1px solid var(--hairline-band);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--gold);
     border-radius: var(--radius-lg);
-    padding: 30px 28px 26px;
+    padding: 30px 30px 26px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 22px;
   }
+  .voice.fr { border-left-color: var(--teal-bright); }
   .voice blockquote {
     margin: 0;
-    color: #eef3f4;
-    font-size: 1.02rem;
+    color: var(--head);
+    font-size: 1.05rem;
     line-height: 1.55;
     position: relative;
-    padding-top: 30px;
+    padding-top: 32px;
   }
   .voice blockquote::before {
     content: "\201C";
     position: absolute;
-    top: -6px;
+    top: -4px;
     left: -2px;
     font-family: var(--font-serif);
-    font-size: 3.2rem;
+    font-size: 3.4rem;
     line-height: 1;
     color: var(--gold);
   }
-  .voice figcaption { display: flex; flex-direction: column; gap: 3px; margin-top: auto; }
-  .voice .who { font-weight: 800; color: #fff; font-size: 0.95rem; }
-  .voice .org {
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--teal-bright);
+  .voice.fr blockquote::before { color: var(--teal-bright); }
+  .voice figcaption {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 14px;
+    margin-top: auto;
+    flex-wrap: wrap;
   }
+  .voice .who { font-weight: 700; color: var(--body); font-size: 0.9rem; }
+  .voice .firm-tag {
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--gold-deep);
+  }
+  .voice.fr .firm-tag { color: var(--teal-ink); }
 
   /* numbers — soft gold glow (lighter slate band) */
   .legacy { padding: 100px 0; position: relative; overflow: hidden; }
@@ -723,15 +766,7 @@ const testimonials = [
       gap: 16px;
     }
     .all-link { white-space: nowrap; }
-    .voices-grid {
-      grid-template-columns: none;
-      grid-auto-flow: column;
-      grid-auto-columns: 84%;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      padding-bottom: 12px;
-      -webkit-overflow-scrolling: touch;
-    }
-    .voices-grid > :global(*) { scroll-snap-align: start; }
+    .voices-grid { grid-template-columns: 1fr; }
+    .certs { gap: 20px 28px; }
   }
 </style>
