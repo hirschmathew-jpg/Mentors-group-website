@@ -10,14 +10,14 @@ interface Props {
   url: string;
   /** internal links open in place (→); external open on the firm's site (↗) */
   internal?: boolean;
-  /** basename of a webp in assets/article-thumbs or assets/uploads */
+  /** basename of a webp in assets/uploads (e.g. "insight-<slug>") */
   image?: string | null;
 }
 const { title, description, date, firm, url, internal = false, image } = Astro.props;
 
-// Resolve the thumbnail by basename across both image folders.
+// Resolve the thumbnail by basename from the uploads folder.
 const pool = import.meta.glob<{ default: ImageMetadata }>(
-  ['../assets/article-thumbs/*.webp', '../assets/uploads/*.webp'],
+  '../assets/uploads/*.webp',
   { eager: true }
 );
 let img: ImageMetadata | undefined;

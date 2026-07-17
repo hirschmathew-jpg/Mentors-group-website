@@ -5,7 +5,6 @@ import ArticleCard from '../../components/ArticleCard.astro';
 import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Cta from '../../components/Cta.astro';
-import articles from '../../data/articles.json';
 
 export async function getStaticPaths() {
   const posts = await getCollection('insights');
@@ -29,29 +28,18 @@ const formatted = date.toLocaleDateString('en-IE', {
 // from HLB Ireland and FutureRange (which open on their own sites). Newest
 // first, so the mix stays current.
 const firmOf = (id: string) => (/futurerange|future-range/i.test(id) ? 'FutureRange' : 'HLB Ireland');
-const internal = (await getCollection('insights'))
+const related = (await getCollection('insights'))
   .filter((p) => p.id !== post.id)
   .map((p) => ({
     title: p.data.title,
     description: p.data.description,
     date: p.data.date.toISOString().slice(0, 10),
-    firm: firmOf(p.id),
+    firm: firmOf(p.id) as 'HLB Ireland' | 'FutureRange',
     url: href(`/insights/${p.id}/`),
     internal: true,
     image: `insight-${p.id}`,
-  }));
-const external = articles.map((a) => ({
-  title: a.title,
-  description: a.description,
-  date: a.date,
-  firm: a.firm as 'HLB Ireland' | 'FutureRange',
-  url: a.url,
-  internal: false,
-  image: a.image,
-}));
-const related = [...internal, ...external].sort(
-  (a, b) => new Date(b.date).valueOf() - new Date(a.date).valueOf()
-);
+  }))
+  .sort((a, b) => new Date(b.date).valueOf() - new Date(a.date).valueOf());
 
 // Article schema for richer search results.
 const articleSchema = {

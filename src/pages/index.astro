@@ -6,7 +6,6 @@ import Cta from '../components/Cta.astro';
 import ArticleCard from '../components/ArticleCard.astro';
 import Placeholder from '../components/Placeholder.astro';
 import ServicesStrip from '../components/ServicesStrip.astro';
-import articles from '../data/articles.json';
 
 // Drop hero-video.mp4 into src/assets/uploads/ for a full-bleed hero video.
 const videos = import.meta.glob<string>('../assets/uploads/hero-video.mp4', {
@@ -20,10 +19,10 @@ const firmOf = (id: string) => (/futurerange|future-range/i.test(id) ? 'FutureRa
 const insights = (await getCollection('insights')).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
 );
-// "Latest from the group" carousel — the on-site insights first (open in place),
-// then the most recent HLB / FutureRange articles (open on their own sites).
-const latest = [
-  ...insights.map((p) => ({
+// "Latest from the group" carousel — the most recent articles across both
+// firms, all now living on-site.
+const latest = insights
+  .map((p) => ({
     title: p.data.title,
     description: p.data.description,
     date: p.data.date.toISOString().slice(0, 10),
@@ -31,18 +30,7 @@ const latest = [
     url: href(`/insights/${p.id}/`),
     internal: true,
     image: `insight-${p.id}`,
-  })),
-  ...articles.map((a) => ({
-    title: a.title,
-    description: a.description,
-    date: a.date,
-    firm: a.firm as 'HLB Ireland' | 'FutureRange',
-    url: a.url,
-    internal: false,
-    image: a.image,
-  })),
-]
-  .sort((a, b) => new Date(b.date).valueOf() - new Date(a.date).valueOf())
+  }))
   .slice(0, 12);
 
 // Real certifications held by the group's firms (badges from their own sites).

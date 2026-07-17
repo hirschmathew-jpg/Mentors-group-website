@@ -1,15 +1,26 @@
 ---
+import { href } from '../../lib/paths';
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Cta from '../../components/Cta.astro';
 import PostCard from '../../components/PostCard.astro';
 import ArticleCard from '../../components/ArticleCard.astro';
 import ServicesStrip from '../../components/ServicesStrip.astro';
-import articles from '../../data/articles.json';
 
-const posts = (await getCollection('insights')).sort(
+const firmOf = (id: string) => (/futurerange|future-range/i.test(id) ? 'FutureRange' : 'HLB Ireland');
+const all = (await getCollection('insights')).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
 );
+// The three most recent lead as full feature cards; the rest fill the archive.
+const featured = all.slice(0, 3);
+const archive = all.slice(3).map((p) => ({
+  title: p.data.title,
+  description: p.data.description,
+  date: p.data.date.toISOString().slice(0, 10),
+  firm: firmOf(p.id) as 'HLB Ireland' | 'FutureRange',
+  url: href(`/insights/${p.id}/`),
+  image: `insight-${p.id}`,
+}));
 ---
 
 <BaseLayout
@@ -34,19 +45,20 @@ const posts = (await getCollection('insights')).sort(
     <div class="container">
       <h2 class="visually-hidden">Featured articles</h2>
       <div class="posts">
-        {posts.map((post) => <PostCard post={post} />)}
+        {featured.map((post) => <PostCard post={post} />)}
       </div>
 
       <div class="archive" data-archive hidden>
         <h2 class="arc-head">More from HLB Ireland &amp; FutureRange</h2>
         <div class="arc-grid">
-          {articles.map((a) => (
+          {archive.map((a) => (
             <ArticleCard
               title={a.title}
               description={a.description}
               date={a.date}
-              firm={a.firm as 'HLB Ireland' | 'FutureRange'}
+              firm={a.firm}
               url={a.url}
+              internal={true}
               image={a.image}
             />
           ))}
