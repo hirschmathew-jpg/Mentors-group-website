@@ -10,13 +10,38 @@ interface Props {
   description: string;
   /** og:type, defaults to website */
   type?: string;
+  /** optional page-specific JSON-LD (e.g. Article schema) */
+  jsonld?: Record<string, unknown>;
 }
 
-const { title, description, type = 'website' } = Astro.props;
+const { title, description, type = 'website', jsonld } = Astro.props;
 // The 404 page has no canonical URL of its own — don't emit one for it.
 const is404 = Astro.url.pathname.includes('/404');
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const ogImage = new URL(href('/og.png'), Astro.site);
+const siteUrl = new URL(href('/'), Astro.site).href;
+
+// Sitewide Organization graph — Mentora Group and the two firms it holds.
+const orgSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Mentora Group',
+  url: siteUrl,
+  logo: ogImage.href,
+  description:
+    'Mentora Group is the holding company of HLB Ireland, an audit, accounting and tax advisory firm, and FutureRange, an IT services firm.',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'Suite 7, The Courtyard, Carmanhall Road, Sandyford',
+    addressLocality: 'Dublin',
+    postalCode: 'D18 NW62',
+    addressCountry: 'IE',
+  },
+  subOrganization: [
+    { '@type': 'Organization', name: 'HLB Ireland', url: 'https://www.hlb.ie' },
+    { '@type': 'Organization', name: 'FutureRange', url: 'https://www.futurerange.ie' },
+  ],
+};
 ---
 
 <!doctype html>
@@ -41,6 +66,9 @@ const ogImage = new URL(href('/og.png'), Astro.site);
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
+
+    <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
+    {jsonld && <script type="application/ld+json" set:html={JSON.stringify(jsonld)} />}
 
     <link rel="preload" href={href('/fonts/fraunces.woff2')} as="font" type="font/woff2" crossorigin />
     <link rel="preload" href={href('/fonts/manrope.woff2')} as="font" type="font/woff2" crossorigin />

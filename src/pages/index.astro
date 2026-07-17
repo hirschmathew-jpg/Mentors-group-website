@@ -19,6 +19,36 @@ const posts = (await getCollection('insights'))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .slice(0, 3);
 
+// Credentials — all verifiable from the firms' own sites.
+const credentials = [
+  { main: '1976 & 1995', sub: 'Two firms, five decades' },
+  { main: 'Registered Auditors', sub: 'Chartered Accountants Ireland' },
+  { main: 'Great Place to Work®', sub: 'Certified' },
+  { main: 'Most Loved Workplace®', sub: 'Two years running' },
+  { main: 'HLB Global', sub: 'Network across 155 countries' },
+];
+
+// Real client testimonials from FutureRange's website.
+const testimonials = [
+  {
+    quote:
+      'FutureRange planned and executed our move to Office 365 meticulously. I have moved my IT support to FutureRange and found them equally impressive and very knowledgeable on all aspects of IT.',
+    who: 'Paul Dunne',
+    org: 'Hisun Technologies',
+  },
+  {
+    quote:
+      'FutureRange provided immensely beneficial knowledge transfer to our IT professionals and staff. We feel a very high level of trust and confidence with FutureRange now and into the future.',
+    who: 'Head of IT',
+    org: 'Zenith Technologies',
+  },
+  {
+    quote:
+      'I have always found the staff in FutureRange pleasant to deal with and very responsive to any IT issues we have.',
+    who: 'Margaret Wafer',
+    org: 'Director of Nursing, Belmont House',
+  },
+];
 ---
 
 <BaseLayout
@@ -112,6 +142,18 @@ const posts = (await getCollection('insights'))
     </div>
   </section>
 
+  <!-- Trust / accreditations -->
+  <section class="trust" aria-label="Credentials">
+    <div class="container trust-inner" data-reveal>
+      {credentials.map((c) => (
+        <div class="cred">
+          <span class="cred-main">{c.main}</span>
+          <span class="cred-sub">{c.sub}</span>
+        </div>
+      ))}
+    </div>
+  </section>
+
   <!-- How we work -->
   <section class="approach band on-dark">
     <div class="container">
@@ -146,6 +188,27 @@ const posts = (await getCollection('insights'))
             <a href={href('/join-the-group/')}>Talk to us in confidence</a>.
           </p>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="voices" aria-label="What clients say">
+    <div class="container">
+      <div class="voices-head" data-reveal>
+        <p class="eyebrow">In their words</p>
+        <h2 class="section-title">Trusted by organisations across Ireland</h2>
+      </div>
+      <div class="voices-grid">
+        {testimonials.map((t) => (
+          <figure class="voice" data-reveal>
+            <blockquote>{t.quote}</blockquote>
+            <figcaption>
+              <span class="who">{t.who}</span>
+              <span class="org">{t.org}</span>
+            </figcaption>
+          </figure>
+        ))}
       </div>
     </div>
   </section>
@@ -446,6 +509,76 @@ const posts = (await getCollection('insights'))
     max-width: 46ch;
   }
 
+  /* trust bar — slim credential strip, continuous with the firms section */
+  .trust { padding: 0 0 100px; }
+  .trust-inner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 24px 40px;
+    padding-top: 40px;
+    border-top: 1px solid var(--line);
+  }
+  .cred { display: flex; flex-direction: column; gap: 4px; }
+  .cred-main {
+    font-weight: 800;
+    font-size: 1rem;
+    color: var(--head);
+    letter-spacing: -0.01em;
+  }
+  .cred-sub {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--body);
+  }
+
+  /* testimonials */
+  .voices { padding: 100px 0; background: var(--ink-deep); }
+  .voices-head { max-width: 640px; margin-bottom: 56px; }
+  .voices-head .section-title { color: #f0f4f5; }
+  .voices-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 26px;
+  }
+  .voice {
+    margin: 0;
+    background: var(--surface);
+    border: 1px solid var(--hairline-band);
+    border-radius: var(--radius-lg);
+    padding: 30px 28px 26px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .voice blockquote {
+    margin: 0;
+    color: #eef3f4;
+    font-size: 1.02rem;
+    line-height: 1.55;
+    position: relative;
+    padding-top: 30px;
+  }
+  .voice blockquote::before {
+    content: "\201C";
+    position: absolute;
+    top: -6px;
+    left: -2px;
+    font-family: var(--font-serif);
+    font-size: 3.2rem;
+    line-height: 1;
+    color: var(--gold);
+  }
+  .voice figcaption { display: flex; flex-direction: column; gap: 3px; margin-top: auto; }
+  .voice .who { font-weight: 800; color: #fff; font-size: 0.95rem; }
+  .voice .org {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--teal-bright);
+  }
+
   /* numbers — soft gold glow (lighter slate band) */
   .legacy { padding: 100px 0; position: relative; overflow: hidden; }
   .legacy::before {
@@ -590,5 +723,15 @@ const posts = (await getCollection('insights'))
       gap: 16px;
     }
     .all-link { white-space: nowrap; }
+    .voices-grid {
+      grid-template-columns: none;
+      grid-auto-flow: column;
+      grid-auto-columns: 84%;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 12px;
+      -webkit-overflow-scrolling: touch;
+    }
+    .voices-grid > :global(*) { scroll-snap-align: start; }
   }
 </style>
