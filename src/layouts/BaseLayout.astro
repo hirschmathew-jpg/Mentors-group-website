@@ -173,6 +173,13 @@ const orgSchema = {
         const glowSel =
           '.hero, .firms, .trust, .approach, .voices, .insights, .legacy, .cta, ' +
           '.page-hero, .story, .tl, .listing, .contact, .legal, .pitch, .record, .confidential, .related';
+        // Shared state so the once-bound listeners always see the current
+        // page's hosts, and their rects are cached (not read per pointermove).
+        const G = (window as any).__glow || ((window as any).__glow = {});
+        G.measure = () => {
+          G.hosts = [...document.querySelectorAll<HTMLElement>('.glow-host')];
+          G.rects = G.hosts.map((h: HTMLElement) => h.getBoundingClientRect());
+        };
         document.querySelectorAll<HTMLElement>(glowSel).forEach((band) => {
           if (band.dataset.glow) return;
           band.dataset.glow = 'true';
@@ -181,20 +188,22 @@ const orgSchema = {
           glow.className = 'cursor-glow';
           glow.setAttribute('aria-hidden', 'true');
           band.appendChild(glow);
+          (band as any).__glow = glow;
         });
-        if (!(window as any).__glowBound) {
-          (window as any).__glowBound = true;
+        G.measure();
+        if (!G.bound) {
+          G.bound = true;
           const R = 420; // keep sections within this reach of the cursor lit
-          let last: PointerEvent | null = null;
-          let ticking = false;
           const paint = () => {
-            ticking = false;
-            const e = last;
-            if (!e) return;
-            document.querySelectorAll<HTMLElement>('.glow-host').forEach((band) => {
-              const glow = band.querySelector<HTMLElement>(':scope > .cursor-glow');
-              if (!glow) return;
-              const r = band.getBoundingClientRect();
+            G.ticking = false;
+            const e = G.last;
+            if (!e || !G.hosts) return;
+            // Reads only from the cached rects — no getBoundingClientRect here,
+            // so moving over the animating marquee can't thrash layout.
+            for (let i = 0; i < G.hosts.length; i++) {
+              const glow = G.hosts[i].__glow;
+              if (!glow) continue;
+              const r = G.rects[i];
               const near =
                 e.clientX > r.left - R && e.clientX < r.right + R &&
                 e.clientY > r.top - R && e.clientY < r.bottom + R;
@@ -205,12 +214,18 @@ const orgSchema = {
               } else {
                 glow.style.opacity = '0';
               }
-            });
+            }
           };
           document.addEventListener('pointermove', (e) => {
-            last = e as PointerEvent;
-            if (!ticking) { ticking = true; requestAnimationFrame(paint); }
+            G.last = e;
+            if (!G.ticking) { G.ticking = true; requestAnimationFrame(paint); }
           }, { passive: true });
+          // Rects only change on scroll/resize — remeasure then (rAF-throttled).
+          let mTick = false;
+          const remeasure = () => { mTick = false; G.measure(); paint(); };
+          const schedule = () => { if (!mTick) { mTick = true; requestAnimationFrame(remeasure); } };
+          window.addEventListener('scroll', schedule, { passive: true });
+          window.addEventListener('resize', schedule);
         }
         // magnetic gold buttons
         document.querySelectorAll<HTMLElement>('.btn-gold').forEach((btn) => {
