@@ -108,21 +108,35 @@ const posts = (await getCollection('insights')).sort(
 </style>
 
 <script>
+  // Reveal the archive six articles at a time; once everything is shown the
+  // button collapses it again.
+  const STEP = 6;
   document.addEventListener('astro:page-load', () => {
     const btn = document.querySelector<HTMLButtonElement>('[data-show-more]');
     const archive = document.querySelector<HTMLElement>('[data-archive]');
-    if (!btn || !archive) return;
+    if (!btn || !archive || (archive as any).__moreBound) return;
+    (archive as any).__moreBound = true;
+
+    const cards = [...archive.querySelectorAll<HTMLElement>('.arc-grid > .acard')];
+    let shown = 0;
+    const render = () => {
+      // inline display beats the card's own `display:flex`, which would
+      // otherwise override the [hidden] attribute.
+      cards.forEach((c, i) => (c.style.display = i < shown ? '' : 'none'));
+      archive.toggleAttribute('hidden', shown === 0);
+      btn.textContent = shown >= cards.length ? 'Show fewer articles' : 'Show more articles';
+      btn.setAttribute('aria-expanded', shown > 0 ? 'true' : 'false');
+    };
+    render();
+
     btn.addEventListener('click', () => {
-      const open = archive.hasAttribute('hidden');
-      if (open) {
-        archive.removeAttribute('hidden');
-        btn.textContent = 'Show fewer articles';
-        btn.setAttribute('aria-expanded', 'true');
-      } else {
-        archive.setAttribute('hidden', '');
-        btn.textContent = 'Show more articles';
-        btn.setAttribute('aria-expanded', 'false');
+      if (shown >= cards.length) {
+        shown = 0;
+        render();
         archive.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      } else {
+        shown = Math.min(shown + STEP, cards.length);
+        render();
       }
     });
   });
