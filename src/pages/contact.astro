@@ -66,13 +66,14 @@ const firms = ['HLB Ireland', 'FutureRange'];
 
 // TODO: when a form backend is chosen (e.g. a real Formspree form ID),
 // point the form's `action` at it and remove the mailto fallback note.
+// Each area routes the submission to the right firm's inbox.
 const areas = [
-  'Audit, Accounting & Tax',
-  'Technology & Managed IT',
-  'Cybersecurity',
-  'Wealth Management',
-  'Joining the group / practice sale',
-  'Something else',
+  { label: 'Audit, Accounting & Tax', firm: 'hlb' },
+  { label: 'Technology & Managed IT', firm: 'futurerange' },
+  { label: 'Cybersecurity', firm: 'futurerange' },
+  { label: 'Wealth Management', firm: 'hlb' },
+  { label: 'Joining the group / practice sale', firm: 'hlb' },
+  { label: 'Something else', firm: 'hlb' },
 ];
 ---
 
@@ -191,7 +192,7 @@ const areas = [
           <label for="area">Area of interest</label>
           <select id="area" name="area_of_interest">
             <option value="" disabled selected>Select one…</option>
-            {areas.map((a) => <option value={a}>{a}</option>)}
+            {areas.map((a) => <option value={a.label} data-firm={a.firm}>{a.label}</option>)}
           </select>
         </div>
         <div class="field">
@@ -200,8 +201,9 @@ const areas = [
         </div>
         <button class="btn btn-gold" type="submit">Send message <span aria-hidden="true">→</span></button>
         <p class="note">
-          Submitting opens an email to us in your mail app — or write to us
-          directly at the addresses on the left.
+          Submitting opens an email in your mail app, addressed to the right
+          firm for your enquiry — or write to us directly at the addresses on
+          the left.
         </p>
       </form>
     </div>
@@ -463,6 +465,21 @@ const areas = [
         if (d.open) closeAll(d);
       });
     });
+
+    // Route the mailto submission to the right firm for the selected area
+    // of interest (data-firm on each option). Defaults to HLB Ireland.
+    // TODO: when a real form backend is wired up, switch the endpoint (or a
+    // routing field) here instead of the mailto address.
+    const form = document.querySelector<HTMLFormElement>('form.form');
+    const area = form?.querySelector<HTMLSelectElement>('#area');
+    if (form && area) {
+      const route = () => {
+        const firm = area.selectedOptions[0]?.dataset.firm;
+        form.action = firm === 'futurerange' ? 'mailto:info@futurerange.ie' : 'mailto:info@hlb.ie';
+      };
+      area.addEventListener('change', route);
+      route();
+    }
   });
   document.addEventListener('click', (e) => {
     if (!(e.target instanceof Element && e.target.closest('details.loc'))) closeAll();
