@@ -167,10 +167,14 @@ const orgSchema = {
 
       function initMicro() {
         if (reduced() || !finePointer()) return;
-        // cursor-following glow on dark bands
-        document.querySelectorAll<HTMLElement>('.hero, .legacy, .cta, .page-hero, .spot').forEach((band) => {
+        // cursor-following glow on every main section (not the services strip)
+        const glowSel =
+          '.hero, .firms, .trust, .approach, .voices, .insights, .legacy, .cta, ' +
+          '.page-hero, .story, .tl, .listing, .contact, .legal, .pitch, .record, .confidential, .related';
+        document.querySelectorAll<HTMLElement>(glowSel).forEach((band) => {
           if (band.dataset.glow) return;
           band.dataset.glow = 'true';
+          band.classList.add('glow-host');
           const glow = document.createElement('i');
           glow.className = 'cursor-glow';
           glow.setAttribute('aria-hidden', 'true');
