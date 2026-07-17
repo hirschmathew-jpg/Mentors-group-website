@@ -19,13 +19,13 @@ const posts = (await getCollection('insights'))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .slice(0, 3);
 
-// Credentials — all verifiable from the firms' own sites.
+// Credentials — all verifiable from the firms' own sites; both firms covered.
 const credentials = [
   { main: '1976 & 1995', sub: 'Two firms, five decades' },
   { main: 'Registered Auditors', sub: 'Chartered Accountants Ireland' },
-  { main: 'Great Place to Work®', sub: 'Certified' },
-  { main: 'Most Loved Workplace®', sub: 'Two years running' },
+  { main: 'Great Place to Work®', sub: 'HLB Ireland, certified' },
   { main: 'HLB Global', sub: 'Network across 155 countries' },
+  { main: 'All-island', sub: 'Offices across Ireland & NI' },
 ];
 
 // Real client testimonials from FutureRange's website.
