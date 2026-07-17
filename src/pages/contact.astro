@@ -9,21 +9,29 @@ const locations = [
     firm: 'HLB Ireland',
     tag: 'Head office',
     address: ['Suite 7', 'The Courtyard', 'Carmanhall Road', 'Sandyford', 'Dublin 18', 'D18 NW62'],
+    phone: '(01) 291 5265',
+    tel: '+35312915265',
   },
   {
     name: 'Beacon',
     firm: 'HLB Ireland',
     address: ['Suite 19', 'The Mall', 'Beacon Court', 'Sandyford', 'Dublin 18'],
+    phone: '(01) 291 5265',
+    tel: '+35312915265',
   },
   {
     name: 'Marino',
     firm: 'HLB Ireland',
     address: ['1-2 Marino Mart', 'Fairview', 'Dublin 3', 'D03 T3P1'],
+    phone: '(01) 291 5265',
+    tel: '+35312915265',
   },
   {
     name: 'Galway',
     firm: 'HLB Ireland',
     address: ['2 Steamship House', 'Dock Street', 'Galway', 'H91 YF8C'],
+    phone: '(01) 291 5265',
+    tel: '+35312915265',
   },
   {
     name: 'Dublin',
@@ -50,6 +58,8 @@ const locations = [
     name: 'Belfast',
     firm: 'FutureRange',
     address: ['Units 5 & 6', 'Bellsbridge Office Park', '100 Ladas Drive', 'Belfast', 'BT6 9FH'],
+    phone: '(01) 2960 560',
+    tel: '+35312960560',
   },
 ];
 const firms = ['HLB Ireland', 'FutureRange'];
@@ -107,6 +117,7 @@ const areas = [
         <div class="info-block">
           <h3 class="mini">Locations</h3>
           <p class="places-hint">Select a location for the address.</p>
+          <div class="places-wrap">
           {firms.map((firm) => (
             <div class="places-group">
               <p class="places-firm">{firm}</p>
@@ -137,6 +148,7 @@ const areas = [
               </ul>
             </div>
           ))}
+          </div>
         </div>
 
         <div class="info-block">
@@ -248,10 +260,9 @@ const areas = [
     gap: 4px;
     padding: 0;
   }
-  .place { position: relative; }
-  /* inline-block so the popover anchors beside the name instead of
-     covering the location names below it */
-  .loc { position: relative; display: inline-block; }
+  /* all popovers anchor to this wrapper so they open in the same spot */
+  .places-wrap { position: relative; }
+  .loc { display: inline-block; }
   .loc summary {
     list-style: none;
     display: inline-flex;
@@ -303,8 +314,9 @@ const areas = [
   .loc[open] .chev { rotate: 180deg; }
   .loc-pop {
     position: absolute;
-    left: calc(100% + 14px);
-    top: -10px;
+    left: 250px;
+    top: 50%;
+    translate: 0 -50%;
     z-index: 6;
     min-width: 264px;
     max-width: min(330px, 78vw);
