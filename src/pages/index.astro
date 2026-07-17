@@ -26,7 +26,8 @@ const certs = [
   { img: 'most-loved-workplace', alt: 'Most Loved Workplace certified', label: 'Most Loved Workplace®', sub: 'HLB Ireland' },
 ];
 
-// Real, attributed client testimonials from the firms' own websites — both covered.
+// Real, attributed client testimonials from the firms' own websites — both firms,
+// alternating so any three-in-view show a mix. Displayed in a revolving carousel.
 const testimonials = [
   {
     quote: 'Bruce and his team provide an outstanding, confidential service.',
@@ -46,6 +47,16 @@ const testimonials = [
   {
     quote: 'Always pleasant to deal with and very responsive to any IT issues we have.',
     who: 'Margaret Wafer · Belmont House',
+    firm: 'FutureRange',
+  },
+  {
+    quote: 'They take care of everything — from tax filings to Revenue queries — with minimal disruption to our firm.',
+    who: 'Law & consulting firm client',
+    firm: 'HLB Ireland',
+  },
+  {
+    quote: 'FutureRange provided immensely beneficial knowledge transfer to our IT staff.',
+    who: 'Head of IT · Zenith Technologies',
     firm: 'FutureRange',
   },
 ];
@@ -198,16 +209,26 @@ const testimonials = [
     </div>
   </section>
 
-  <!-- Testimonials -->
+  <!-- Testimonials (revolving carousel) -->
   <section class="voices" aria-label="What clients say">
     <div class="container">
       <div class="voices-head" data-reveal>
-        <p class="eyebrow">In their words</p>
-        <h2 class="section-title">Trusted by organisations across Ireland</h2>
+        <div>
+          <p class="eyebrow">In their words</p>
+          <h2 class="section-title">Trusted by organisations across Ireland</h2>
+        </div>
+        <div class="voices-nav" aria-hidden="true">
+          <button type="button" class="v-btn" data-voices-prev aria-label="Previous testimonials">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6" /></svg>
+          </button>
+          <button type="button" class="v-btn" data-voices-next aria-label="Next testimonials">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6" /></svg>
+          </button>
+        </div>
       </div>
-      <div class="voices-grid">
+      <div class="voices-viewport" data-voices-viewport data-reveal tabindex="0" role="group" aria-label="Client testimonials, scrollable">
         {testimonials.map((t) => (
-          <figure class:list={['voice', { fr: t.firm === 'FutureRange' }]} data-reveal>
+          <figure class:list={['voice', { fr: t.firm === 'FutureRange' }]}>
             <blockquote>{t.quote}</blockquote>
             <figcaption>
               <span class="who">{t.who}</span>
@@ -555,21 +576,54 @@ const testimonials = [
     color: var(--body);
   }
 
-  /* testimonials — darker blue band, single row of cards */
+  /* testimonials — darker blue band, revolving carousel */
   .voices { padding: 100px 0; background: var(--paper); }
-  .voices-head { max-width: 640px; margin-bottom: 52px; }
-  .voices-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
+  .voices-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 24px;
+    margin-bottom: 44px;
   }
+  .voices-head > div:first-child { max-width: 640px; }
+  .voices-nav { display: flex; gap: 10px; }
+  .v-btn {
+    width: 46px;
+    height: 46px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    color: var(--head);
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+  }
+  .v-btn svg { width: 20px; height: 20px; }
+  .v-btn:hover { border-color: var(--gold); color: var(--gold); }
+  .v-btn:active { transform: scale(0.94); }
+  .v-btn:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+  .voices-viewport {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 4px;
+  }
+  .voices-viewport::-webkit-scrollbar { display: none; }
+  .voices-viewport:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
   .voice {
     margin: 0;
+    flex: 0 0 calc((100% - 40px) / 3);
+    scroll-snap-align: start;
     background: var(--surface);
     border: 1px solid var(--line);
     border-left: 3px solid var(--gold);
     border-radius: var(--radius-lg);
-    padding: 28px 24px 24px;
+    padding: 28px 26px 24px;
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -756,10 +810,64 @@ const testimonials = [
       gap: 16px;
     }
     .all-link { white-space: nowrap; }
-    .voices-grid { grid-template-columns: 1fr 1fr; }
+    .voice { flex-basis: calc((100% - 20px) / 2); }
     .certs { gap: 20px 28px; }
   }
   @media (max-width: 560px) {
-    .voices-grid { grid-template-columns: 1fr; }
+    .voices-head { flex-direction: column; align-items: flex-start; }
+    .voice { flex-basis: 86%; }
   }
+  /* the arrows are a JS enhancement; the viewport still swipes without them */
+  :global(html:not(.js)) .voices-nav { display: none; }
 </style>
+
+<script>
+  // Revolving testimonials carousel: prev/next, native swipe, and a gentle
+  // auto-advance that pauses on hover, focus, or when off-screen. Re-inits on
+  // every page visit; the previous run is torn down first to avoid leaks.
+  function initVoices() {
+    if ((window as any).__voicesCleanup) (window as any).__voicesCleanup();
+    const vp = document.querySelector<HTMLElement>('[data-voices-viewport]');
+    if (!vp) return;
+    const cards = [...vp.querySelectorAll<HTMLElement>('.voice')];
+    if (!cards.length) return;
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const nav = document.querySelector('.voices-nav');
+    if (nav) nav.removeAttribute('aria-hidden');
+
+    const step = () => {
+      const gap = parseFloat(getComputedStyle(vp).columnGap) || 20;
+      return cards[0].getBoundingClientRect().width + gap;
+    };
+    const atEnd = () => vp.scrollLeft + vp.clientWidth >= vp.scrollWidth - 4;
+    const atStart = () => vp.scrollLeft <= 4;
+    const go = (dir: number) => {
+      const behavior: ScrollBehavior = reduce ? 'auto' : 'smooth';
+      if (dir > 0) atEnd() ? vp.scrollTo({ left: 0, behavior }) : vp.scrollBy({ left: step(), behavior });
+      else atStart() ? vp.scrollTo({ left: vp.scrollWidth, behavior }) : vp.scrollBy({ left: -step(), behavior });
+    };
+
+    const nextBtn = document.querySelector('[data-voices-next]');
+    const prevBtn = document.querySelector('[data-voices-prev]');
+    nextBtn?.addEventListener('click', () => go(1));
+    prevBtn?.addEventListener('click', () => go(-1));
+
+    let paused = false;
+    let timer = 0;
+    const section = vp.closest('.voices') as HTMLElement;
+    const startTick = () => { if (reduce || timer) return; timer = window.setInterval(() => { if (!paused) go(1); }, 5000); };
+    const stopTick = () => { if (timer) { clearInterval(timer); timer = 0; } };
+    section.addEventListener('pointerenter', () => (paused = true));
+    section.addEventListener('pointerleave', () => (paused = false));
+    vp.addEventListener('focusin', () => (paused = true));
+    vp.addEventListener('focusout', () => (paused = false));
+    const io = new IntersectionObserver(
+      (es) => es.forEach((e) => (e.isIntersecting ? startTick() : stopTick())),
+      { threshold: 0.25 }
+    );
+    io.observe(section);
+
+    (window as any).__voicesCleanup = () => { stopTick(); io.disconnect(); };
+  }
+  document.addEventListener('astro:page-load', initVoices);
+</script>
