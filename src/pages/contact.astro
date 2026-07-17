@@ -1,6 +1,59 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 
+// Office addresses from the HLB Ireland headed paper (July 2026) and the
+// FutureRange website contact page.
+const locations = [
+  {
+    name: 'Sandyford',
+    firm: 'HLB Ireland',
+    tag: 'Head office',
+    address: ['Suite 7, The Courtyard', 'Carmanhall Road, Sandyford', 'Dublin 18, D18 NW62'],
+  },
+  {
+    name: 'Beacon',
+    firm: 'HLB Ireland',
+    address: ['Suite 19, The Mall', 'Beacon Court, Sandyford', 'Dublin 18'],
+  },
+  {
+    name: 'Marino',
+    firm: 'HLB Ireland',
+    address: ['1-2 Marino Mart', 'Fairview', 'Dublin 3, D03 T3P1'],
+  },
+  {
+    name: 'Galway',
+    firm: 'HLB Ireland',
+    address: ['2 Steamship House', 'Dock Street', 'Galway, H91 YF8C'],
+  },
+  {
+    name: 'Dublin',
+    firm: 'FutureRange',
+    address: ['Suite 8, Block B, The Courtyard', 'Carmanhall Road, Sandyford Business Park', 'Dublin 18, D18 C436'],
+    phone: '(01) 2960 560',
+    tel: '+35312960560',
+  },
+  {
+    name: 'Cork',
+    firm: 'FutureRange',
+    address: ['Unit 2, Airport East Business & Technology Park', 'Kinsale Road', 'Cork'],
+    phone: '(021) 242 7974',
+    tel: '+353212427974',
+  },
+  {
+    name: 'Limerick',
+    firm: 'FutureRange',
+    address: ['Unit 1A, Crossagalla Industrial Estate', 'Ballysimon Road', 'Co. Limerick'],
+    phone: '(061) 40 0230',
+    tel: '+35361400230',
+  },
+  {
+    name: 'Belfast',
+    firm: 'FutureRange',
+    address: ['Units 5 & 6, Bellsbridge Office Park', '100 Ladas Drive', 'Belfast BT6 9FH'],
+  },
+];
+const firms = ['HLB Ireland', 'FutureRange'];
+
 // TODO: when a form backend is chosen (e.g. a real Formspree form ID),
 // point the form's `action` at it and remove the mailto fallback note.
 const areas = [
@@ -43,6 +96,7 @@ const areas = [
         <div class="info-block">
           <h3 class="mini">Head office</h3>
           <address class="address">
+            Suite 7<br />
             The Courtyard<br />
             Carmanhall Road<br />
             Sandyford<br />
@@ -53,14 +107,37 @@ const areas = [
 
         <div class="info-block">
           <h3 class="mini">Locations</h3>
-          <ul class="places" role="list">
-            <li>Sandyford</li>
-            <li>Beacon</li>
-            <li>Merino</li>
-            <li>Galway</li>
-            <li>Cork</li>
-            <li>Limerick</li>
-          </ul>
+          <p class="places-hint">Select a location for the address.</p>
+          {firms.map((firm) => (
+            <div class="places-group">
+              <p class="places-firm">{firm}</p>
+              <ul class="places" role="list">
+                {locations.filter((l) => l.firm === firm).map((loc) => (
+                  <li class:list={['place', { fr: firm === 'FutureRange' }]}>
+                    <details class="loc">
+                      <summary>
+                        <span class="loc-name">{loc.name}</span>
+                        {loc.tag && <span class="loc-tag">{loc.tag}</span>}
+                        <svg class="chev" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5 6 7.5 9 4.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                      </summary>
+                      <div class="loc-pop">
+                        <p class="loc-firm">{loc.firm}{loc.tag ? ` — ${loc.tag}` : ''}</p>
+                        <address>
+                          {loc.address.map((line, i) => (
+                            <>
+                              {line}
+                              {i < loc.address.length - 1 && <br />}
+                            </>
+                          ))}
+                        </address>
+                        {loc.phone && <a class="loc-phone" href={`tel:${loc.tel}`}>{loc.phone}</a>}
+                      </div>
+                    </details>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
 
         <div class="info-block">
@@ -152,28 +229,127 @@ const areas = [
     padding: 16px 20px;
     display: inline-block;
   }
+  .places-hint {
+    font-size: 0.85rem;
+    color: var(--body);
+    margin-bottom: 14px;
+  }
+  .places-group + .places-group { margin-top: 18px; }
+  .places-firm {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-weight: 800;
+    color: var(--body);
+    margin-bottom: 8px;
+  }
   .places {
     list-style: none;
     display: grid;
-    gap: 6px;
+    gap: 4px;
     padding: 0;
   }
-  .places li {
+  .place { position: relative; }
+  /* inline-block so the popover anchors beside the name instead of
+     covering the location names below it */
+  .loc { position: relative; display: inline-block; }
+  .loc summary {
+    list-style: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
     color: var(--head);
     font-weight: 600;
-    padding-left: 18px;
+    padding: 3px 0 3px 18px;
     position: relative;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
   }
-  .places li::before {
+  .loc summary::-webkit-details-marker { display: none; }
+  .loc summary::before {
     content: "";
     position: absolute;
     left: 0;
-    top: 0.62em;
+    top: 50%;
+    translate: 0 -50%;
     width: 8px;
     height: 8px;
     border-radius: 50%;
     background: var(--gold);
   }
+  .place.fr .loc summary::before { background: var(--teal-bright); }
+  .loc summary:hover .loc-name { color: var(--gold-deep); }
+  .place.fr .loc summary:hover .loc-name { color: var(--teal-bright); }
+  .loc summary:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+  .loc-tag {
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 800;
+    color: var(--gold-deep);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 2px 8px;
+  }
+  .chev {
+    width: 12px;
+    height: 12px;
+    color: var(--body);
+    transition: rotate 0.18s ease;
+  }
+  .loc[open] .chev { rotate: 180deg; }
+  .loc-pop {
+    position: absolute;
+    left: calc(100% + 14px);
+    top: -10px;
+    z-index: 6;
+    min-width: 264px;
+    max-width: min(330px, 78vw);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--gold);
+    border-radius: var(--radius-sm);
+    padding: 14px 18px;
+    box-shadow: 0 18px 44px rgba(0, 10, 14, 0.45);
+  }
+  .place.fr .loc-pop { border-left-color: var(--teal-bright); }
+  @media (prefers-reduced-motion: no-preference) {
+    .loc[open] .loc-pop { animation: pop-in 0.16s ease; }
+  }
+  @keyframes pop-in {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .loc-firm {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-weight: 800;
+    color: var(--gold-deep);
+    margin-bottom: 8px;
+  }
+  .place.fr .loc-firm { color: var(--teal-bright); }
+  .loc-pop address {
+    font-style: normal;
+    color: var(--head);
+    font-weight: 600;
+    line-height: 1.55;
+  }
+  .loc-phone {
+    display: inline-block;
+    margin-top: 10px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--head);
+    border-bottom: 2px solid var(--gold);
+    padding-bottom: 1px;
+  }
+  .place.fr .loc-phone { border-bottom-color: var(--teal-bright); }
+  .loc-phone:hover { color: var(--gold-deep); }
   .direct {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -246,7 +422,41 @@ const areas = [
     .form { padding: 26px; }
     .row.two { grid-template-columns: 1fr; gap: 0; }
   }
+  @media (max-width: 640px) {
+    /* on small screens the popover opens in flow, accordion-style */
+    .loc-pop {
+      position: static;
+      margin: 8px 0 10px 18px;
+      min-width: 0;
+      max-width: none;
+      box-shadow: none;
+    }
+  }
   @media (max-width: 480px) {
     .direct { grid-template-columns: 1fr; }
   }
 </style>
+
+<script>
+  // Location popovers: only one open at a time; click-away and Escape close.
+  // The toggle listeners re-bind per page visit; the document-level
+  // dismissers bind once (this module runs once per session).
+  const closeAll = (except?: Element) => {
+    document.querySelectorAll('details.loc[open]').forEach((d) => {
+      if (d !== except) (d as HTMLDetailsElement).open = false;
+    });
+  };
+  document.addEventListener('astro:page-load', () => {
+    document.querySelectorAll<HTMLDetailsElement>('details.loc').forEach((d) => {
+      d.addEventListener('toggle', () => {
+        if (d.open) closeAll(d);
+      });
+    });
+  });
+  document.addEventListener('click', (e) => {
+    if (!(e.target instanceof Element && e.target.closest('details.loc'))) closeAll();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeAll();
+  });
+</script>
