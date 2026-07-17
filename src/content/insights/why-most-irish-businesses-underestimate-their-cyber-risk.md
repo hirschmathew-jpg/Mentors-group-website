@@ -11,15 +11,19 @@ This is not a failure of intention — it is a failure of visibility. Most owner
 
 ## The perception gap
 
-FutureRange's latest research found that 71% of Irish SMEs consider cybersecurity a significant business risk. Yet only 34% had conducted a formal cyber risk assessment in the past two years.
+HLB Ireland's [2024 Cybersecurity Report](https://www.hlb.ie/hlb-cyber-security-report-2024/) puts numbers on it. 86% of businesses surveyed expressed heightened concern about cyber threats, and nearly two-thirds now treat cybersecurity as a major strategic priority. Yet only a third describe themselves as "very confident" of recovering quickly from an attack, and just 24% run ongoing security awareness training programmes.
 
-More striking: of those who had conducted an assessment, 61% identified vulnerabilities they had not previously been aware of.
+Meanwhile the threat itself is growing: 39% of companies reported increased attacks, with 29% saying the impacts have become more severe. And despite the pace of AI adoption, only 29% have put in place the security and governance controls needed to manage emerging AI risks.
 
-The conclusion is straightforward. Businesses consistently underestimate their actual exposure — not because they are careless, but because the threats are not visible in day-to-day operations.
+> "Being prepared means more than just withstanding an attack; it's about ensuring swift and effective recovery to maintain business continuity."
+>
+> — Mark Butler, Managing Partner, HLB Ireland
+
+The conclusion is straightforward. Businesses consistently overestimate their preparedness — not because they are careless, but because the gaps are not visible in day-to-day operations.
 
 ## Where the risk actually lives
 
-The most commonly underestimated risk areas identified in our research were not exotic attack vectors. They were mundane.
+The most commonly underestimated risk areas FutureRange sees in practice are not exotic attack vectors. They are mundane.
 
 **Email compromise** remains the most common entry point for cybercriminals targeting Irish businesses. A convincing email — impersonating a supplier, a client or a senior executive — is still more effective than any piece of malware.
 
@@ -29,7 +33,7 @@ The most commonly underestimated risk areas identified in our research were not 
 
 ## What to do
 
-The good news is that the most impactful steps are not the most expensive ones. Based on our assessments across hundreds of Irish businesses, the following measures address the majority of common vulnerabilities:
+The good news is that the most impactful steps are not the most expensive ones. In FutureRange's experience supporting organisations across the island of Ireland, the following measures address the majority of common vulnerabilities:
 
 - **Multi-factor authentication** on all business email accounts — this single step eliminates the vast majority of account compromise attacks
 - **A documented and tested incident response plan** — most businesses have no plan for the first 24 hours of an attack
@@ -42,4 +46,4 @@ For businesses without a dedicated IT team, managed IT services offer a practica
 
 If your current IT arrangement does not include proactive security monitoring, it is worth reviewing whether it remains fit for purpose.
 
-To discuss your organisation's cyber risk posture, contact FutureRange at [info@futurerange.ie](mailto:info@futurerange.ie).
+To discuss your organisation's cyber risk posture, contact FutureRange at [info@futurerange.ie](mailto:info@futurerange.ie). The full HLB Cybersecurity Report is available from [hlb.ie](https://www.hlb.ie/hlb-cyber-security-report-2024/).

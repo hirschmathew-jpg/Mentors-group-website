@@ -8,9 +8,11 @@ import ServicesStrip from '../components/ServicesStrip.astro';
 const timeline = [
   { year: '1976', title: 'HLB Ireland founded', text: 'Partner-led audit, accounting and tax advisory, headquartered in Dublin.' },
   { year: '1995', title: 'FutureRange founded', text: 'Tom Haugh sets out to help businesses get real value from technology.' },
-  { year: '2019', title: 'First major merger', text: 'Conlan Crotty Murray joins — the acquisition programme begins.' },
-  { year: '2025', title: 'Cardinal Capital invests', text: 'Minority backing accelerates growth: six acquisitions follow in fourteen months.' },
-  { year: '2026', title: 'Mentora Group formed', text: 'One group holds both firms — 12 acquisitions in, 180+ professionals strong.' },
+  { year: '2019', title: 'First major merger', text: 'Conlan Crotty Murray joins HLB Ireland — the acquisition programme begins.' },
+  { year: '2021', title: 'Garry IT joins', text: 'The respected Limerick IT provider merges with FutureRange.' },
+  { year: '2024', title: 'Lowry joins HLB', text: 'Lowry Chartered Accountants merges in, following John McCarrick & Associates.' },
+  { year: '2025', title: 'Cardinal Capital invests', text: 'Minority backing lands; FutureRange adds DigitalWell’s managed IT business.' },
+  { year: '2026', title: 'One group, all-island', text: 'Echo IT, EOS Systems and Leahy O’Riordan join — Mentora Group is formed.' },
 ];
 ---
 
@@ -128,8 +130,8 @@ const timeline = [
   .tl-rail {
     list-style: none;
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 28px;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 20px;
     margin-top: 64px;
     position: relative;
     padding: 0;
@@ -155,16 +157,18 @@ const timeline = [
     background: var(--gold);
     box-shadow: 0 0 0 5px rgba(234, 182, 51, 0.18);
   }
-  .tl-item:nth-child(2) .tl-node { background: var(--teal-bright); box-shadow: 0 0 0 5px rgba(59, 191, 208, 0.18); }
-  .tl-item:nth-child(3) .tl-node { background: var(--gold); }
-  .tl-item:nth-child(4) .tl-node { background: var(--teal-bright); box-shadow: 0 0 0 5px rgba(59, 191, 208, 0.18); }
-  .tl-item:nth-child(5) .tl-node { background: var(--violet); box-shadow: 0 0 0 5px rgba(143, 127, 242, 0.2); }
+  .tl-item:nth-child(2) .tl-node,
+  .tl-item:nth-child(4) .tl-node,
+  .tl-item:nth-child(6) .tl-node { background: var(--teal-bright); box-shadow: 0 0 0 5px rgba(59, 191, 208, 0.18); }
+  .tl-item:nth-child(7) .tl-node { background: var(--violet); box-shadow: 0 0 0 5px rgba(143, 127, 242, 0.2); }
   @media (prefers-reduced-motion: no-preference) {
     .tl-node { animation: pulse 3.2s ease-in-out infinite; }
-    .tl-item:nth-child(2) .tl-node { animation-delay: 0.5s; }
-    .tl-item:nth-child(3) .tl-node { animation-delay: 1s; }
-    .tl-item:nth-child(4) .tl-node { animation-delay: 1.5s; }
-    .tl-item:nth-child(5) .tl-node { animation-delay: 2s; }
+    .tl-item:nth-child(2) .tl-node { animation-delay: 0.4s; }
+    .tl-item:nth-child(3) .tl-node { animation-delay: 0.8s; }
+    .tl-item:nth-child(4) .tl-node { animation-delay: 1.2s; }
+    .tl-item:nth-child(5) .tl-node { animation-delay: 1.6s; }
+    .tl-item:nth-child(6) .tl-node { animation-delay: 2s; }
+    .tl-item:nth-child(7) .tl-node { animation-delay: 2.4s; }
   }
   @keyframes pulse {
     0%, 100% { transform: scale(1); }
@@ -180,9 +184,10 @@ const timeline = [
     line-height: 1;
     margin-bottom: 10px;
   }
-  .tl-item:nth-child(2) .tl-year { color: var(--teal-bright); }
-  .tl-item:nth-child(4) .tl-year { color: var(--teal-bright); }
-  .tl-item:nth-child(5) .tl-year { color: var(--violet-ink); }
+  .tl-item:nth-child(2) .tl-year,
+  .tl-item:nth-child(4) .tl-year,
+  .tl-item:nth-child(6) .tl-year { color: var(--teal-bright); }
+  .tl-item:nth-child(7) .tl-year { color: var(--violet-ink); }
   .tl-title {
     display: block;
     font-weight: 800;
@@ -194,7 +199,7 @@ const timeline = [
   @media (max-width: 900px) {
     .hero-grid, .story-grid { grid-template-columns: 1fr; }
     .tl-rail {
-      grid-template-columns: repeat(5, minmax(230px, 1fr));
+      grid-template-columns: repeat(7, minmax(230px, 1fr));
       overflow-x: auto;
       scroll-snap-type: x mandatory;
       padding-bottom: 14px;
