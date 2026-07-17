@@ -3,14 +3,18 @@ import { href } from '../lib/paths';
 interface Props {
   title?: string;
   body?: string;
+  /** which blue to sit on, to keep the page's light/dark alternation going.
+      'light' = lighter slate (default), 'dark' = darker blue. */
+  tone?: 'light' | 'dark';
 }
 const {
   title = 'Let’s talk about what comes next',
   body = 'Whether you are growing, restructuring, navigating a technology change or planning for what comes next — the right conversation starts here.',
+  tone = 'light',
 } = Astro.props;
 ---
 
-<section class="cta band on-dark">
+<section class="cta band on-dark" data-tone={tone}>
   <div class="container inner">
     <div data-reveal>
       <p class="eyebrow">Work with us</p>
@@ -24,7 +28,9 @@ const {
 </section>
 
 <style>
-  .cta { padding: 100px 0; position: relative; overflow: hidden; background: var(--paper); }
+  .cta { padding: 100px 0; position: relative; overflow: hidden; }
+  .cta[data-tone='light'] { background: var(--band-bg); }
+  .cta[data-tone='dark'] { background: var(--paper); }
   .cta::before {
     content: "";
     position: absolute;
