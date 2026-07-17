@@ -3,9 +3,10 @@ import { href } from '../lib/paths';
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Cta from '../components/Cta.astro';
-import PostCard from '../components/PostCard.astro';
+import ArticleCard from '../components/ArticleCard.astro';
 import Placeholder from '../components/Placeholder.astro';
 import ServicesStrip from '../components/ServicesStrip.astro';
+import articles from '../data/articles.json';
 
 // Drop hero-video.mp4 into src/assets/uploads/ for a full-bleed hero video.
 const videos = import.meta.glob<string>('../assets/uploads/hero-video.mp4', {
@@ -15,9 +16,34 @@ const videos = import.meta.glob<string>('../assets/uploads/hero-video.mp4', {
 });
 const heroVideo = Object.values(videos)[0];
 
-const posts = (await getCollection('insights'))
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
-  .slice(0, 3);
+const firmOf = (id: string) => (/futurerange|future-range/i.test(id) ? 'FutureRange' : 'HLB Ireland');
+const insights = (await getCollection('insights')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+// "Latest from the group" carousel — the on-site insights first (open in place),
+// then the most recent HLB / FutureRange articles (open on their own sites).
+const latest = [
+  ...insights.map((p) => ({
+    title: p.data.title,
+    description: p.data.description,
+    date: p.data.date.toISOString().slice(0, 10),
+    firm: firmOf(p.id) as 'HLB Ireland' | 'FutureRange',
+    url: href(`/insights/${p.id}/`),
+    internal: true,
+    image: `insight-${p.id}`,
+  })),
+  ...articles.map((a) => ({
+    title: a.title,
+    description: a.description,
+    date: a.date,
+    firm: a.firm as 'HLB Ireland' | 'FutureRange',
+    url: a.url,
+    internal: false,
+    image: a.image,
+  })),
+]
+  .sort((a, b) => new Date(b.date).valueOf() - new Date(a.date).valueOf())
+  .slice(0, 12);
 
 // Real certifications held by the group's firms (badges from their own sites).
 const certs = [
@@ -245,7 +271,7 @@ const testimonials = [
     </div>
   </section>
 
-  <!-- Insights -->
+  <!-- Insights (revolving carousel) -->
   <section class="insights">
     <div class="container">
       <div class="insights-head" data-reveal>
@@ -253,10 +279,30 @@ const testimonials = [
           <p class="eyebrow">Insights</p>
           <h2 class="section-title">Latest from the group</h2>
         </div>
-        <a class="all-link" href={href('/insights/')}>All insights</a>
+        <div class="insights-actions">
+          <div class="latest-nav" aria-hidden="true">
+            <button type="button" class="l-btn" data-latest-prev aria-label="Previous articles">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6" /></svg>
+            </button>
+            <button type="button" class="l-btn" data-latest-next aria-label="Next articles">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6" /></svg>
+            </button>
+          </div>
+          <a class="all-link" href={href('/insights/')}>All insights</a>
+        </div>
       </div>
-      <div class="posts">
-        {posts.map((post) => <PostCard post={post} />)}
+      <div class="latest-viewport" data-latest-viewport data-reveal tabindex="0" role="group" aria-label="Latest articles, scrollable">
+        {latest.map((a) => (
+          <ArticleCard
+            title={a.title}
+            description={a.description}
+            date={a.date}
+            firm={a.firm}
+            url={a.url}
+            internal={a.internal}
+            image={a.image}
+          />
+        ))}
       </div>
     </div>
   </section>
@@ -775,6 +821,24 @@ const testimonials = [
     align-items: flex-end;
     margin-bottom: 44px;
   }
+  .insights-actions { display: flex; align-items: center; gap: 22px; }
+  .latest-nav { display: flex; gap: 10px; }
+  .l-btn {
+    width: 46px;
+    height: 46px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    color: var(--head);
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+  }
+  .l-btn svg { width: 20px; height: 20px; }
+  .l-btn:hover { border-color: var(--gold); color: var(--gold); }
+  .l-btn:active { transform: scale(0.94); }
+  .l-btn:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
   .all-link {
     font-weight: 800;
     font-size: 0.85rem;
@@ -785,11 +849,22 @@ const testimonials = [
     padding-bottom: 4px;
   }
   .all-link:hover { color: var(--gold-deep); }
-  .posts {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+  .latest-viewport {
+    display: flex;
     gap: 28px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 4px;
   }
+  .latest-viewport::-webkit-scrollbar { display: none; }
+  .latest-viewport:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
+  .latest-viewport > :global(.acard) {
+    flex: 0 0 calc((100% - 56px) / 3);
+    scroll-snap-align: start;
+  }
+  :global(html:not(.js)) .latest-nav { display: none; }
 
   @media (max-width: 960px) {
     .hero-grid { grid-template-columns: 1fr; }
@@ -798,16 +873,7 @@ const testimonials = [
     .hero-grid { padding-top: 72px; padding-bottom: 80px; }
     .stats { grid-template-columns: 1fr 1fr; }
     .pillars { grid-template-columns: 1fr; }
-    .posts {
-      grid-template-columns: none;
-      grid-auto-flow: column;
-      grid-auto-columns: 82%;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      padding-bottom: 12px;
-      -webkit-overflow-scrolling: touch;
-    }
-    .posts > :global(*) { scroll-snap-align: start; }
+    .latest-viewport > :global(.acard) { flex-basis: 82%; }
     .firms-head { flex-direction: column; align-items: flex-start; }
     .insights-head {
       flex-direction: column;
@@ -899,4 +965,19 @@ const testimonials = [
     (window as any).__voicesCleanup = () => { stopTick(); io.disconnect(); clearTimeout(settle); };
   }
   document.addEventListener('astro:page-load', initVoices);
+</script>
+
+<script>
+  import { initCarousel } from '../lib/carousel';
+  function initLatest() {
+    (window as any).__latestCleanup?.();
+    const vp = document.querySelector<HTMLElement>('[data-latest-viewport]');
+    if (!vp) return;
+    (window as any).__latestCleanup = initCarousel(vp, {
+      navSelector: '.latest-nav',
+      prevSelector: '[data-latest-prev]',
+      nextSelector: '[data-latest-next]',
+    });
+  }
+  document.addEventListener('astro:page-load', initLatest);
 </script>
