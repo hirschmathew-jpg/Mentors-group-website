@@ -167,7 +167,9 @@ const orgSchema = {
 
       function initMicro() {
         if (reduced() || !finePointer()) return;
-        // cursor-following glow on every main section (not the services strip)
+        // cursor-following glow on every main section (not the services strip).
+        // One shared cursor position drives every section, so the glow flows
+        // continuously across boundaries instead of cutting off at each edge.
         const glowSel =
           '.hero, .firms, .trust, .approach, .voices, .insights, .legacy, .cta, ' +
           '.page-hero, .story, .tl, .listing, .contact, .legal, .pitch, .record, .confidential, .related';
@@ -179,12 +181,37 @@ const orgSchema = {
           glow.className = 'cursor-glow';
           glow.setAttribute('aria-hidden', 'true');
           band.appendChild(glow);
-          band.addEventListener('pointermove', (e) => {
-            const r = band.getBoundingClientRect();
-            glow.style.setProperty('--mx', `${e.clientX - r.left}px`);
-            glow.style.setProperty('--my', `${e.clientY - r.top}px`);
-          });
         });
+        if (!(window as any).__glowBound) {
+          (window as any).__glowBound = true;
+          const R = 420; // keep sections within this reach of the cursor lit
+          let last: PointerEvent | null = null;
+          let ticking = false;
+          const paint = () => {
+            ticking = false;
+            const e = last;
+            if (!e) return;
+            document.querySelectorAll<HTMLElement>('.glow-host').forEach((band) => {
+              const glow = band.querySelector<HTMLElement>(':scope > .cursor-glow');
+              if (!glow) return;
+              const r = band.getBoundingClientRect();
+              const near =
+                e.clientX > r.left - R && e.clientX < r.right + R &&
+                e.clientY > r.top - R && e.clientY < r.bottom + R;
+              if (near) {
+                glow.style.setProperty('--mx', `${e.clientX - r.left}px`);
+                glow.style.setProperty('--my', `${e.clientY - r.top}px`);
+                glow.style.opacity = '1';
+              } else {
+                glow.style.opacity = '0';
+              }
+            });
+          };
+          document.addEventListener('pointermove', (e) => {
+            last = e as PointerEvent;
+            if (!ticking) { ticking = true; requestAnimationFrame(paint); }
+          }, { passive: true });
+        }
         // magnetic gold buttons
         document.querySelectorAll<HTMLElement>('.btn-gold').forEach((btn) => {
           if (btn.dataset.magnet) return;

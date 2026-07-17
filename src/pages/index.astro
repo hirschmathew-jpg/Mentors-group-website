@@ -29,26 +29,22 @@ const certs = [
 // Real, attributed client testimonials from the firms' own websites — both covered.
 const testimonials = [
   {
-    quote:
-      'Bruce and his team provide an outstanding, confidential service. They handle our partners’ and professionals’ tax affairs seamlessly, allowing us to focus on running the firm.',
+    quote: 'Bruce and his team provide an outstanding, confidential service.',
     who: 'Law & consulting firm client',
     firm: 'HLB Ireland',
   },
   {
-    quote:
-      'FutureRange planned and executed our move to Office 365 meticulously, and I have found them equally impressive and very knowledgeable on all aspects of IT.',
+    quote: 'FutureRange planned and executed our move to Office 365 meticulously.',
     who: 'Paul Dunne · Hisun Technologies',
     firm: 'FutureRange',
   },
   {
-    quote:
-      'HLB Ireland’s responsiveness and expertise make them a trusted extension of our internal finance team.',
+    quote: 'HLB Ireland’s responsiveness and expertise make them a trusted extension of our finance team.',
     who: 'Professional services client',
     firm: 'HLB Ireland',
   },
   {
-    quote:
-      'I have always found the staff in FutureRange pleasant to deal with and very responsive to any IT issues we have.',
+    quote: 'Always pleasant to deal with and very responsive to any IT issues we have.',
     who: 'Margaret Wafer · Belmont House',
     firm: 'FutureRange',
   },
@@ -559,24 +555,24 @@ const testimonials = [
     color: var(--body);
   }
 
-  /* testimonials — lighter slate, pairs with "how we work" as one band */
-  .voices { padding: 100px 0; background: var(--band-bg); }
+  /* testimonials — darker blue band, single row of cards */
+  .voices { padding: 100px 0; background: var(--paper); }
   .voices-head { max-width: 640px; margin-bottom: 52px; }
   .voices-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 24px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
   }
   .voice {
     margin: 0;
-    background: var(--paper);
+    background: var(--surface);
     border: 1px solid var(--line);
     border-left: 3px solid var(--gold);
     border-radius: var(--radius-lg);
-    padding: 30px 30px 26px;
+    padding: 28px 24px 24px;
     display: flex;
     flex-direction: column;
-    gap: 22px;
+    gap: 20px;
   }
   .voice.fr { border-left-color: var(--teal-bright); }
   .voice blockquote {
@@ -616,8 +612,8 @@ const testimonials = [
   }
   .voice.fr .firm-tag { color: var(--teal-ink); }
 
-  /* numbers — soft gold glow (lighter slate band) */
-  .legacy { padding: 100px 0; position: relative; overflow: hidden; }
+  /* numbers — darker blue band */
+  .legacy { padding: 100px 0; position: relative; overflow: hidden; background: var(--paper); }
   .legacy::before {
     content: "";
     position: absolute;
@@ -712,8 +708,8 @@ const testimonials = [
   }
   .pillar a:hover { color: var(--gold-deep); }
 
-  /* insights — base page blue, same as the firms section */
-  .insights { padding: 100px 0 110px; }
+  /* insights — lighter slate band */
+  .insights { padding: 100px 0 110px; background: var(--band-bg); }
   .insights-head {
     display: flex;
     justify-content: space-between;
@@ -760,7 +756,10 @@ const testimonials = [
       gap: 16px;
     }
     .all-link { white-space: nowrap; }
-    .voices-grid { grid-template-columns: 1fr; }
+    .voices-grid { grid-template-columns: 1fr 1fr; }
     .certs { gap: 20px 28px; }
+  }
+  @media (max-width: 560px) {
+    .voices-grid { grid-template-columns: 1fr; }
   }
 </style>

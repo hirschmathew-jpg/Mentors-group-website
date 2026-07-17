@@ -241,13 +241,13 @@ h1, h2, h3, h4 {
   pointer-events: none;
   z-index: 0;
   opacity: 0;
-  transition: opacity 0.35s ease;
-  background: radial-gradient(340px 340px at var(--mx, 50%) var(--my, 50%), rgba(234, 182, 51, 0.09), transparent 70%);
+  transition: opacity 0.45s ease;
+  background: radial-gradient(380px 380px at var(--mx, 50%) var(--my, 50%), rgba(234, 182, 51, 0.1), transparent 72%);
 }
-/* glow host: positioning context, with content lifted above the glow */
+/* glow host: positioning context, with content lifted above the glow.
+   Opacity is driven by the motion engine (shared cursor across sections). */
 .glow-host { position: relative; }
 .glow-host > .container { position: relative; z-index: 1; }
-.glow-host:hover .cursor-glow { opacity: 1; }
 /* magnetic buttons move via translate; keep their own transition smooth */
 .btn-gold { transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease, translate 0.18s ease; }
 .orbit { transition: transform 0.25s ease; will-change: transform; }
