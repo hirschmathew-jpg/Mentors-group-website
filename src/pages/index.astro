@@ -548,15 +548,9 @@ const testimonials = [
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 150px;
-    height: 106px;
-    padding: 14px;
-    overflow: hidden;
-    background: #fff;
-    border-radius: var(--radius-sm);
-    box-shadow: 0 10px 26px rgba(0, 10, 14, 0.28);
+    height: 96px;
   }
-  .cert-chip img { height: auto; width: auto; max-height: 74px; max-width: 118px; object-fit: contain; display: block; }
+  .cert-chip img { height: auto; width: auto; max-height: 92px; max-width: 150px; object-fit: contain; display: block; }
   .cert-label { font-weight: 800; font-size: 0.92rem; color: var(--head); }
   .cert-sub {
     font-size: 0.72rem;
@@ -565,8 +559,8 @@ const testimonials = [
     color: var(--body);
   }
 
-  /* testimonials (base blue — same rhythm as the rest of the body) */
-  .voices { padding: 100px 0; }
+  /* testimonials — lighter slate, pairs with "how we work" as one band */
+  .voices { padding: 100px 0; background: var(--band-bg); }
   .voices-head { max-width: 640px; margin-bottom: 52px; }
   .voices-grid {
     display: grid;
@@ -575,7 +569,7 @@ const testimonials = [
   }
   .voice {
     margin: 0;
-    background: var(--surface);
+    background: var(--paper);
     border: 1px solid var(--line);
     border-left: 3px solid var(--gold);
     border-radius: var(--radius-lg);
