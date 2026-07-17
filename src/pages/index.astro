@@ -26,9 +26,14 @@ const certs = [
   { img: 'most-loved-workplace', alt: 'Most Loved Workplace certified', label: 'Most Loved Workplace®', sub: 'HLB Ireland' },
 ];
 
-// Real, attributed client testimonials from the firms' own websites — both firms,
-// alternating so any three-in-view show a mix. Displayed in a revolving carousel.
+// Every real, attributed client testimonial from the firms' own websites —
+// both firms, alternating so any three-in-view show a mix. Revolving carousel.
 const testimonials = [
+  {
+    quote: 'I have always found the staff in FutureRange pleasant to deal with and very responsive to any IT issues we have.',
+    who: 'Margaret Wafer · Belmont House',
+    firm: 'FutureRange',
+  },
   {
     quote: 'Bruce and his team provide an outstanding, confidential service.',
     who: 'Law & consulting firm client',
@@ -40,13 +45,13 @@ const testimonials = [
     firm: 'FutureRange',
   },
   {
-    quote: 'HLB Ireland’s responsiveness and expertise make them a trusted extension of our finance team.',
+    quote: 'HLB Ireland’s responsiveness and expertise make them a trusted extension of our internal finance team.',
     who: 'Professional services client',
     firm: 'HLB Ireland',
   },
   {
-    quote: 'Always pleasant to deal with and very responsive to any IT issues we have.',
-    who: 'Margaret Wafer · Belmont House',
+    quote: 'FutureRange provided immensely beneficial knowledge transfer to our IT professionals and staff.',
+    who: 'Head of IT · Zenith Technologies',
     firm: 'FutureRange',
   },
   {
@@ -55,8 +60,8 @@ const testimonials = [
     firm: 'HLB Ireland',
   },
   {
-    quote: 'FutureRange provided immensely beneficial knowledge transfer to our IT staff.',
-    who: 'Head of IT · Zenith Technologies',
+    quote: 'FutureRange has helped Bord na Móna realise significant performance increases across our key business systems, and reduced our annual IT support costs.',
+    who: 'Paul Boland · Bord na Móna',
     firm: 'FutureRange',
   },
 ];
@@ -822,35 +827,59 @@ const testimonials = [
 </style>
 
 <script>
-  // Revolving testimonials carousel: prev/next, native swipe, and a gentle
-  // auto-advance that pauses on hover, focus, or when off-screen. Re-inits on
-  // every page visit; the previous run is torn down first to avoid leaks.
+  // Revolving testimonials carousel with a seamless loop. The set of cards is
+  // cloned once; advancing right scrolls into the clones, and once a full set
+  // has passed we silently subtract that width so scrolling keeps going right
+  // forever instead of snapping back to the start. Native swipe, prev/next,
+  // and a gentle auto-advance that pauses on hover, focus, or off-screen.
   function initVoices() {
     if ((window as any).__voicesCleanup) (window as any).__voicesCleanup();
     const vp = document.querySelector<HTMLElement>('[data-voices-viewport]');
     if (!vp) return;
-    const cards = [...vp.querySelectorAll<HTMLElement>('.voice')];
-    if (!cards.length) return;
+    const originals = [...vp.querySelectorAll<HTMLElement>('.voice:not([data-clone])')];
+    if (!originals.length) return;
+    const n = originals.length;
+
+    // Clone the whole set once so there is always content to the right.
+    if (!vp.querySelector('[data-clone]')) {
+      originals.forEach((card) => {
+        const c = card.cloneNode(true) as HTMLElement;
+        c.setAttribute('data-clone', 'true');
+        c.setAttribute('aria-hidden', 'true');
+        vp.appendChild(c);
+      });
+    }
+
     const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
     const nav = document.querySelector('.voices-nav');
     if (nav) nav.removeAttribute('aria-hidden');
 
     const step = () => {
       const gap = parseFloat(getComputedStyle(vp).columnGap) || 20;
-      return cards[0].getBoundingClientRect().width + gap;
+      return originals[0].getBoundingClientRect().width + gap;
     };
-    const atEnd = () => vp.scrollLeft + vp.clientWidth >= vp.scrollWidth - 4;
-    const atStart = () => vp.scrollLeft <= 4;
+    const setWidth = () => n * step();
+    // Keep scrollLeft within one set; shifting by a full set is invisible
+    // because the clones are identical to the originals.
+    const normalize = () => {
+      const w = setWidth();
+      if (w <= 0) return;
+      if (vp.scrollLeft >= w) vp.scrollLeft -= w;
+      else if (vp.scrollLeft < 0) vp.scrollLeft += w;
+    };
     const go = (dir: number) => {
       const behavior: ScrollBehavior = reduce ? 'auto' : 'smooth';
-      if (dir > 0) atEnd() ? vp.scrollTo({ left: 0, behavior }) : vp.scrollBy({ left: step(), behavior });
-      else atStart() ? vp.scrollTo({ left: vp.scrollWidth, behavior }) : vp.scrollBy({ left: -step(), behavior });
+      if (dir < 0 && vp.scrollLeft < step() - 1) vp.scrollLeft += setWidth(); // wrap-left seam
+      vp.scrollBy({ left: dir * step(), behavior });
     };
 
-    const nextBtn = document.querySelector('[data-voices-next]');
-    const prevBtn = document.querySelector('[data-voices-prev]');
-    nextBtn?.addEventListener('click', () => go(1));
-    prevBtn?.addEventListener('click', () => go(-1));
+    document.querySelector('[data-voices-next]')?.addEventListener('click', () => go(1));
+    document.querySelector('[data-voices-prev]')?.addEventListener('click', () => go(-1));
+
+    // normalise once the scroll settles (invisible; keeps scrollLeft bounded)
+    let settle = 0;
+    const onScroll = () => { clearTimeout(settle); settle = window.setTimeout(normalize, 120); };
+    vp.addEventListener('scroll', onScroll, { passive: true });
 
     let paused = false;
     let timer = 0;
@@ -867,7 +896,7 @@ const testimonials = [
     );
     io.observe(section);
 
-    (window as any).__voicesCleanup = () => { stopTick(); io.disconnect(); };
+    (window as any).__voicesCleanup = () => { stopTick(); io.disconnect(); clearTimeout(settle); };
   }
   document.addEventListener('astro:page-load', initVoices);
 </script>
