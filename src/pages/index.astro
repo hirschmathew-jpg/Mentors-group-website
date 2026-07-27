@@ -11,6 +11,13 @@ const videos = import.meta.glob<string>('../assets/uploads/hero-video.mp4', {
   import: 'default',
 });
 const heroVideo = Object.values(videos)[0];
+
+// Real certifications held by the group's firms (badges from their own sites).
+const certs = [
+  { img: 'iso-27001', alt: 'ISO/IEC 27001 certified', label: 'ISO/IEC 27001', sub: 'HLB Ireland & FutureRange' },
+  { img: 'great-place-to-work', alt: 'Great Place to Work certified', label: 'Great Place to Work®', sub: 'HLB Ireland' },
+  { img: 'most-loved-workplace', alt: 'Most Loved Workplace certified', label: 'Most Loved Workplace®', sub: 'HLB Ireland' },
+];
 ---
 
 <BaseLayout
@@ -96,6 +103,24 @@ const heroVideo = Object.values(videos)[0];
             <span class="desc">Cyber security &amp; managed operations, modern workplace, and cloud, AI &amp; transformation — since 1995.</span>
           </span>
         </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Certifications -->
+  <section class="trust" aria-label="Certifications">
+    <div class="container" data-reveal>
+      <p class="trust-eyebrow">Certified &amp; accredited</p>
+      <div class="certs">
+        {certs.map((c) => (
+          <div class="cert">
+            <span class="cert-chip">
+              <img src={href(`/certs/${c.img}.webp`)} alt={c.alt} loading="lazy" decoding="async" />
+            </span>
+            <span class="cert-label">{c.label}</span>
+            <span class="cert-sub">{c.sub}</span>
+          </div>
+        ))}
       </div>
     </div>
   </section>
@@ -356,11 +381,52 @@ const heroVideo = Object.values(videos)[0];
     max-width: 46ch;
   }
 
+  /* certifications — real badges, continuous with the firms section */
+  .trust { padding: 0 0 100px; }
+  .trust .container { padding-top: 44px; border-top: 1px solid var(--line); }
+  .trust-eyebrow {
+    text-align: center;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold-deep);
+    margin-bottom: 28px;
+  }
+  .certs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px 48px;
+  }
+  .cert {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    text-align: center;
+  }
+  .cert-chip {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 60px;
+  }
+  .cert-chip img { height: auto; width: auto; max-height: 58px; max-width: 104px; object-fit: contain; display: block; }
+  .cert-label { font-weight: 800; font-size: 0.92rem; color: var(--head); }
+  .cert-sub {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--body);
+  }
+
   @media (max-width: 960px) {
     .hero-grid { grid-template-columns: 1fr; }
     .firms-head { grid-template-columns: 1fr; gap: 18px; }
     .firm-cards { grid-template-columns: 1fr; }
     .hero-grid { padding-top: 72px; padding-bottom: 80px; }
     .firms-head { flex-direction: column; align-items: flex-start; }
+    .certs { gap: 20px 28px; }
   }
 </style>
