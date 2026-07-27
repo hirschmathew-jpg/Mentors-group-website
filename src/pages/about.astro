@@ -59,6 +59,31 @@ import ServicesStrip from '../components/ServicesStrip.astro';
     </div>
   </section>
 
+  <!-- Purpose -->
+  <section class="purpose band on-dark">
+    <div class="container">
+      <div data-reveal>
+        <p class="eyebrow">Our purpose</p>
+        <h2 class="purpose-lede">
+          Privately owned businesses and private clients on the island of
+          Ireland face a world that is more complex, more connected, and more
+          exposed than ever before.
+        </h2>
+      </div>
+      <div class="purpose-body" data-reveal>
+        <p>
+          Mentora Group was built to help clients adapt to that complexity. By
+          bringing together accounting, taxation, advisory, technology,
+          managed IT, cybersecurity, and AI under one roof, we give our
+          clients something rare: integrated expertise from people who
+          understand their business, not just one corner of it.
+        </p>
+        <p class="purpose-close">
+          We are ambitious for the businesses and individuals we serve.
+        </p>
+      </div>
+    </div>
+  </section>
 
 </BaseLayout>
 
@@ -87,6 +112,35 @@ import ServicesStrip from '../components/ServicesStrip.astro';
     text-underline-offset: 3px;
   }
   .story .body a:hover { color: var(--gold-deep); }
+
+  /* purpose — lighter band, statement-led */
+  .purpose { padding: 100px 0; position: relative; overflow: hidden; }
+  .purpose::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(720px 420px at 88% 15%, rgba(234, 182, 51, 0.1), transparent 65%);
+    pointer-events: none;
+  }
+  .purpose .container { position: relative; }
+  .purpose-lede {
+    font-family: var(--font-serif);
+    font-weight: 460;
+    font-size: clamp(1.5rem, 2.9vw, 2.3rem);
+    line-height: 1.4;
+    letter-spacing: 0;
+    color: #f0f4f5;
+    max-width: 34ch;
+  }
+  .purpose-body { margin-top: 36px; max-width: 62ch; }
+  .purpose-body p { color: var(--text-on-dark); }
+  .purpose-body p.purpose-close {
+    margin-top: 20px;
+    font-weight: 700;
+    font-size: 1.08rem;
+    color: var(--gold);
+  }
+
   @media (max-width: 900px) {
     .hero-grid, .story-grid { grid-template-columns: 1fr; }
   }
