@@ -61,7 +61,7 @@ import ServicesStrip from '../components/ServicesStrip.astro';
 
   <!-- Purpose -->
   <section class="purpose band on-dark">
-    <div class="container">
+    <div class="container purpose-grid">
       <div data-reveal>
         <p class="eyebrow">Our purpose</p>
         <h2 class="purpose-lede">
@@ -69,19 +69,31 @@ import ServicesStrip from '../components/ServicesStrip.astro';
           Ireland face a world that is more complex, more connected, and more
           exposed than ever before.
         </h2>
+        <div class="purpose-body">
+          <p>
+            Mentora Group was built to help clients adapt to that complexity.
+            By bringing together accounting, taxation, advisory, technology,
+            managed IT, cybersecurity, and AI under one roof, we give our
+            clients something rare: integrated expertise from people who
+            understand their business, not just one corner of it.
+          </p>
+          <p class="purpose-close">
+            We are ambitious for the businesses and individuals we serve.
+          </p>
+        </div>
       </div>
-      <div class="purpose-body" data-reveal>
-        <p>
-          Mentora Group was built to help clients adapt to that complexity. By
-          bringing together accounting, taxation, advisory, technology,
-          managed IT, cybersecurity, and AI under one roof, we give our
-          clients something rare: integrated expertise from people who
-          understand their business, not just one corner of it.
-        </p>
-        <p class="purpose-close">
-          We are ambitious for the businesses and individuals we serve.
-        </p>
-      </div>
+      <aside class="purpose-roof" data-reveal aria-label="The disciplines the group brings together">
+        <p class="roof-label">Under one roof</p>
+        <ul class="roof-list">
+          <li>Accounting</li>
+          <li>Taxation</li>
+          <li>Advisory</li>
+          <li>Technology</li>
+          <li>Managed IT</li>
+          <li>Cybersecurity</li>
+          <li>AI</li>
+        </ul>
+      </aside>
     </div>
   </section>
 
@@ -113,35 +125,95 @@ import ServicesStrip from '../components/ServicesStrip.astro';
   }
   .story .body a:hover { color: var(--gold-deep); }
 
-  /* purpose — lighter band, statement-led */
-  .purpose { padding: 100px 0; position: relative; overflow: hidden; }
+  /* purpose — statement left, "one roof" panel right */
+  .purpose { padding: 104px 0 110px; position: relative; overflow: hidden; }
   .purpose::before {
     content: "";
     position: absolute;
-    inset: 0;
-    background: radial-gradient(720px 420px at 88% 15%, rgba(234, 182, 51, 0.1), transparent 65%);
+    inset: -10%;
+    background:
+      radial-gradient(640px 400px at 88% 12%, rgba(234, 182, 51, 0.13), transparent 62%),
+      radial-gradient(700px 460px at 4% 96%, rgba(59, 191, 208, 0.14), transparent 62%);
     pointer-events: none;
   }
-  .purpose .container { position: relative; }
+  @media (prefers-reduced-motion: no-preference) {
+    .purpose::before { animation: page-aurora 18s ease-in-out infinite alternate; }
+  }
+  .purpose::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+    background-size: 46px 46px;
+    mask-image: radial-gradient(70% 90% at 85% 40%, black, transparent 75%);
+    pointer-events: none;
+  }
+  .purpose-grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 76px;
+    align-items: center;
+  }
   .purpose-lede {
     font-family: var(--font-serif);
     font-weight: 460;
-    font-size: clamp(1.5rem, 2.9vw, 2.3rem);
-    line-height: 1.4;
+    font-size: clamp(1.55rem, 3vw, 2.45rem);
+    line-height: 1.38;
     letter-spacing: 0;
     color: #f0f4f5;
-    max-width: 34ch;
+    max-width: 26ch;
+    text-wrap: balance;
   }
-  .purpose-body { margin-top: 36px; max-width: 62ch; }
+  .purpose-body { margin-top: 30px; max-width: 56ch; }
   .purpose-body p { color: var(--text-on-dark); }
   .purpose-body p.purpose-close {
     margin-top: 20px;
     font-weight: 700;
-    font-size: 1.08rem;
+    font-size: 1.1rem;
     color: var(--gold);
   }
+  .purpose-roof {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--gold);
+    border-radius: var(--radius-lg);
+    padding: 32px 34px 18px;
+    box-shadow: 0 24px 50px rgba(0, 10, 14, 0.25);
+  }
+  .roof-label {
+    font-size: 0.74rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold-deep);
+    margin-bottom: 10px;
+  }
+  .roof-list { list-style: none; margin: 0; padding: 0; }
+  .roof-list li {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 13px 2px;
+    border-bottom: 1px solid var(--line);
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    color: var(--head);
+  }
+  .roof-list li:last-child { border-bottom: none; }
+  .roof-list li::before {
+    content: "◆";
+    font-size: 0.55rem;
+    color: var(--gold);
+    flex: none;
+  }
+  .roof-list li:nth-child(even)::before { color: var(--teal-bright); }
 
   @media (max-width: 900px) {
     .hero-grid, .story-grid { grid-template-columns: 1fr; }
+    .purpose-grid { grid-template-columns: 1fr; gap: 44px; }
   }
 </style>
