@@ -1,4 +1,5 @@
 ---
+import { href } from '../lib/paths';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Placeholder from '../components/Placeholder.astro';
 import ServicesStrip from '../components/ServicesStrip.astro';
@@ -105,15 +106,14 @@ const perks = [
             </span>
           </span>
         </a>
-        <a class="firm" href="https://www.hlb.ie/jobs/" target="_blank" rel="noopener noreferrer" data-reveal>
+        <a class="firm" href={href('/careers/mentora/')} data-reveal>
           <Placeholder name="firm-mentora" label="Insert image" ratio="16 / 9" />
           <span class="firm-body">
             <span class="tag">Group Functions</span>
-            <span class="name">Careers at Mentora <span class="go" aria-hidden="true">↗</span></span>
+            <span class="name">Careers at Mentora <span class="go" aria-hidden="true">→</span></span>
             <span class="desc">
               Group-level roles in finance, people and operations that
-              support both firms — advertised through the HLB Ireland jobs
-              board.
+              support both firms — see the current group openings.
             </span>
           </span>
         </a>

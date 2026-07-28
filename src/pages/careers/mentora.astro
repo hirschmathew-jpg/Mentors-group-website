@@ -1,0 +1,247 @@
+---
+import { href } from '../../lib/paths';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+// Group-level openings, taken from the live postings on the HLB Ireland
+// jobs board (verified 28 July 2026). Update or remove roles as they close.
+const jobs = [
+  {
+    title: 'Group HR Director',
+    posted: '10 June 2026',
+    deadline: null,
+    location: 'Sandyford, Dublin — on-site across Ireland',
+    url: 'https://www.hlb.ie/jobs/group-hr-director-mentora-group/',
+    summary:
+      'Senior, strategic leadership of the group’s people agenda as Mentora scales towards 300+ people. An internal executive role for a strategy-led people leader who can design and deliver scalable people solutions, acting as a trusted advisor to the CEO and leadership team.',
+    doing: [
+      'Define and deliver a scalable people strategy aligned to growth, acquisitions and service-line economics',
+      'Lead organisational design for a multi-site, multi-disciplinary professional services model',
+      'Lead cultural integration across acquired businesses, driving change management and engagement',
+      'Embed performance and development frameworks, workforce planning, succession and leadership capability',
+      'Own the people workstream for acquisitions — due diligence, integration and repeatable playbooks',
+      'Ensure compliant, modern people practices across ROI and NI, with scalable HR systems and metrics',
+    ],
+    bringing: [
+      'Senior people leadership experience — CPO, HR Director, Head of People or equivalent',
+      'Background in professional services: accounting, advisory, technology or similar',
+      'Proven experience scaling organisations from roughly 150 to 300+ employees',
+      'Strong M&A people-integration experience',
+      'Deep understanding of ROI and NI employment frameworks',
+      'Desirable: partner-led or matrix organisations; coaching or leadership development credentials',
+    ],
+    applyText: 'Apply through the application form on the posting (CV required, cover letter optional).',
+    applyBtn: { label: 'Apply on the posting', url: 'https://www.hlb.ie/jobs/group-hr-director-mentora-group/', external: true },
+  },
+  {
+    title: 'Group Financial Controller',
+    posted: '9 June 2026',
+    deadline: 'Apply before 31 August 2026',
+    location: 'HLB Ireland / Mentora Group',
+    url: 'https://www.hlb.ie/jobs/group-financial-controller/',
+    summary:
+      'A pivotal role in the group’s next phase of growth — financial leadership, commercial insight and operational excellence, with responsibility for high-quality reporting, strong controls, cash flow management and a scalable finance function that supports an ambitious growth and acquisition agenda.',
+    doing: [
+      'Lead accurate, timely monthly group management accounts with insightful analysis and commentary',
+      'Lead the financial integration of acquired businesses — systems, reporting, controls and working capital',
+      'Manage the group audit end to end and ensure statutory, regulatory and tax compliance',
+      'Manage treasury, working capital and cash flow across the group, including covenant reporting',
+      'Develop strong financial control and governance frameworks; own the group’s cost base',
+      'Lead, mentor and develop the finance team as a trusted finance partner to the business',
+    ],
+    bringing: [
+      'Qualified accountant (ACA preferred) with a minimum of 5 years PQE',
+      'Naturally curious, with a drive to improve processes through automation and technology',
+      'Strong interpersonal and communication skills with senior stakeholders',
+      'Proven experience leading and building high-performing teams',
+      'Strong technical accounting skills and commercial acumen',
+      'Expert-level Excel; business intelligence tools such as Power BI an advantage',
+    ],
+    applyText: 'Send your CV and cover letter to recruitment@hlb.ie, or apply through the form on the posting.',
+    applyBtn: { label: 'Apply by email', url: 'mailto:recruitment@hlb.ie?subject=Group%20Financial%20Controller%20application', external: false },
+  },
+];
+---
+
+<BaseLayout
+  title="Group roles at Mentora — Mentora Group"
+  description="Current group-level openings at Mentora Group — leadership roles in finance, people and operations supporting HLB Ireland and FutureRange."
+>
+  <section class="page-hero on-dark">
+    <div class="container">
+      <p class="crumbs"><a href={href('/careers/')}>← Careers</a></p>
+      <p class="eyebrow">Careers at Mentora</p>
+      <h1>Group roles at Mentora<span class="dot">.</span></h1>
+      <p class="lede">
+        Group-level positions in finance, people and operations — roles that
+        span both HLB Ireland and FutureRange and help shape the group's next
+        phase of growth.
+      </p>
+    </div>
+  </section>
+
+  <section class="roles" aria-label="Open group roles">
+    <div class="container">
+      {jobs.map((job) => (
+        <article class="job" data-reveal>
+          <header class="job-head">
+            <h2>{job.title}</h2>
+            <div class="chips">
+              <span class="chip">Posted {job.posted}</span>
+              {job.deadline && <span class="chip chip-hot">{job.deadline}</span>}
+              <span class="chip">{job.location}</span>
+            </div>
+          </header>
+          <p class="job-summary">{job.summary}</p>
+          <div class="job-cols">
+            <div>
+              <h3>What you'll do</h3>
+              <ul>
+                {job.doing.map((d) => <li>{d}</li>)}
+              </ul>
+            </div>
+            <div>
+              <h3>What you'll bring</h3>
+              <ul>
+                {job.bringing.map((d) => <li>{d}</li>)}
+              </ul>
+            </div>
+          </div>
+          <footer class="job-apply">
+            <p>{job.applyText}</p>
+            <div class="apply-actions">
+              {job.applyBtn.external ? (
+                <a class="btn btn-gold" href={job.applyBtn.url} target="_blank" rel="noopener noreferrer">{job.applyBtn.label} <span aria-hidden="true">↗</span></a>
+              ) : (
+                <a class="btn btn-gold" href={job.applyBtn.url}>{job.applyBtn.label} <span aria-hidden="true">→</span></a>
+              )}
+              <a class="btn btn-ghost-dark" href={job.url} target="_blank" rel="noopener noreferrer">Full posting <span aria-hidden="true">↗</span></a>
+            </div>
+          </footer>
+        </article>
+      ))}
+
+      <p class="roles-note" data-reveal>
+        Nothing that fits right now? The group is growing — send a speculative
+        CV to <a href="mailto:recruitment@hlb.ie">recruitment@hlb.ie</a> and
+        tell us where you'd add value.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  h1 .dot { color: var(--gold); }
+  .crumbs {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    margin-bottom: 22px;
+    font-size: 0.85rem;
+  }
+  .crumbs a { color: var(--text-on-dark); }
+  .crumbs a:hover { color: var(--gold); }
+
+  .roles { padding: 90px 0 100px; }
+  .job {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--gold);
+    border-radius: var(--radius-lg);
+    padding: 38px 42px 36px;
+  }
+  .job + .job { margin-top: 32px; }
+
+  .job-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin-bottom: 18px;
+  }
+  .job-head h2 {
+    font-size: clamp(1.5rem, 2.6vw, 2rem);
+    color: var(--head);
+  }
+  .chips { display: flex; gap: 10px; flex-wrap: wrap; }
+  .chip {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--body);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 6px 14px;
+    white-space: nowrap;
+  }
+  .chip-hot { color: var(--gold); border-color: var(--gold); }
+
+  .job-summary { color: var(--body); max-width: 78ch; margin-bottom: 26px; }
+
+  .job-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 28px;
+  }
+  .job-cols h3 {
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold-deep);
+    margin-bottom: 12px;
+  }
+  .job-cols ul { list-style: none; margin: 0; padding: 0; }
+  .job-cols li {
+    display: flex;
+    gap: 12px;
+    padding: 7px 0;
+    color: var(--body);
+    font-size: 0.93rem;
+    line-height: 1.5;
+  }
+  .job-cols li::before {
+    content: "◆";
+    font-size: 0.5rem;
+    color: var(--gold);
+    flex: none;
+    margin-top: 7px;
+  }
+  .job-cols > div:last-child li::before { color: var(--teal-bright); }
+
+  .job-apply {
+    border-top: 1px solid var(--line);
+    padding-top: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .job-apply p { color: var(--body); font-size: 0.92rem; max-width: 46ch; }
+  .apply-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn-ghost-dark {
+    border: 1px solid var(--line);
+    color: var(--head);
+  }
+  .btn-ghost-dark:hover { border-color: var(--gold); color: var(--gold); }
+
+  .roles-note {
+    margin-top: 44px;
+    text-align: center;
+    color: var(--body);
+  }
+  .roles-note a {
+    color: var(--gold-deep);
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  @media (max-width: 900px) {
+    .job { padding: 28px 24px 28px; }
+    .job-cols { grid-template-columns: 1fr; gap: 24px; }
+  }
+</style>
