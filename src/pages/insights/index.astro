@@ -3,7 +3,6 @@ import { href } from '../../lib/paths';
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Cta from '../../components/Cta.astro';
-import PostCard from '../../components/PostCard.astro';
 import ArticleCard from '../../components/ArticleCard.astro';
 import ServicesStrip from '../../components/ServicesStrip.astro';
 
@@ -11,16 +10,16 @@ const firmOf = (id: string) => (/futurerange|future-range/i.test(id) ? 'FutureRa
 const all = (await getCollection('insights')).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
 );
-// The three most recent lead as full feature cards; the rest fill the archive.
-const featured = all.slice(0, 3);
-const archive = all.slice(3).map((p) => ({
+const toCard = (p: (typeof all)[number]) => ({
   title: p.data.title,
   description: p.data.description,
   date: p.data.date.toISOString().slice(0, 10),
   firm: firmOf(p.id) as 'HLB Ireland' | 'FutureRange',
   url: href(`/insights/${p.id}/`),
   image: `insight-${p.id}`,
-}));
+});
+const hlb = all.filter((p) => firmOf(p.id) === 'HLB Ireland').map(toCard);
+const fr = all.filter((p) => firmOf(p.id) === 'FutureRange').map(toCard);
 ---
 
 <BaseLayout
@@ -43,32 +42,50 @@ const archive = all.slice(3).map((p) => ({
 
   <section class="listing" aria-label="Articles">
     <div class="container">
-      <h2 class="visually-hidden">Featured articles</h2>
-      <div class="posts">
-        {featured.map((post) => <PostCard post={post} />)}
-      </div>
-
-      <div class="archive" data-archive hidden>
-        <h2 class="arc-head">More from HLB Ireland &amp; FutureRange</h2>
-        <div class="arc-grid">
-          {archive.map((a) => (
-            <ArticleCard
-              title={a.title}
-              description={a.description}
-              date={a.date}
-              firm={a.firm}
-              url={a.url}
-              internal={true}
-              image={a.image}
-            />
-          ))}
+      <div class="cols">
+        <div class="col" data-col>
+          <h2 class="col-head hlb">HLB Ireland <span class="count">{hlb.length} articles</span></h2>
+          <div class="col-stack">
+            {hlb.map((a) => (
+              <ArticleCard
+                title={a.title}
+                description={a.description}
+                date={a.date}
+                firm={a.firm}
+                url={a.url}
+                internal={true}
+                image={a.image}
+              />
+            ))}
+          </div>
+          <div class="more-wrap">
+            <button class="btn btn-more" type="button" data-show-more aria-expanded="false">
+              Show more articles
+            </button>
+          </div>
         </div>
-      </div>
 
-      <div class="more-wrap">
-        <button class="btn btn-more" type="button" data-show-more aria-expanded="false">
-          Show more articles
-        </button>
+        <div class="col" data-col>
+          <h2 class="col-head fr">FutureRange <span class="count">{fr.length} articles</span></h2>
+          <div class="col-stack">
+            {fr.map((a) => (
+              <ArticleCard
+                title={a.title}
+                description={a.description}
+                date={a.date}
+                firm={a.firm}
+                url={a.url}
+                internal={true}
+                image={a.image}
+              />
+            ))}
+          </div>
+          <div class="more-wrap">
+            <button class="btn btn-more" type="button" data-show-more aria-expanded="false">
+              Show more articles
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -78,27 +95,42 @@ const archive = all.slice(3).map((p) => ({
 
 <style>
   .listing { padding: 90px 0 110px; }
-  .posts {
+
+  .cols {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 28px;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: start;
   }
 
-  .archive { margin-top: 64px; }
-  .arc-head {
-    font-size: 1.1rem;
+  .col-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    font-size: 1.15rem;
     color: var(--head);
     margin-bottom: 28px;
     padding-bottom: 16px;
-    border-bottom: 1px solid var(--line);
+    border-bottom: 2px solid var(--line);
   }
-  .arc-grid {
+  .col-head.hlb { border-bottom-color: var(--gold); }
+  .col-head.fr { border-bottom-color: var(--teal, #3bbfd0); }
+  .count {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--muted);
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+
+  .col-stack {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 1fr;
     gap: 24px;
   }
 
-  .more-wrap { display: flex; justify-content: center; margin-top: 44px; }
+  .more-wrap { display: flex; justify-content: center; margin-top: 36px; }
   .btn-more {
     background: transparent;
     color: var(--head);
@@ -106,50 +138,51 @@ const archive = all.slice(3).map((p) => ({
     cursor: pointer;
   }
   .btn-more:hover { border-color: var(--gold); color: var(--gold); }
-  /* Without JS the arrows/toggle can't run, so just show everything. */
-  :global(html:not(.js)) .archive { display: block !important; }
+  /* Without JS the toggles can't run, so just show everything. */
   :global(html:not(.js)) .more-wrap { display: none; }
 
   @media (max-width: 960px) {
-    .posts { grid-template-columns: 1fr; }
-    .arc-grid { grid-template-columns: 1fr; }
-  }
-  @media (min-width: 961px) and (max-width: 1180px) {
-    .arc-grid { grid-template-columns: repeat(2, 1fr); }
+    .cols { grid-template-columns: 1fr; gap: 64px; }
   }
 </style>
 
 <script>
-  // Reveal the archive six articles at a time; once everything is shown the
-  // button collapses it again.
+  // Each firm column reveals six articles at a time; once everything is
+  // visible the button collapses the column back down.
   const STEP = 6;
   document.addEventListener('astro:page-load', () => {
-    const btn = document.querySelector<HTMLButtonElement>('[data-show-more]');
-    const archive = document.querySelector<HTMLElement>('[data-archive]');
-    if (!btn || !archive || (archive as any).__moreBound) return;
-    (archive as any).__moreBound = true;
+    document.querySelectorAll<HTMLElement>('[data-col]').forEach((col) => {
+      if ((col as any).__moreBound) return;
+      (col as any).__moreBound = true;
 
-    const cards = [...archive.querySelectorAll<HTMLElement>('.arc-grid > .acard')];
-    let shown = 0;
-    const render = () => {
-      // inline display beats the card's own `display:flex`, which would
-      // otherwise override the [hidden] attribute.
-      cards.forEach((c, i) => (c.style.display = i < shown ? '' : 'none'));
-      archive.toggleAttribute('hidden', shown === 0);
-      btn.textContent = shown >= cards.length ? 'Show fewer articles' : 'Show more articles';
-      btn.setAttribute('aria-expanded', shown > 0 ? 'true' : 'false');
-    };
-    render();
-
-    btn.addEventListener('click', () => {
-      if (shown >= cards.length) {
-        shown = 0;
-        render();
-        archive.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      } else {
-        shown = Math.min(shown + STEP, cards.length);
-        render();
+      const btn = col.querySelector<HTMLButtonElement>('[data-show-more]');
+      const cards = [...col.querySelectorAll<HTMLElement>('.col-stack > .acard')];
+      if (!btn) return;
+      if (cards.length <= STEP) {
+        btn.closest<HTMLElement>('.more-wrap')?.remove();
+        return;
       }
+
+      let shown = STEP;
+      const render = () => {
+        // inline display beats the card's own `display:flex`, which would
+        // otherwise override the [hidden] attribute.
+        cards.forEach((c, i) => (c.style.display = i < shown ? '' : 'none'));
+        btn.textContent = shown >= cards.length ? 'Show fewer articles' : 'Show more articles';
+        btn.setAttribute('aria-expanded', shown > STEP ? 'true' : 'false');
+      };
+      render();
+
+      btn.addEventListener('click', () => {
+        if (shown >= cards.length) {
+          shown = STEP;
+          render();
+          col.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+          shown = Math.min(shown + STEP, cards.length);
+          render();
+        }
+      });
     });
   });
 </script>
