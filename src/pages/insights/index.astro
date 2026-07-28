@@ -147,10 +147,10 @@ const fr = all.filter((p) => firmOf(p.id) === 'FutureRange').map(toCard);
 </style>
 
 <script>
-  // Each firm column starts with a single article; the button reveals six
+  // Each firm column starts with a single article; the button reveals three
   // more at a time and collapses the column once everything is visible.
   const INITIAL = 1;
-  const STEP = 6;
+  const STEP = 3;
   document.addEventListener('astro:page-load', () => {
     document.querySelectorAll<HTMLElement>('[data-col]').forEach((col) => {
       if ((col as any).__moreBound) return;
