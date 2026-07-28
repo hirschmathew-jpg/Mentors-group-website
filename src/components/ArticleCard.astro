@@ -69,8 +69,10 @@ const ext = internal ? {} : { target: '_blank', rel: 'noopener noreferrer' };
   }
   .acard:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 
-  .acard-thumb { position: relative; aspect-ratio: 16 / 10; background: var(--ink-deep); }
-  .acard-thumb :global(img) { width: 100%; height: 100%; object-fit: cover; display: block; }
+  /* The image is absolutely positioned so a tall source can't stretch the
+     fixed-ratio box and break the uniform card height. */
+  .acard-thumb { position: relative; aspect-ratio: 16 / 10; background: var(--ink-deep); overflow: hidden; }
+  .acard-thumb :global(img) { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
   .acard-thumb::after {
     content: "";
     position: absolute;
@@ -107,7 +109,18 @@ const ext = internal ? {} : { target: '_blank', rel: 'noopener noreferrer' };
   .acard-firm { font-weight: 800; color: var(--gold-deep); }
   .acard.fr .acard-firm { color: var(--teal-ink); }
   .acard-meta time { color: var(--body); }
-  .acard-title { font-size: 1.08rem; line-height: 1.3; margin: 0; color: var(--head); }
+  /* Title and description occupy fixed slots so every card is the same height. */
+  .acard-title {
+    font-size: 1.08rem;
+    line-height: 1.3;
+    margin: 0;
+    color: var(--head);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 2.6em;
+  }
   .acard-ic { color: var(--gold-deep); font-weight: 800; }
   .acard.fr .acard-ic { color: var(--teal-ink); }
   .acard-desc {
@@ -119,5 +132,6 @@ const ext = internal ? {} : { target: '_blank', rel: 'noopener noreferrer' };
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    height: 4.5em;
   }
 </style>

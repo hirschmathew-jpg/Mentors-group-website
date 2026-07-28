@@ -147,8 +147,9 @@ const fr = all.filter((p) => firmOf(p.id) === 'FutureRange').map(toCard);
 </style>
 
 <script>
-  // Each firm column reveals six articles at a time; once everything is
-  // visible the button collapses the column back down.
+  // Each firm column starts with a single article; the button reveals six
+  // more at a time and collapses the column once everything is visible.
+  const INITIAL = 1;
   const STEP = 6;
   document.addEventListener('astro:page-load', () => {
     document.querySelectorAll<HTMLElement>('[data-col]').forEach((col) => {
@@ -158,24 +159,24 @@ const fr = all.filter((p) => firmOf(p.id) === 'FutureRange').map(toCard);
       const btn = col.querySelector<HTMLButtonElement>('[data-show-more]');
       const cards = [...col.querySelectorAll<HTMLElement>('.col-stack > .acard')];
       if (!btn) return;
-      if (cards.length <= STEP) {
+      if (cards.length <= INITIAL) {
         btn.closest<HTMLElement>('.more-wrap')?.remove();
         return;
       }
 
-      let shown = STEP;
+      let shown = INITIAL;
       const render = () => {
         // inline display beats the card's own `display:flex`, which would
         // otherwise override the [hidden] attribute.
         cards.forEach((c, i) => (c.style.display = i < shown ? '' : 'none'));
         btn.textContent = shown >= cards.length ? 'Show fewer articles' : 'Show more articles';
-        btn.setAttribute('aria-expanded', shown > STEP ? 'true' : 'false');
+        btn.setAttribute('aria-expanded', shown > INITIAL ? 'true' : 'false');
       };
       render();
 
       btn.addEventListener('click', () => {
         if (shown >= cards.length) {
-          shown = STEP;
+          shown = INITIAL;
           render();
           col.scrollIntoView({ behavior: 'smooth', block: 'start' });
         } else {
