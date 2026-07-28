@@ -1,0 +1,301 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Placeholder from '../components/Placeholder.astro';
+import ServicesStrip from '../components/ServicesStrip.astro';
+
+const perks = [
+  {
+    title: 'Structured development',
+    body: 'Professional qualifications at HLB Ireland — ACA, ACCA or CPA — with senior mentoring, and vendor certifications and ongoing technical training at FutureRange.',
+  },
+  {
+    title: 'Genuine variety',
+    body: 'Audit, tax, advisory and outsourcing on one side; managed IT, cyber security, cloud and AI on the other — two firms and 200+ colleagues under one roof.',
+  },
+  {
+    title: 'Flexibility that works',
+    body: 'Flexible start and finish options at HLB Ireland, and hybrid roles across FutureRange’s offices in Dublin, Belfast, Limerick and Cork.',
+  },
+  {
+    title: 'A recognised employer',
+    body: 'HLB Ireland is certified as a Great Place to Work and a Most Loved Workplace, and both firms hold ISO/IEC 27001 certification.',
+  },
+];
+---
+
+<BaseLayout
+  title="Careers — Mentora Group"
+  description="Build your career with Mentora Group — 200+ professionals across HLB Ireland (audit, accounting and tax) and FutureRange (IT services), with offices in Dublin, Belfast, Limerick and Cork."
+>
+  <!-- Page hero -->
+  <section class="page-hero on-dark">
+    <div class="container">
+      <p class="eyebrow">Careers</p>
+      <h1>Build your career with the group<span class="dot">.</span></h1>
+      <p class="lede">
+        Mentora Group is 200+ professionals across two firms — accountants,
+        tax specialists and advisors at HLB Ireland; engineers, consultants
+        and security experts at FutureRange — with offices in Dublin,
+        Belfast, Limerick and Cork.
+      </p>
+    </div>
+  </section>
+
+  <!-- Service strip (marquee) -->
+  <ServicesStrip />
+
+  <!-- Why join -->
+  <section class="why">
+    <div class="container">
+      <div class="why-head" data-reveal>
+        <p class="eyebrow">Why Mentora</p>
+        <h2 class="section-title title-accent">One group. Many career paths.</h2>
+      </div>
+      <div class="perks">
+        {perks.map((p, i) => (
+          <article class="perk" data-reveal>
+            <span class:list={['perk-dot', { teal: i % 2 === 1 }]} aria-hidden="true">◆</span>
+            <h3>{p.title}</h3>
+            <p>{p.body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Open roles by firm -->
+  <section class="hiring">
+    <div class="container">
+      <div class="hiring-head" data-reveal>
+        <div>
+          <p class="eyebrow">Open roles</p>
+          <h2 class="section-title title-accent">Choose your side of the house.</h2>
+        </div>
+        <div class="hiring-copy">
+          <p>
+            Each firm hires directly. Browse the current openings — from
+            graduate programmes to senior roles — on the firm's own careers
+            page.
+          </p>
+        </div>
+      </div>
+      <div class="firm-cards">
+        <a class="firm" href="https://www.hlb.ie/careers/" target="_blank" rel="noopener noreferrer" data-reveal>
+          <Placeholder name="firm-hlb" label="Insert image" ratio="16 / 9" />
+          <span class="firm-body">
+            <span class="tag">Audit, Accounting &amp; Tax</span>
+            <span class="name">Careers at HLB Ireland <span class="go" aria-hidden="true">↗</span></span>
+            <span class="desc">
+              Roles across audit &amp; assurance, taxation, advisory and
+              outsourcing — plus a graduate and internship programme with
+              full ACA, ACCA or CPA support.
+            </span>
+          </span>
+        </a>
+        <a class="firm firm-teal" href="https://futurerange.ie/careers/" target="_blank" rel="noopener noreferrer" data-reveal>
+          <Placeholder name="firm-futurerange" label="Insert image" ratio="16 / 9" />
+          <span class="firm-body">
+            <span class="tag">Managed IT, Security &amp; Digital</span>
+            <span class="name">Careers at FutureRange <span class="go" aria-hidden="true">↗</span></span>
+            <span class="desc">
+              Engineers, consultants and commercial roles across managed
+              services, cyber security, cloud and AI — in Dublin, Belfast,
+              Limerick and Cork.
+            </span>
+          </span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Speculative applications -->
+  <section class="spec band on-dark">
+    <div class="container spec-inner">
+      <div data-reveal>
+        <p class="eyebrow">Not seeing your role?</p>
+        <h2>Good people are always worth a conversation.</h2>
+        <p class="spec-body">
+          Both firms welcome speculative applications. Send a CV to the team
+          you'd like to join and tell us what you're great at.
+        </p>
+      </div>
+      <div class="spec-actions" data-reveal>
+        <a class="btn btn-gold" href="mailto:recruitment@hlb.ie">HLB Ireland — recruitment@hlb.ie</a>
+        <a class="btn btn-ghost" href="mailto:careers@futurerange.ie">FutureRange — careers@futurerange.ie</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  h1 .dot { color: var(--gold); }
+
+  /* why join */
+  .why { padding: 100px 0 90px; }
+  .why-head { margin-bottom: 44px; }
+  .why-head h2 { margin-bottom: 0; }
+  .perks {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+  .perk {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 30px 32px 32px;
+  }
+  .perk-dot {
+    display: block;
+    font-size: 0.7rem;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+  .perk-dot.teal { color: var(--teal-bright); }
+  .perk h3 {
+    font-size: 1.12rem;
+    color: var(--head);
+    margin-bottom: 10px;
+  }
+  .perk p {
+    color: var(--body);
+    font-size: 0.95rem;
+    max-width: 52ch;
+  }
+
+  /* firm hiring cards — same card language as the homepage */
+  .hiring { padding: 10px 0 110px; }
+  .hiring-head {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 56px;
+    align-items: center;
+    margin-bottom: 46px;
+  }
+  .hiring-head h2 { margin-bottom: 0; }
+  .hiring-copy p { max-width: 52ch; }
+  .firm-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+  }
+  .firm {
+    display: block;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-top: 4px solid var(--gold);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    color: inherit;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .firm :global(.ph), .firm :global(.slot) { border-radius: 0; border-left: none; border-right: none; border-top: none; }
+  @media (prefers-reduced-motion: no-preference) {
+    .firm:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 22px 48px rgba(26, 41, 48, 0.16), 0 0 0 1px rgba(234, 182, 51, 0.55);
+    }
+  }
+  .firm-body { display: block; padding: 28px 30px 32px; }
+  .firm .tag {
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--gold-deep);
+    display: block;
+    margin-bottom: 10px;
+  }
+  .firm .name {
+    font-family: var(--font-display);
+    font-size: 1.55rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--head);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .firm .go {
+    font-size: 1.2rem;
+    font-weight: 400;
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--line);
+    display: grid;
+    place-items: center;
+    border-radius: 999px;
+    transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    flex: none;
+  }
+  .firm:hover .go {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--ink);
+  }
+  .firm-teal { border-top-color: var(--teal-bright); }
+  .firm-teal .tag { color: var(--teal-ink); }
+  @media (prefers-reduced-motion: no-preference) {
+    .firm-teal:hover {
+      box-shadow: 0 22px 48px rgba(26, 41, 48, 0.16), 0 0 0 1px rgba(59, 191, 208, 0.6);
+    }
+  }
+  .firm-teal:hover .go {
+    background: var(--teal-bright);
+    border-color: var(--teal-bright);
+    color: #06272c;
+  }
+  .firm .desc {
+    display: block;
+    color: var(--body);
+    font-size: 0.95rem;
+    margin-top: 10px;
+    max-width: 46ch;
+  }
+
+  /* speculative applications band */
+  .spec { padding: 100px 0; position: relative; overflow: hidden; }
+  .spec::before {
+    content: "";
+    position: absolute;
+    inset: -20%;
+    background:
+      radial-gradient(600px 400px at 88% 12%, rgba(234, 182, 51, 0.14), transparent 60%),
+      radial-gradient(640px 420px at 6% 90%, rgba(59, 191, 208, 0.16), transparent 62%);
+    pointer-events: none;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .spec::before { animation: page-aurora 17s ease-in-out infinite alternate; }
+  }
+  .spec-inner {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 60px;
+    align-items: center;
+  }
+  .spec h2 {
+    font-size: clamp(1.9rem, 3.4vw, 2.7rem);
+    font-weight: 480;
+    color: #f0f4f5;
+    margin-bottom: 16px;
+    max-width: 22ch;
+    text-wrap: balance;
+  }
+  .spec-body { color: var(--text-on-dark); max-width: 50ch; }
+  .spec-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    align-items: flex-start;
+  }
+
+  @media (max-width: 900px) {
+    .perks { grid-template-columns: 1fr; }
+    .hiring-head { grid-template-columns: 1fr; gap: 18px; }
+    .firm-cards { grid-template-columns: 1fr; }
+    .spec-inner { grid-template-columns: 1fr; gap: 36px; }
+  }
+</style>
