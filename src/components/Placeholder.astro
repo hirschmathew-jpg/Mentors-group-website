@@ -36,7 +36,7 @@ if (name) {
 {
   img ? (
     <div class="slot" style={`aspect-ratio: ${ratio};`}>
-      <Image src={img} alt={alt} widths={[480, 960, 1440]} sizes="(min-width: 960px) 50vw, 100vw" />
+      <Image src={img} alt={alt} widths={[480, 960, 1440]} sizes="(min-width: 960px) 50vw, 100vw" quality={90} />
     </div>
   ) : (
     <div class:list={['ph', { dark }]} style={`aspect-ratio: ${ratio};`} role="img" aria-label={`Placeholder: ${label}`}>
