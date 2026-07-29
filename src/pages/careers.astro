@@ -3,25 +3,6 @@ import { href } from '../lib/paths';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Placeholder from '../components/Placeholder.astro';
 import ServicesStrip from '../components/ServicesStrip.astro';
-
-const perks = [
-  {
-    title: 'Structured development',
-    body: 'Professional qualifications at HLB Ireland — ACA, ACCA or CPA — with senior mentoring, and vendor certifications and ongoing technical training at FutureRange.',
-  },
-  {
-    title: 'Genuine variety',
-    body: 'Audit, tax, advisory and outsourcing on one side; managed IT, cyber security, cloud and AI on the other — two firms and 200+ colleagues under one roof.',
-  },
-  {
-    title: 'Flexibility that works',
-    body: 'Flexible start and finish options at HLB Ireland, and hybrid roles across FutureRange’s offices in Dublin, Belfast, Limerick and Cork.',
-  },
-  {
-    title: 'A recognised employer',
-    body: 'HLB Ireland is certified as a Great Place to Work and a Most Loved Workplace, and both firms hold ISO/IEC 27001 certification.',
-  },
-];
 ---
 
 <BaseLayout
@@ -44,25 +25,6 @@ const perks = [
 
   <!-- Service strip (marquee) -->
   <ServicesStrip />
-
-  <!-- Why join -->
-  <section class="why">
-    <div class="container">
-      <div class="why-head" data-reveal>
-        <p class="eyebrow">Why Mentora</p>
-        <h2 class="section-title title-accent">One group. Many career paths.</h2>
-      </div>
-      <div class="perks">
-        {perks.map((p, i) => (
-          <article class="perk" data-reveal>
-            <span class:list={['perk-dot', { teal: i % 2 === 1 }]} aria-hidden="true">◆</span>
-            <h3>{p.title}</h3>
-            <p>{p.body}</p>
-          </article>
-        ))}
-      </div>
-    </div>
-  </section>
 
   <!-- Open roles by firm -->
   <section class="hiring">
@@ -143,41 +105,8 @@ const perks = [
 <style>
   h1 .dot { color: var(--gold); }
 
-  /* why join */
-  .why { padding: 100px 0 90px; }
-  .why-head { margin-bottom: 44px; }
-  .why-head h2 { margin-bottom: 0; }
-  .perks {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 24px;
-  }
-  .perk {
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: var(--radius-lg);
-    padding: 30px 32px 32px;
-  }
-  .perk-dot {
-    display: block;
-    font-size: 0.7rem;
-    color: var(--gold);
-    margin-bottom: 16px;
-  }
-  .perk-dot.teal { color: var(--teal-bright); }
-  .perk h3 {
-    font-size: 1.12rem;
-    color: var(--head);
-    margin-bottom: 10px;
-  }
-  .perk p {
-    color: var(--body);
-    font-size: 0.95rem;
-    max-width: 52ch;
-  }
-
   /* firm hiring cards — same card language as the homepage */
-  .hiring { padding: 10px 0 110px; }
+  .hiring { padding: 100px 0 110px; }
   .hiring-head {
     display: grid;
     grid-template-columns: 1.05fr 0.95fr;
@@ -306,7 +235,6 @@ const perks = [
   }
 
   @media (max-width: 900px) {
-    .perks { grid-template-columns: 1fr; }
     .hiring-head { grid-template-columns: 1fr; gap: 18px; }
     .firm-cards { grid-template-columns: 1fr; }
     .spec-inner { grid-template-columns: 1fr; gap: 36px; }
