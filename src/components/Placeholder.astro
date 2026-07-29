@@ -14,8 +14,10 @@ interface Props {
   ratio?: string;
   /** dark variant for slate sections */
   dark?: boolean;
+  /** eager-load (for above-the-fold slots the browser's lazy heuristics miss) */
+  eager?: boolean;
 }
-const { name, label = 'Insert image', alt = '', ratio = '16 / 10', dark = false } = Astro.props;
+const { name, label = 'Insert image', alt = '', ratio = '16 / 10', dark = false, eager = false } = Astro.props;
 
 const uploads = import.meta.glob<{ default: ImageMetadata }>(
   '../assets/uploads/*.{jpg,jpeg,png,webp,avif}',
@@ -36,7 +38,7 @@ if (name) {
 {
   img ? (
     <div class="slot" style={`aspect-ratio: ${ratio};`}>
-      <Image src={img} alt={alt} widths={[480, 960, 1440]} sizes="(min-width: 960px) 50vw, 100vw" quality={90} />
+      <Image src={img} alt={alt} widths={[480, 960, 1440]} sizes="(min-width: 960px) 50vw, 100vw" quality={90} loading={eager ? 'eager' : 'lazy'} />
     </div>
   ) : (
     <div class:list={['ph', { dark }]} style={`aspect-ratio: ${ratio};`} role="img" aria-label={`Placeholder: ${label}`}>
