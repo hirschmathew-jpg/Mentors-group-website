@@ -11,15 +11,20 @@ import ServicesStrip from '../components/ServicesStrip.astro';
 >
   <!-- Page hero -->
   <section class="page-hero on-dark">
-    <div class="container">
-      <p class="eyebrow">Careers</p>
-      <h1>Build your career with the group<span class="dot">.</span></h1>
-      <p class="lede">
-        Mentora Group is 200+ professionals across two firms — accountants,
-        tax specialists and advisors at HLB Ireland; engineers, consultants
-        and security experts at FutureRange — with offices in Dublin,
-        Belfast, Limerick and Cork.
-      </p>
+    <div class="container hero-grid">
+      <div>
+        <p class="eyebrow">Careers</p>
+        <h1>Build your career with the group<span class="dot">.</span></h1>
+        <p class="lede">
+          Mentora Group is 200+ professionals across two firms — accountants,
+          tax specialists and advisors at HLB Ireland; engineers, consultants
+          and security experts at FutureRange — with offices in Dublin,
+          Belfast, Limerick and Cork.
+        </p>
+      </div>
+      <div class="hero-media">
+        <Placeholder name="careers-hero" label="Insert image" ratio="4 / 3" dark />
+      </div>
     </div>
   </section>
 
@@ -104,6 +109,13 @@ import ServicesStrip from '../components/ServicesStrip.astro';
 
 <style>
   h1 .dot { color: var(--gold); }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 56px;
+    align-items: center;
+  }
 
   /* firm hiring cards — same card language as the homepage */
   .hiring { padding: 100px 0 110px; }
@@ -235,6 +247,7 @@ import ServicesStrip from '../components/ServicesStrip.astro';
   }
 
   @media (max-width: 900px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 36px; }
     .hiring-head { grid-template-columns: 1fr; gap: 18px; }
     .firm-cards { grid-template-columns: 1fr; }
     .spec-inner { grid-template-columns: 1fr; gap: 36px; }
