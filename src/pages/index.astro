@@ -268,13 +268,14 @@ const certs = [
   .orbit-track > :global(*) { flex: none; width: 100%; }
   .orbit-track :global(.ph), .orbit-track :global(.slot) { border-radius: 0; border: none; }
   @media (prefers-reduced-motion: no-preference) {
-    .orbit-track { animation: carousel 15s cubic-bezier(0.6, 0, 0.2, 1) infinite; }
+    .orbit-track { animation: carousel 14s cubic-bezier(0.6, 0, 0.2, 1) infinite; }
   }
+  /* ~2.6s dwell per slide with the original ~0.9s glide between slides */
   @keyframes carousel {
-    0%, 20.5% { transform: translateY(0); }
-    25%, 45.5% { transform: translateY(-20%); }
-    50%, 70.5% { transform: translateY(-40%); }
-    75%, 95.5% { transform: translateY(-60%); }
+    0%, 18.5% { transform: translateY(0); }
+    25%, 43.5% { transform: translateY(-20%); }
+    50%, 68.5% { transform: translateY(-40%); }
+    75%, 93.5% { transform: translateY(-60%); }
     100% { transform: translateY(-80%); }
   }
 
