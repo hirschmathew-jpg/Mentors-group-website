@@ -44,7 +44,7 @@ const fr = all.filter((p) => firmOf(p.id) === 'FutureRange').map(toCard);
     <div class="container">
       <div class="cols">
         <div class="col" data-col>
-          <h2 class="col-head hlb">HLB Ireland <span class="count">{hlb.length} articles</span></h2>
+          <h2 class="col-head hlb">HLB Ireland</h2>
           <div class="col-stack">
             {hlb.map((a) => (
               <ArticleCard
@@ -66,7 +66,7 @@ const fr = all.filter((p) => firmOf(p.id) === 'FutureRange').map(toCard);
         </div>
 
         <div class="col" data-col>
-          <h2 class="col-head fr">FutureRange <span class="count">{fr.length} articles</span></h2>
+          <h2 class="col-head fr">FutureRange</h2>
           <div class="col-stack">
             {fr.map((a) => (
               <ArticleCard
@@ -116,13 +116,6 @@ const fr = all.filter((p) => firmOf(p.id) === 'FutureRange').map(toCard);
   }
   .col-head.hlb { border-bottom-color: var(--gold); }
   .col-head.fr { border-bottom-color: var(--teal, #3bbfd0); }
-  .count {
-    font-size: 0.8rem;
-    font-weight: 500;
-    color: var(--muted);
-    letter-spacing: 0.02em;
-    white-space: nowrap;
-  }
 
   .col-stack {
     display: grid;
