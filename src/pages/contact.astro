@@ -66,7 +66,7 @@ const firms = ['HLB Ireland', 'FutureRange'];
 
 // TODO: when a form backend is chosen (e.g. a real Formspree form ID),
 // point the form's `action` at it and remove the mailto fallback note.
-// Each area routes the submission to the right firm's inbox.
+// All submissions go to info@hlb.ie; the selected area travels in the email body.
 const areas = [
   { label: 'Accounting', firm: 'hlb' },
   { label: 'Tax', firm: 'hlb' },
@@ -201,9 +201,8 @@ const areas = [
         </div>
         <button class="btn btn-gold" type="submit">Send message <span aria-hidden="true">→</span></button>
         <p class="note">
-          Submitting opens an email in your mail app, addressed to the right
-          firm for your enquiry — or write to us directly at the addresses on
-          the left.
+          Submitting opens an email in your mail app — or write to us
+          directly at the addresses on the left.
         </p>
       </form>
     </div>
@@ -466,20 +465,9 @@ const areas = [
       });
     });
 
-    // Route the mailto submission to the right firm for the selected area
-    // of interest (data-firm on each option). Defaults to HLB Ireland.
-    // TODO: when a real form backend is wired up, switch the endpoint (or a
-    // routing field) here instead of the mailto address.
-    const form = document.querySelector<HTMLFormElement>('form.form');
-    const area = form?.querySelector<HTMLSelectElement>('#area');
-    if (form && area) {
-      const route = () => {
-        const firm = area.selectedOptions[0]?.dataset.firm;
-        form.action = firm === 'futurerange' ? 'mailto:info@futurerange.ie' : 'mailto:info@hlb.ie';
-      };
-      area.addEventListener('change', route);
-      route();
-    }
+    // All form submissions go to info@hlb.ie regardless of the selected
+    // area of interest (the area still travels in the email body).
+    // TODO: when a real form backend is wired up, point the endpoint here.
   });
   document.addEventListener('click', (e) => {
     if (!(e.target instanceof Element && e.target.closest('details.loc'))) closeAll();
