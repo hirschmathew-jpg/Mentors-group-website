@@ -52,6 +52,7 @@ const certs = [
       </div>
       <div class="hero-media">
         <div class="orbit" aria-label="Group highlights">
+          <div class="orbit-glow" aria-hidden="true"></div>
           <div class="orbit-ring" aria-hidden="true"></div>
           <div class="orbit-mask">
             <div class="orbit-track">
@@ -253,17 +254,37 @@ const certs = [
     width: min(580px, 92vw);
     aspect-ratio: 16 / 9;
   }
+  @property --ring-a {
+    syntax: '<angle>';
+    initial-value: 40deg;
+    inherits: false;
+  }
+  .orbit-glow {
+    position: absolute;
+    inset: -10px;
+    border-radius: 32px;
+    background: conic-gradient(from var(--ring-a), var(--gold), var(--teal-bright), var(--violet), var(--gold));
+    filter: blur(24px);
+    opacity: 0.5;
+    pointer-events: none;
+  }
   .orbit-ring {
     position: absolute;
     inset: -4px;
     border-radius: 26px;
     padding: 4px;
-    background: conic-gradient(from 40deg, var(--gold), var(--teal-bright), var(--violet), var(--gold));
+    background: conic-gradient(from var(--ring-a), var(--gold), var(--teal-bright), var(--violet), var(--gold));
     -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
     -webkit-mask-composite: xor;
     mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
     mask-composite: exclude;
     opacity: 0.9;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .orbit-glow, .orbit-ring { animation: ringspin 14s linear infinite; }
+  }
+  @keyframes ringspin {
+    to { --ring-a: 400deg; }
   }
   .orbit-mask {
     position: absolute;
