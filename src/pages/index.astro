@@ -60,9 +60,6 @@ const certs = [
               <Placeholder name="hero-carousel-3" label="Insert image" ratio="1 / 1" dark eager />
               <Placeholder name="hero-carousel-4" label="Insert image" ratio="1 / 1" dark eager />
               <Placeholder name="hero-carousel-5" label="Insert image" ratio="1 / 1" dark eager />
-              <Placeholder name="hero-carousel-6" label="Insert image" ratio="1 / 1" dark eager />
-              <Placeholder name="hero-carousel-7" label="Insert image" ratio="1 / 1" dark eager />
-              <Placeholder name="hero-carousel-8" label="Insert image" ratio="1 / 1" dark eager />
               <Placeholder name="hero-carousel-1" label="Insert image" ratio="1 / 1" dark eager />
             </div>
           </div>
@@ -269,23 +266,20 @@ const certs = [
     overflow: hidden;
     box-shadow: 0 30px 80px rgba(0, 10, 14, 0.45);
   }
-  .orbit-track { display: flex; flex-direction: column; height: 900%; }
+  .orbit-track { display: flex; flex-direction: column; height: 600%; }
   .orbit-track > :global(*) { flex: none; width: 100%; }
   .orbit-track :global(.ph), .orbit-track :global(.slot) { border-radius: 0; border: none; }
   @media (prefers-reduced-motion: no-preference) {
-    .orbit-track { animation: carousel 24s cubic-bezier(0.6, 0, 0.2, 1) infinite; }
+    .orbit-track { animation: carousel 15s cubic-bezier(0.6, 0, 0.2, 1) infinite; }
   }
-  /* eight slides: ~2.1s dwell each with a ~0.9s glide between */
+  /* five slides: ~2.1s dwell each with a ~0.9s glide between */
   @keyframes carousel {
-    0%, 8.75% { transform: translateY(0); }
-    12.5%, 21.25% { transform: translateY(-11.111%); }
-    25%, 33.75% { transform: translateY(-22.222%); }
-    37.5%, 46.25% { transform: translateY(-33.333%); }
-    50%, 58.75% { transform: translateY(-44.444%); }
-    62.5%, 71.25% { transform: translateY(-55.556%); }
-    75%, 83.75% { transform: translateY(-66.667%); }
-    87.5%, 96.25% { transform: translateY(-77.778%); }
-    100% { transform: translateY(-88.889%); }
+    0%, 14% { transform: translateY(0); }
+    20%, 34% { transform: translateY(-16.667%); }
+    40%, 54% { transform: translateY(-33.333%); }
+    60%, 74% { transform: translateY(-50%); }
+    80%, 94% { transform: translateY(-66.667%); }
+    100% { transform: translateY(-83.333%); }
   }
 
   .intro-grid {
