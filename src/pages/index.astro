@@ -59,6 +59,9 @@ const certs = [
               <Placeholder name="hero-carousel-2" label="Insert image" ratio="1 / 1" dark eager />
               <Placeholder name="hero-carousel-3" label="Insert image" ratio="1 / 1" dark eager />
               <Placeholder name="hero-carousel-4" label="Insert image" ratio="1 / 1" dark eager />
+              <Placeholder name="hero-carousel-5" label="Insert image" ratio="1 / 1" dark eager />
+              <Placeholder name="hero-carousel-6" label="Insert image" ratio="1 / 1" dark eager />
+              <Placeholder name="hero-carousel-7" label="Insert image" ratio="1 / 1" dark eager />
               <Placeholder name="hero-carousel-1" label="Insert image" ratio="1 / 1" dark eager />
             </div>
           </div>
@@ -265,19 +268,22 @@ const certs = [
     overflow: hidden;
     box-shadow: 0 30px 80px rgba(0, 10, 14, 0.45);
   }
-  .orbit-track { display: flex; flex-direction: column; height: 500%; }
+  .orbit-track { display: flex; flex-direction: column; height: 800%; }
   .orbit-track > :global(*) { flex: none; width: 100%; }
   .orbit-track :global(.ph), .orbit-track :global(.slot) { border-radius: 0; border: none; }
   @media (prefers-reduced-motion: no-preference) {
-    .orbit-track { animation: carousel 12s cubic-bezier(0.6, 0, 0.2, 1) infinite; }
+    .orbit-track { animation: carousel 21s cubic-bezier(0.6, 0, 0.2, 1) infinite; }
   }
-  /* ~2.1s dwell per slide with the original ~0.9s glide between slides */
+  /* seven slides: ~2.1s dwell each with a ~0.9s glide between */
   @keyframes carousel {
-    0%, 17.5% { transform: translateY(0); }
-    25%, 42.5% { transform: translateY(-20%); }
-    50%, 67.5% { transform: translateY(-40%); }
-    75%, 92.5% { transform: translateY(-60%); }
-    100% { transform: translateY(-80%); }
+    0%, 10% { transform: translateY(0); }
+    14.286%, 24.286% { transform: translateY(-12.5%); }
+    28.571%, 38.571% { transform: translateY(-25%); }
+    42.857%, 52.857% { transform: translateY(-37.5%); }
+    57.143%, 67.143% { transform: translateY(-50%); }
+    71.429%, 81.429% { transform: translateY(-62.5%); }
+    85.714%, 95.714% { transform: translateY(-75%); }
+    100% { transform: translateY(-87.5%); }
   }
 
   .intro-grid {
