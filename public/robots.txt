@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://hirschmathew-jpg.github.io/Mentors-group-website/sitemap-index.xml
