@@ -67,6 +67,9 @@ const certs = [
               <Placeholder name="hero-carousel-9" label="Insert image" ratio="16 / 9" dark eager />
               <Placeholder name="hero-carousel-10" label="Insert image" ratio="16 / 9" dark eager />
               <Placeholder name="hero-carousel-11" label="Insert image" ratio="16 / 9" dark eager />
+              <Placeholder name="hero-carousel-12" label="Insert image" ratio="16 / 9" dark eager />
+              <Placeholder name="hero-carousel-13" label="Insert image" ratio="16 / 9" dark eager />
+              <Placeholder name="hero-carousel-14" label="Insert image" ratio="16 / 9" dark eager />
               <Placeholder name="hero-carousel-1" label="Insert image" ratio="16 / 9" dark eager />
             </div>
           </div>
@@ -293,26 +296,29 @@ const certs = [
     overflow: hidden;
     box-shadow: 0 30px 80px rgba(0, 10, 14, 0.45);
   }
-  .orbit-track { display: flex; flex-direction: column; height: 1200%; }
+  .orbit-track { display: flex; flex-direction: column; height: 1500%; }
   .orbit-track > :global(*) { flex: none; width: 100%; }
   .orbit-track :global(.ph), .orbit-track :global(.slot) { border-radius: 0; border: none; }
   @media (prefers-reduced-motion: no-preference) {
-    .orbit-track { animation: carousel 33s cubic-bezier(0.6, 0, 0.2, 1) infinite; }
+    .orbit-track { animation: carousel 42s cubic-bezier(0.6, 0, 0.2, 1) infinite; }
   }
-  /* eleven slides: ~2.1s dwell each with a ~0.9s glide between */
+  /* fourteen slides: ~2.1s dwell each with a ~0.9s glide between */
   @keyframes carousel {
-    0%, 6.364% { transform: translateY(0); }
-    9.091%, 15.455% { transform: translateY(-8.333%); }
-    18.182%, 24.545% { transform: translateY(-16.667%); }
-    27.273%, 33.636% { transform: translateY(-25%); }
-    36.364%, 42.727% { transform: translateY(-33.333%); }
-    45.455%, 51.818% { transform: translateY(-41.667%); }
-    54.545%, 60.909% { transform: translateY(-50%); }
-    63.636%, 70% { transform: translateY(-58.333%); }
-    72.727%, 79.091% { transform: translateY(-66.667%); }
-    81.818%, 88.182% { transform: translateY(-75%); }
-    90.909%, 97.273% { transform: translateY(-83.333%); }
-    100% { transform: translateY(-91.667%); }
+    0%, 5% { transform: translateY(0); }
+    7.143%, 12.143% { transform: translateY(-6.667%); }
+    14.286%, 19.286% { transform: translateY(-13.333%); }
+    21.429%, 26.429% { transform: translateY(-20%); }
+    28.571%, 33.571% { transform: translateY(-26.667%); }
+    35.714%, 40.714% { transform: translateY(-33.333%); }
+    42.857%, 47.857% { transform: translateY(-40%); }
+    50%, 55% { transform: translateY(-46.667%); }
+    57.143%, 62.143% { transform: translateY(-53.333%); }
+    64.286%, 69.286% { transform: translateY(-60%); }
+    71.429%, 76.429% { transform: translateY(-66.667%); }
+    78.571%, 83.571% { transform: translateY(-73.333%); }
+    85.714%, 90.714% { transform: translateY(-80%); }
+    92.857%, 97.857% { transform: translateY(-86.667%); }
+    100% { transform: translateY(-93.333%); }
   }
 
   .intro-grid {
